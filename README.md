@@ -35,7 +35,7 @@
 - 📦 **[Download Nightfall GPU Miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1/nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz)**
 - 🔐 **[Download SHA-256 checksum (.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1/nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256)**
 
-*The release is currently a private Draft. These direct links will work after the release is published and this distribution repository is made public.*
+*The links become available when the GitHub prerelease is published.*
 
 The miner includes precompiled NVIDIA CUDA workers, so **no CUDA Toolkit or `nvcc` is required**. A compatible NVIDIA driver is still needed. Verify the archive against the downloaded SHA-256 file before installation.
 
@@ -46,7 +46,7 @@ See the [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [installation gu
 ## Key Advantages
 
 - 🚀 **High hashrate:** Earlier results include RTX 5060 Ti ~5.92 kH/s and RTX 3070 ~4.66 kH/s (hardware dependent).
-- 🔒 **Precompiled CUDA:** Architecture-specific native GPU workers, without distributed proprietary `.cu` sources or a local CUDA compiler.
+- 🔒 **Precompiled CUDA:** Architecture-specific native GPU workers; CUDA kernel source is not included and no local CUDA compiler is required.
 - 🛡️ **Canonical sync guard:** Pauses mining when local chain state cannot be confirmed against peers.
 - ⏩ **FastSync & FastState:** Fast bootstrap initialization and optional transfer of a recent trusted chain snapshot.
 - 🖥️ **Multi-GPU:** Parallel mining across supported NVIDIA GPUs, with device-specific settings.
@@ -56,7 +56,7 @@ See the [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [installation gu
 
 ## Hardware Benchmarks
 
-Results below were measured during **earlier v1.3.8 development/mainnet testing**. They are reference figures, **not a performance guarantee for the forthcoming protected RC3 beta**. Speeds depend on GPU model, power limits, clock settings, drivers and mining conditions.
+**Historical development measurements, not RC3 release benchmarks.** The results below come from earlier v1.3.8 development/mainnet testing. Only the separate **RC3 paired worker tests** table provides measured RC3 binary results. Speeds depend on GPU model, power limits, clock settings, drivers and network conditions.
 
 ### Multi-GPU
 
@@ -116,9 +116,9 @@ In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally acc
 
 Windows and AMD GPU mining are not currently advertised as supported.
 
-## Quickstart (once the release is published)
+## Quickstart
 
-**Use the detailed [RC3 beta install and trusted FastState guide](docs/INSTALL.md).** It includes the verified Release asset commands; those commands will work only **after** the beta has actually been published.
+Use the detailed [RC3 beta installation and trusted FastState guide](docs/INSTALL.md) for verified downloads and setup instructions.
 
 1. Download the miner archive and matching SHA-256 file from [Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases).
 2. Verify the checksum and extract the archive.
@@ -143,9 +143,7 @@ minerctl blocks 20
 
 ## 📊 Live Dashboard
 
-Monitor hashrate, GPU temperatures, power, block activity and fee accounting from the terminal with `mine`.
-
-![Nightfall GPU Miner live dashboard](assets/Dashboard.png)
+Run `mine` to monitor GPU/CPU hashrate, temperatures, power, block activity and developer-fee accounting from the terminal.
 
 ## Command Reference
 
