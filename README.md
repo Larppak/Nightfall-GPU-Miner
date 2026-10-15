@@ -1,5 +1,16 @@
 # Nightfall GPU Miner
 
+```text
+ _   _ _       _     _    __       _ _   __  __ _                 
+| \ | (_)     | |   | |  / _|     | | | |  \/  (_)                
+|  \| |_  __ _| |__ | |_| |_ __ _ | | | | \  / |_ _ __   ___ _ __ 
+| . ` | |/ _` | '_ \| __|  _/ _` || | | | |\/| | | '_ \ / _ \ '__|
+| |\  | | (_| | | | | |_| || (_| || | | | |  | | | | | |  __/ |   
+|_| \_|_|\__, |_| |_|\__|_| \__,_||_|_| |_|  |_|_|_| |_|\___|_|   
+          __/ |                                                    
+         |___/                                                     
+```
+
 [![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)]()
 [![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://developer.nvidia.com/cuda-toolkit)
 [![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.5-green)](https://github.com/Instinctes/nightfall)
@@ -120,11 +131,55 @@ Monitor hashrate, GPU temperatures, power, block activity and fee accounting fro
 
 For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. Additional settings and troubleshooting instructions will be included in the released package.
 
+## Multi-GPU Setup
+
+Multiple supported NVIDIA GPUs can mine concurrently. Identify the cards with:
+
+```bash
+/opt/nightfall-miner/minerctl hardware
+```
+
+To select specific devices on a rig, edit `/opt/nightfall-miner/config.env`:
+
+```bash
+NIGHTFALL_CUDA_DEVICES="0,1"
+# Optional per-device batch sizes for GPUs with different VRAM:
+# NIGHTFALL_CUDA_BATCHES="256,128"
+```
+
+Then restart with `minerctl restart`. Individual GPU tuning and mixed-GPU operation should be confirmed against the final release's compatibility matrix.
+
+## FastSync & FastState
+
+**Default FastSync:** The installer downloads the official Nightfall chain bootstrap, verifies its SHA-256 and uses it as a trusted historical anchor. Historical blocks through that anchor are not individually reverified locally; subsequent network data is verified normally. The node still needs to catch up to the current chain tip and confirm canonical peer agreement before mining starts.
+
+**FastState (optional):** For repeated deployments or GPU rental rigs, import a recent canonical snapshot from a fully synchronized, trusted Nightfall Miner installation. A compatible miner can export one using `minerctl faststate-create` and import it through the installer's `--faststate PATH` argument. Snapshot creation, transfer and import take time; a fresh snapshot can greatly reduce network catch-up, but fast mining start is not guaranteed.
+
+After installing, useful checks include:
+
+```bash
+minerctl canonical-check 180 3
+minerctl fastsync-info
+minerctl sync-watch 2
+```
+
+The canonical guard waits for an acceptable live network state before enabling mining. Do not use arbitrary untrusted snapshots.
+
 ## Developer Fee (4.5%)
 
 The developer fee applies **only to completed GPU mining work**. CPU mining remains fee-free. The miner's dashboard reports the target and observed GPU fee percentages and displays USER/DEV payout identities. The displayed percentage may fluctuate slightly around 4.5% over short periods because work is processed in batches.
 
 The protected orchestration component is distributed as a compiled executable; surrounding tools and third-party components retain their respective licensing terms. This design makes casual source extraction more difficult, but no software running on a user's own machine can be considered impossible to reverse-engineer.
+
+## FAQ
+
+**Can I mine on CPU and GPU simultaneously?** Yes. CPU mining and supported NVIDIA GPU mining can run together. CPU has no developer fee.
+
+**Do I need a new wallet?** No. You can use your existing public `nf1...` reward address. Never share a wallet seed or private key.
+
+**Does FastSync mean mining starts in 60 seconds?** Not necessarily. Installation, chain catch-up and canonical network verification can take longer; the fastest route is a recent verified FastState snapshot on an already-prepared machine.
+
+**What if the miner shows `SYNCING_SAFE_WAIT`?** The node is waiting for verified chain agreement. Monitor with `minerctl sync-watch 2` rather than forcing mining on an unconfirmed tip.
 
 ## License & Support
 
