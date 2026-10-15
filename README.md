@@ -11,7 +11,7 @@
          |___/                                                     
 ```
 
-[![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)]()
+![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)
 [![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://developer.nvidia.com/cuda-toolkit)
 [![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.5-green)](https://github.com/Instinctes/nightfall)
 [![Status](https://img.shields.io/badge/status-RC3%20limited%20beta-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
@@ -24,7 +24,7 @@
 
 [NIGHTFALLCOIN](https://nightfallcoin.org/) is a privacy-focused, fair-launch Proof-of-Work cryptocurrency with a 90 million NIGHT supply cap. It uses the memory-hard **Nighthash-v2 (Argon2id)** mining algorithm.
 
-[Official website](https://nightfallcoin.org/) · [Web wallet](https://nightfallcoin.org/wallet/) · [Nightfall Core](https://github.com/Instinctes/nightfall)
+[Official website](https://nightfallcoin.org/) · [Web wallet](https://wallet.nightfallcoin.org/) · [Nightfall Core](https://github.com/Instinctes/nightfall)
 
 ## 📥 GPU Miner Downloads & Releases
 
