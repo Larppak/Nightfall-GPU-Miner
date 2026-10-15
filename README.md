@@ -14,7 +14,7 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)]()
 [![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://developer.nvidia.com/cuda-toolkit)
 [![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.5-green)](https://github.com/Instinctes/nightfall)
-[![Status](https://img.shields.io/badge/status-Release%20in%20preparation-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
+[![Status](https://img.shields.io/badge/status-RC3%20beta%20preparation-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
 
 **Nightfall GPU Miner** is an independent, high-performance **NVIDIA CUDA + CPU** miner for **NIGHTFALLCOIN (NIGHT)**, built around Nightfall Core v1.0.5. It combines GPU acceleration, CPU mining, multi-GPU support, hardware autotuning, fast synchronization and live monitoring.
 
@@ -28,13 +28,14 @@
 
 ## 📥 GPU Miner Downloads & Releases
 
-**Release in preparation.** The download will appear on the [GitHub Releases page](https://github.com/Larppak/Nightfall-GPU-Miner/releases) after final compatibility, payout and security checks.
+**RC3 limited public beta in preparation — NOT PUBLISHED.** The approved archive and checksum will appear on [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases) only after artifact/license review and explicit publication approval. See [draft release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [install instructions](docs/INSTALL.md).
 
-The release will provide a **Linux x86-64 miner archive** and a matching **SHA-256 checksum**. Use the actual miner asset from Releases, **not GitHub's automatically generated “Source code” ZIP/TAR archives**. No miner archive has been published in this repository yet.
+The release will provide a **Linux x86-64 precompiled CUDA miner archive** and matching **SHA-256 checksum**. The protected GPU workers will not require `nvcc` or a local CUDA Toolkit. Use the actual binary asset from Releases, **not GitHub's automatically generated “Source code” ZIP/TAR archives**. No miner archive has been published in this repository yet.
 
 ## Key Advantages
 
-- 🚀 **High hashrate:** Previously measured RTX 5060 Ti ~5.92 kH/s and RTX 3070 ~4.66 kH/s, versus ~200–400 H/s on standard CPU nodes.
+- 🚀 **High hashrate:** Earlier results include RTX 5060 Ti ~5.92 kH/s and RTX 3070 ~4.66 kH/s (hardware dependent).
+- 🔒 **Precompiled CUDA:** Architecture-specific native GPU workers, without distributed proprietary `.cu` sources or a local CUDA compiler.
 - 🛡️ **Canonical sync guard:** Pauses mining when local chain state cannot be confirmed against peers.
 - ⏩ **FastSync & FastState:** Fast bootstrap initialization and optional transfer of a recent trusted chain snapshot.
 - 🖥️ **Multi-GPU:** Parallel mining across supported NVIDIA GPUs, with device-specific settings.
@@ -44,7 +45,7 @@ The release will provide a **Linux x86-64 miner archive** and a matching **SHA-2
 
 ## Hardware Benchmarks
 
-Results below were measured during **earlier v1.3.8 development/mainnet testing**. They are reference figures, **not yet a performance guarantee for the forthcoming protected release**. Speeds depend on GPU model, power limits, clock settings, drivers and mining conditions.
+Results below were measured during **earlier v1.3.8 development/mainnet testing**. They are reference figures, **not a performance guarantee for the forthcoming protected RC3 beta**. Speeds depend on GPU model, power limits, clock settings, drivers and mining conditions.
 
 ### Multi-GPU
 
@@ -65,6 +66,24 @@ Results below were measured during **earlier v1.3.8 development/mainnet testing*
 | GeForce RTX 3070 8 GB | **4.66 kH/s** | Ampere (`sm_86`) |
 | TITAN Xp 12 GB | **2.81–5.50 kH/s** | Varies substantially with power limit |
 
+### RC3 paired worker tests
+
+The following were measured on the same GPU in paired offline worker tests. They do **not** measure full-window live effective hashrate.
+
+| GPU | Architecture | RC3 GPU rate | Change vs RC2 |
+| --- | --- | ---: | ---: |
+| GTX 1070 | sm_61 | 2.60 kH/s | −0.15% |
+| RTX 2080 Ti* | sm_75 | 4.61 kH/s | +0.56% |
+| RTX 3070 | sm_86 | 4.68 kH/s | +0.004% |
+| Quadro RTX 5000 | sm_75 | 5.40 kH/s | +0.003% |
+| RTX 4060 Ti 16 GB | sm_89 | 4.17 kH/s | −0.008% |
+
+*The RTX 2080 Ti rental reported 22 GiB VRAM; the test should not be generalized to a stock 11 GiB model. The Quadro and RTX 4060 Ti numbers used their autotuned batches, unlike the batch-128 results above.*
+
+In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally accepted GPU submissions** and no locally rejected submissions. This is not proof of finalized rewards, long-term reliability or real mixed-GPU coverage. These tests used the developer address; ordinary-user 4.5% fee accrual was not live-tested in these sessions.
+
+[RC3 tested GPU/OS matrix](docs/COMPATIBILITY.md).
+
 ### CPU Mining
 
 | CPU | Reported hashrate |
@@ -78,25 +97,27 @@ Results below were measured during **earlier v1.3.8 development/mainnet testing*
 
 ## 🛠️ Requirements
 
-- **OS:** 64-bit Linux. Exact distribution and native-library support will be listed with the final release.
+- **OS:** Ubuntu 24.04 x86-64 recommended for the first RC3 beta. Other distros have inherited Core prebuilt restrictions. [Compatibility](docs/COMPATIBILITY.md).
 - **GPU:** Supported NVIDIA card and compatible proprietary driver (check with `nvidia-smi`).
-- **CUDA:** The current worker build uses the CUDA Toolkit (`nvcc`) to compile for the installed GPU; release-specific requirements will be confirmed.
+- **CUDA:** RC3 provides verified precompiled native CUDA workers, so no `nvcc`/CUDA Toolkit is needed on the miner host. A compatible NVIDIA driver is required.
 - **Wallet:** A public `nf1...` payout address; no seed phrase or private key is required.
-- **Rust:** Not required when a compatible prebuilt Core binary is available. Source-building Core may be necessary on some older CPUs or Linux installations.
+- **Rust:** Not needed for the recommended Ubuntu 24.04 prebuilt Core path. The inherited `nightfalld` prebuilt references GLIBC_2.39; other OS versions or older CPUs may require Core built from source.
 
 Windows and AMD GPU mining are not currently advertised as supported.
 
 ## Quickstart (once the release is published)
+
+**Use the detailed [RC3 beta install and trusted FastState guide](docs/INSTALL.md).** It includes the verified Release asset commands; those commands will work only **after** the beta has actually been published.
 
 1. Download the miner archive and matching SHA-256 file from [Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases).
 2. Verify the checksum and extract the archive.
 3. Open the extracted miner folder and run the installer with your own payout address:
 
 ```bash
-./install.sh --use-prebuilt --address "nf1_YOUR_PAYOUT_ADDRESS"
+sudo bash install.sh --use-prebuilt --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --non-interactive
 ```
 
-If the prebuilt Core is incompatible with the machine, follow the release's source-build instructions instead of forcing an unsupported binary. The installer handles CUDA worker preparation, configuration and chain synchronization.
+Use `--use-prebuilt` primarily on Ubuntu 24.04. If Core is incompatible, consult the experimental source-build path instead of forcing an unsupported binary. The GPU worker is selected automatically from precompiled binaries; chain synchronization and guard checks remain mandatory.
 
 When installation completes:
 
@@ -129,7 +150,7 @@ Monitor hashrate, GPU temperatures, power, block activity and fee accounting fro
 | `minerctl restart` | Restart miner services |
 | `minerctl web-start` | Start local browser dashboard |
 
-For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. Additional settings and troubleshooting instructions will be included in the released package.
+For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. **RC3 real mixed-generation GPU operation remains untested**. [Read compatibility](docs/COMPATIBILITY.md).
 
 ## Multi-GPU Setup
 
@@ -186,6 +207,10 @@ The protected orchestration component is distributed as a compiled executable; s
 - [Repository and documentation license](LICENSE)
 - [Protected binary distribution terms — draft for release review](BINARY-LICENSE.md)
 - [Changes](CHANGELOG.md)
+- [RC3 beta draft release notes](docs/RELEASE_NOTES_RC3_BETA.md)
+- [Installation and FastState](docs/INSTALL.md)
+- [Compatibility and tested GPUs](docs/COMPATIBILITY.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Report an issue](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
 
 The developer fee and independent-project status are disclosed above. Nightfall Core and other bundled dependencies remain subject to their original licenses. This repository will contain **documentation and release links only**; production miner archives will be distributed as verified GitHub Release assets.
