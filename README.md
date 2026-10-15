@@ -26,6 +26,8 @@
 
 [Official website](https://nightfallcoin.org/) · [Web wallet](https://wallet.nightfallcoin.org/) · [Nightfall Core](https://github.com/Instinctes/nightfall)
 
+**Interested in building your own GPU miner?** Check out [GPU Mining Concept](GPU_MINING_CONCEPT.md) for a short explanation of Nighthash-v2, GPU memory parallelism, and an educational CUDA-style example. This is not the source code of the released miner or a security audit of its binaries.
+
 ## 📥 GPU Miner Downloads & Releases
 
 **Nightfall GPU Miner v1.3.8 RC3 — Limited Public Beta**
