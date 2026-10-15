@@ -1,32 +1,41 @@
-Nightfall GPU Miner — Public Repository License Scope
+Nightfall GPU Miner — MIT license for first-party materials
 
-The MIT license below applies to README.md, CHANGELOG.md, and other materials
-that expressly identify MIT as their license in this distribution repository.
-This repository license alone does not grant a new license to protected miner
-binaries, screenshots/branding or third-party components. However, it also
-**does not revoke or supersede any valid MIT rights previously granted** for
-software distributed in earlier versions. Future releases may propose separate
-terms only for specifically identified original contributions whose ownership
-and license scope permit those terms. Third-party licenses continue to apply.
+The MIT license below applies to the maintainer's original Nightfall GPU
+Miner contributions, including the first-party compiled mining software
+shipped in the approved v1.3.8-rc3-beta.1 Linux release, and to this
+repository's MIT-licensed documentation.
+
+Third-party software, including Nightfall Core, Hashcat-derived Argon2
+components, NVIDIA CUDA redistributables, CPython/Nuitka, GCC runtime and
+Rust library dependencies, remains under the applicable copyright and
+licenses of its respective owners. See the corresponding release
+archive's LICENSE-MANIFEST.md, THIRD_PARTY_NOTICES.md and full notices.
+No first-party MIT grant overrides vendor/third-party licensing.
+
+Under MIT, users may modify and redistribute covered first-party
+software subject to the conditions below. The disclosed 4.5% GPU
+developer fee is how the unmodified miner works; it does not change the
+license's permission to modify MIT-covered first-party code. CPU developer
+fee is 0%.
 
 MIT License
 
 Copyright (c) 2026 Larppak
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of the MIT-licensed materials (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the
-Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
