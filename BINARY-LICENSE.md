@@ -1,35 +1,57 @@
-# Nightfall GPU Miner — Protected Binary Distribution Terms
+# Nightfall GPU Miner — Protected Binary Distribution Terms (DRAFT)
 
-**DRAFT — awaiting final maintainer/legal review before any public binary release.**
-There is currently no miner executable distributed from this repository.
+**DRAFT / FOR MAINTAINER REVIEW — NO MINER EXECUTABLE HAS BEEN PUBLISHED HERE.**
 
-## Proposed scope
+These are proposed *future* terms for **only those original components** for
+which the maintainer has the rights to offer a separately licensed binary,
+and only once identified in an approved release-specific license manifest.
+The mere inclusion of a binary in a release does not turn other authors'
+copyrighted or open-source components into proprietary software.
 
-The protected controller and any separately designated proprietary GPU binaries
-are distributed in executable form only. They are **not covered by the public
-repository's MIT license**. Open-source and third-party components supplied
-with a release remain governed by their own licenses and notices.
+## Provenance and historical licenses
 
-## Proposed user permissions and conditions
+The maintainer confirms that the original Nightfall Miner implementation was
+developed solely by the maintainer with Codex as a tool, apart from separately
+credited external components/derived material.
 
-- Users may download and run the unmodified official binaries on machines
-  they own or are authorized to operate, including for commercial mining.
-- GPU mining includes a disclosed **4.5% developer fee based on GPU work**;
-  CPU mining does not carry a developer fee.
-- The protected binaries are not a grant of access to unpublished source code.
-- Permission to redistribute, repackage, modify, or sell copies of the
-  proprietary components is not granted unless expressly authorized.
-- The software must not be represented as an official Nightfall Core release.
-- Mandatory rights under applicable law and third-party license obligations
-  remain unaffected.
+**Existing valid MIT grants from previous versions remain in effect.** This
+proposed prospective license does not revoke or restrict rights a recipient
+already holds under those grants. The public repository's MIT license covers
+its expressly designated materials; third-party components retain their own
+licenses and required notices (for example Nightfall Core, Hashcat Argon2,
+RustCrypto, NVIDIA CUDA runtime, Python/Nuitka and GCC runtime libraries).
 
-## Disclaimer
+## Proposed user permission for separately licensed original components
 
-The protected software is intended to be supplied **AS IS**, without warranties,
-to the maximum extent permitted by applicable law. The maintainer does not
-guarantee future software updates, a specific hashrate, rewards, profitability,
-or uninterrupted operation.
+An authorized end user may download, install and run an approved unmodified
+binary on computers they own or may lawfully operate, including commercial
+NIGHTFALLCOIN mining.
 
-The final license and any required third-party notices must be reviewed and
-attached to the approved release **before publication**. This draft does not
-replace licenses that apply to other included components.
+- **GPU developer fee: 4.5% of ordinary-user GPU work.**
+- **CPU developer fee: 0%.**
+- Work-based percentage does not guarantee exactly 4.5% of found blocks
+  during short periods.
+- A developer-address exemption may apply when mining directly to the
+  designated developer payout address.
+
+Under this proposed *new binary-only* license, modification, redistribution,
+repackaging, sublicensing or removing an applicable developer-fee mechanism
+from separately licensed original protected components is not licensed
+without permission, except to the extent that other applicable rights or
+mandatory law independently permit it. In particular, these restrictions
+**do not override earlier MIT permissions or third-party license grants**.
+
+## No warranty and no official affiliation
+
+This is an independent community miner, not an official Nightfall Core or
+NIGHTFALLCOIN software release. The final separately licensed components
+would be provided AS IS, to the extent permitted by law; no specific
+hashrate, GPU/driver compatibility, rewards, uptime or profitability is
+guaranteed. Mandatory statutory rights are unaffected.
+
+## Publication approval still required
+
+Before any public release, the maintainer must approve the exact component
+scope, full third-party/derivative notices, previously granted MIT rights,
+the actual text of the binary terms and the rebuilt archive/checksum.
+**This draft does not itself authorize publication or change any existing rights.**
