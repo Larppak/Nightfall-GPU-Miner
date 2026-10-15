@@ -63,7 +63,7 @@ cd nightfall-miner-v1.3.8-rc3-beta.1
 bash selftest.sh
 ```
 
-Then follow [installation and trusted FastState guide](docs/INSTALL.md).
+Then follow [installation and trusted FastState guide](https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/docs/INSTALL.md).
 Use a **public** `nf1...` payout address, never a private key or seed phrase.
 
 ### Licenses and support
@@ -73,9 +73,9 @@ original third-party license texts and notices. NVIDIA CUDA components
 are covered by NVIDIA's redistribution terms; see the included
 `LICENSE-MANIFEST.md` and `THIRD_PARTY_NOTICES.md`.
 
-[Installation](docs/INSTALL.md) ·
-[Compatibility](docs/COMPATIBILITY.md) ·
-[Troubleshooting](docs/TROUBLESHOOTING.md) ·
+[Installation](https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/docs/INSTALL.md) ·
+[Compatibility](https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/docs/COMPATIBILITY.md) ·
+[Troubleshooting](https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/docs/TROUBLESHOOTING.md) ·
 [Issues](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
 
 Beta software is provided without guarantees of hashrate, rewards,
