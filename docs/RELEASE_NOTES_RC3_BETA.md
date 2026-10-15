@@ -1,86 +1,82 @@
-# Draft GitHub Release notes — v1.3.8-rc3-beta.1
+# Nightfall GPU Miner v1.3.8 RC3 Beta 1 — Limited Public Beta
 
-> **DRAFT — NOT PUBLISHED.** Use this only after the artifact's license scope,
-> contents, exact hash and release naming have been reviewed and approved.
-> This draft intentionally has no download link to a nonexistent asset.
+Independent NVIDIA GPU + CPU miner for NIGHTFALLCOIN (NIGHT),
+based on Nightfall Core v1.0.5. **Not an official Nightfall Core release.**
 
-## Nightfall GPU Miner v1.3.8 RC3 — Limited Public Beta
+### Features
 
-Independent Linux x86-64 NVIDIA CUDA + CPU miner for NIGHTFALLCOIN
-(NIGHT), based on Nightfall Core v1.0.5. This is an **early public beta**,
-not an official Nightfall Core release.
+- Ready-to-run **precompiled NVIDIA CUDA workers** for 12 GPU compute
+  capability targets. The local CUDA Toolkit and `nvcc` are not required.
+- Protected, native-compiled GPU + CPU hybrid control plane.
+- GPU batch autotuning, multi-GPU configuration, canonical network guard,
+  FastSync and optional trusted FastState import.
+- Terminal dashboard, worker diagnostics and CPU mining.
+- **GPU developer fee: 4.5% of completed GPU work. CPU fee: 0%.**
+- **MIT license for first-party miner code and binaries.** Users retain
+  MIT rights to modify and redistribute covered code/software; the developer
+  fee describes the behavior of the unmodified distributed miner.
+  Third-party and vendor components retain their own licenses.
 
-### Highlights
+### GPU testing
 
-- **Precompiled NVIDIA CUDA workers:** The release does not distribute
-  proprietary CUDA kernel source or require users to install `nvcc`.
-- **Per-GPU selection:** Checks SHA-256 and uses architecture-specific
-  native worker binaries for supported compute capabilities.
-- **Protected developer-fee/controller binaries:** 4.5% GPU developer
-  fee on ordinary-user work, **0% CPU developer fee**.
-- **Concurrent CPU + GPU mining**, GPU autotuning, FastSync,
-  optional trusted FastState imports and canonical-sync safety guard.
-- **Terminal dashboard** and monitoring commands.
+Paired RC2 versus RC3 offline worker validation was performed on:
+GTX 1070, RTX 2080 Ti (rental reported nonstandard 22 GiB VRAM),
+RTX 3070, Quadro RTX 5000 and RTX 4060 Ti 16 GB.
 
-### Tested GPUs
+The Quadro RTX 5000 and RTX 4060 Ti also passed short live
+CPU+GPU mainnet trials, graceful restarts and automatic canonical-guard
+recovery. Together, 52 GPU submissions were locally accepted and none
+locally rejected. These are **local node acceptances**, not independently
+verified final/spendable wallet rewards. The latest live sessions used the
+maintainer's developer address, so normal-user 4.5% fee accrual was not
+live retested in these specific sessions; protected fee logic has separate
+software regression evidence.
 
-Paired worker tests have been conducted on GTX 1070, RTX 2080 Ti,
-RTX 3070, Quadro RTX 5000 and RTX 4060 Ti.
+### System requirements / scope
 
-Quadro RTX 5000 and RTX 4060 Ti additionally passed short live
-CPU/GPU mainnet tests, graceful restarts and automatic recovery from
-canonical pauses. The two tests recorded 52 locally accepted GPU
-submissions and zero locally rejected ones; local acceptance is **not**
-a guarantee of finalized rewards.
+- **Recommended: Ubuntu 24.04 x86-64** with a compatible NVIDIA driver.
+- No local `nvcc` required for GPU worker.
+- Bundled Nightfall Core prebuilt `nightfalld` requires **GLIBC_2.39**.
+  The prebuilt node is not compatible with Ubuntu 22.04 or Debian 12.
+- Workers included for sm_50/52/60/61/70/75/80/86/89/90/100/120;
+  availability of a build target is **not** GPU-model hardware validation.
+- Blackwell, mixed-generation physical GPU rigs, older driver branches,
+  and long-duration uptime remain unverified. Other OSs may require an
+  experimental source-built Nightfall Core.
 
-RC2 versus RC3 offline-worker differences for these five cards ranged
-from −0.15% to +0.56% in the measured configurations; these changes
-were consistent with small measurement variation and are not a promise
-for other machines.
+### Downloads / checksum
 
-### Requirements and known limitations
+**Download the .tar.gz and .tar.gz.sha256 from this GitHub Release's
+asset section, NOT GitHub's auto-generated Source code archives.**
 
-**Recommended first-beta OS: Ubuntu 24.04 x86-64.** NVIDIA driver needed.
-Precompiled CUDA workers do not require `nvcc`.
+`nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz`
 
-GPU builds include sm_50/52/60/61/70/75/80/86/89/90/100/120, but
-the presence of a worker **does not mean that GPU has been tested**.
-In particular, Blackwell (sm_100/sm_120), real mixed-generation rigs,
-older drivers and long-run continuous operation remain unvalidated.
+SHA-256: `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`
 
-The optional prebuilt Nightfall node currently references GLIBC_2.39,
-making the first-beta prebuilt install path unsuitable for older
-distributions; using Core built from source on those distributions
-is an experimental alternative. Certain older CPUs may also require
-source-building Core.
+`nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256`
 
-This is beta software. No guarantee of hashrate, uptime, profit, mining
-reward, full node agreement, or hardware coverage is made.
+After download:
+```bash
+sha256sum -c nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256
+tar -xzf nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz
+cd nightfall-miner-v1.3.8-rc3-beta.1
+bash selftest.sh
+```
 
-### How to install
+Then follow [installation and trusted FastState guide](docs/INSTALL.md).
+Use a **public** `nf1...` payout address, never a private key or seed phrase.
 
-1. Download the **release archive asset** and its `.sha256` file from
-   GitHub Releases (NOT GitHub's autogenerated source ZIP/TAR).
-2. Verify the SHA-256, extract, and run the included `selftest.sh`.
-3. Follow [the first-beta installation guide](../docs/INSTALL.md).
-4. Use only a public `nf1...` payout address. **Never share a private key.**
+### Licenses and support
 
-### Fees and provenance
+The main software is MIT-licensed. The release archive includes
+original third-party license texts and notices. NVIDIA CUDA components
+are covered by NVIDIA's redistribution terms; see the included
+`LICENSE-MANIFEST.md` and `THIRD_PARTY_NOTICES.md`.
 
-GPU developer fee: **4.5% of GPU work**. CPU developer fee: **0%**.
-Fee percentages observed in short windows and block rewards may fluctuate.
-Independent third-party miner; not affiliated with official Nightfall Core.
+[Installation](docs/INSTALL.md) ·
+[Compatibility](docs/COMPATIBILITY.md) ·
+[Troubleshooting](docs/TROUBLESHOOTING.md) ·
+[Issues](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
 
-The approved release should include verified third-party notices and
-appropriate licensing for the binaries and included open-source components.
-
-### Downloads
-
-**TO BE COMPLETED AFTER ACCEPTANCE:**
-
-- Tag: `v1.3.8-rc3-beta.1` (proposed).
-- Asset: `nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz` (proposed).
-- Checksum asset: corresponding `.tar.gz.sha256`.
-- Final SHA-256: **PENDING a newly built and audited beta archive**.
-
-Support: https://github.com/Larppak/Nightfall-GPU-Miner/issues
+Beta software is provided without guarantees of hashrate, rewards,
+profitability, uptime or hardware support.
