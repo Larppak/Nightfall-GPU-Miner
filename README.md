@@ -14,7 +14,7 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)]()
 [![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://developer.nvidia.com/cuda-toolkit)
 [![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.5-green)](https://github.com/Instinctes/nightfall)
-[![Status](https://img.shields.io/badge/status-RC3%20beta%20preparation-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
+[![Status](https://img.shields.io/badge/status-RC3%20limited%20beta-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
 
 **Nightfall GPU Miner** is an independent, high-performance **NVIDIA CUDA + CPU** miner for **NIGHTFALLCOIN (NIGHT)**, built around Nightfall Core v1.0.5. It combines GPU acceleration, CPU mining, multi-GPU support, hardware autotuning, fast synchronization and live monitoring.
 
@@ -28,9 +28,9 @@
 
 ## 📥 GPU Miner Downloads & Releases
 
-**RC3 limited public beta in preparation — NOT PUBLISHED.** The approved archive and checksum will appear on [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases) only after artifact/license review and explicit publication approval. See [draft release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [install instructions](docs/INSTALL.md).
+**RC3 limited public beta.** The verified Linux x86-64 archive and SHA-256 checksum are supplied through [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases) once uploaded. See [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [install instructions](docs/INSTALL.md).
 
-The release will provide a **Linux x86-64 precompiled CUDA miner archive** and matching **SHA-256 checksum**. The protected GPU workers will not require `nvcc` or a local CUDA Toolkit. Use the actual binary asset from Releases, **not GitHub's automatically generated “Source code” ZIP/TAR archives**. No miner archive has been published in this repository yet.
+The release will provide a **Linux x86-64 precompiled CUDA miner archive** and matching **SHA-256 checksum**. The protected GPU workers will not require `nvcc` or a local CUDA Toolkit. Use the actual binary asset from Releases, **not GitHub's automatically generated “Source code” ZIP/TAR archives**. The miner archive must be downloaded as a **GitHub Release asset**, not from this documentation repository's source history.
 
 ## Key Advantages
 
@@ -188,7 +188,7 @@ The canonical guard waits for an acceptable live network state before enabling m
 
 ## Developer Fee (4.5%)
 
-The developer fee applies **only to completed GPU mining work**. CPU mining remains fee-free. The miner's dashboard reports the target and observed GPU fee percentages and displays USER/DEV payout identities. The displayed percentage may fluctuate slightly around 4.5% over short periods because work is processed in batches.
+The developer fee applies **only to completed GPU mining work**. **First-party miner software is MIT-licensed**, including the separately distributed compiled binaries. MIT rights allow users to modify and redistribute covered first-party software; the fee describes how the unmodified miner operates. CPU mining remains fee-free. The miner's dashboard reports the target and observed GPU fee percentages and displays USER/DEV payout identities. The displayed percentage may fluctuate slightly around 4.5% over short periods because work is processed in batches.
 
 The protected orchestration component is distributed as a compiled executable; surrounding tools and third-party components retain their respective licensing terms. This design makes casual source extraction more difficult, but no software running on a user's own machine can be considered impossible to reverse-engineer.
 
@@ -204,13 +204,15 @@ The protected orchestration component is distributed as a compiled executable; s
 
 ## License & Support
 
-- [Repository and documentation license](LICENSE)
-- [Protected binary distribution terms — draft for release review](BINARY-LICENSE.md)
+- [MIT license for first-party software and documentation](LICENSE)
+- Third-party licenses and attribution are included with the actual release archive.
 - [Changes](CHANGELOG.md)
-- [RC3 beta draft release notes](docs/RELEASE_NOTES_RC3_BETA.md)
+- [RC3 limited beta release notes](docs/RELEASE_NOTES_RC3_BETA.md)
 - [Installation and FastState](docs/INSTALL.md)
 - [Compatibility and tested GPUs](docs/COMPATIBILITY.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Report an issue](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
 
-The developer fee and independent-project status are disclosed above. Nightfall Core and other bundled dependencies remain subject to their original licenses. This repository will contain **documentation and release links only**; production miner archives will be distributed as verified GitHub Release assets.
+The developer fee and independent-project status are disclosed above. Nightfall Core and other bundled dependencies remain subject to their original licenses. This repository contains **documentation and release links only**; approved miner archives are supplied as verified GitHub Release assets. 
+
+**RC3 Beta 1 archive SHA-256:** `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`
