@@ -34,7 +34,7 @@ The package builds an architecture-specific **native cubin/SASS** worker for
 each of: `sm_50`, `sm_52`, `sm_60`, `sm_61`, `sm_70`, `sm_75`, `sm_80`,
 `sm_86`, `sm_89`, `sm_90`, `sm_100` and `sm_120`.
 
-Only the following **hardware models have RC3 measurements**:
+Only the following **hardware models have measured RC3 GPU worker hashrates**:
 
 | GPU | Compute capability | RC3 offline-worker median (H/s) | Status |
 | --- | --- | ---: | --- |
@@ -50,6 +50,16 @@ Different batches, GPU clocks, memory capacity and power limits make
 cross-model comparisons unsuitable for declaring general GPU rankings.
 
 These figures are measured reference results, **not guaranteed speeds**.
+
+### Additional Blackwell installation/synchronization test
+
+- **RTX 5070 (Blackwell, `sm_120`): PASS** for the reported RC3
+  installation and node synchronization test.
+- This is **installation/sync validation only**. The test does not establish
+  sustained GPU mining, measured RTX 5070 hashrate, accepted GPU submissions,
+  long-run availability or performance parity.
+- Compiling an `sm_120` worker and passing this smoke test does not validate
+  all Blackwell GPU models.
 
 ## Mainnet coverage
 
@@ -73,7 +83,8 @@ needs wider uptime testing.
 - `sm_50` through `sm_90` are built with CUDA 11.8; `sm_100` and `sm_120`
   with CUDA 12.8.1. Actual minimum driver also depends on GPU model.
 - Blackwell needs an appropriate model-capable driver (R570 or newer, subject
-  to vendor-specific restrictions). **Blackwell was not hardware tested**.
+  to vendor-specific restrictions). **RTX 5070 installation/sync was tested**, 
+  but sustained Blackwell GPU mining and other Blackwell models remain unvalidated.
 - Exact SM matching; no PTX/JIT fallback for unknown architectures.
 - Real mixed-generation multi-GPU rigs and older NVIDIA driver branches have
   not been fully validated.
