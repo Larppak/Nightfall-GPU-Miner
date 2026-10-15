@@ -32,6 +32,10 @@ maintainer's developer address, so normal-user 4.5% fee accrual was not
 live retested in these specific sessions; protected fee logic has separate
 software regression evidence.
 
+An RTX 5070 (Blackwell, `sm_120`) additionally passed a reported RC3
+**installation and node synchronization smoke test**. This was not a sustained
+GPU mining or throughput test, and no RTX 5070 hashrate is claimed here.
+
 ### System requirements / scope
 
 - **Recommended: Ubuntu 24.04 x86-64** with a compatible NVIDIA driver.
@@ -40,9 +44,10 @@ software regression evidence.
   The prebuilt node is not compatible with Ubuntu 22.04 or Debian 12.
 - Workers included for sm_50/52/60/61/70/75/80/86/89/90/100/120;
   availability of a build target is **not** GPU-model hardware validation.
-- Blackwell, mixed-generation physical GPU rigs, older driver branches,
-  and long-duration uptime remain unverified. Other OSs may require an
-  experimental source-built Nightfall Core.
+- RTX 5070 installation/sync is confirmed by the test report, but sustained
+  Blackwell GPU mining, other Blackwell models, mixed-generation physical rigs,
+  older driver branches and long-duration uptime remain unverified. Other OSs
+  may require an experimental source-built Nightfall Core.
 
 ### Downloads / checksum
 
