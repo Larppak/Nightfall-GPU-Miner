@@ -6,6 +6,8 @@ change is approved merely because the documentation exists.
 
 ## A. License and ownership — BLOCKING
 
+- [x] Record maintainer's authorship statement: first-party code developed by the
+  maintainer, with Codex assistance, and no other human first-party contributors.
 - [ ] Review whether the earlier broadly scoped MIT license applies to any
   executable or source components. **Do not assume rights already granted can
   be revoked retroactively.** Confirm original authorship and contributor rights.
@@ -90,3 +92,12 @@ change is approved merely because the documentation exists.
 Mandatory remaining work is a license-consistent *new artifact*, matching
 documentation and a clean test of that final repack. Broad production
 certification is *not* required for a clearly scoped public beta.
+
+
+### Authorship clarification (15 October 2026)
+
+The maintainer confirmed being the sole human developer of the original
+miner components, with Codex as an AI-assisted tool. This helps determine
+first-party licensing authority but does **not** extinguish earlier MIT
+licenses or the rights of contributors to upstream/third-party code.
+The remaining legal/notice and exact license approval gates stay open.
