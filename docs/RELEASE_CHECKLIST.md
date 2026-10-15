@@ -1,103 +1,54 @@
-# RC3 Public Beta — publication acceptance checklist
+# RC3 Beta 1 — simple publication checklist
 
-**This is a maintainer checklist, not publication authorization.**
-No binary archive, tag, GitHub Release, PR merge or repository visibility
-change is approved merely because the documentation exists.
+**Agreed license model:** MIT for first-party Nightfall GPU Miner code/binaries.
+No separately restrictive binary EULA. Vendor and other external materials
+retain their applicable licenses. The 4.5% GPU fee (0% CPU fee) remains the
+behavior of the unmodified miner.
 
-## A. License and ownership — BLOCKING
+## Engineering / release files
 
-- [x] Record maintainer's authorship statement: first-party code developed by the
-  maintainer, with Codex assistance, and no other human first-party contributors.
-- [ ] Review whether the earlier broadly scoped MIT license applies to any
-  executable or source components. **Do not assume rights already granted can
-  be revoked retroactively.** Confirm original authorship and contributor rights.
-- [ ] Resolve the conflict between the existing preview archive's unqualified
-  `LICENSE` (MIT) and the proposed, separately scoped proprietary binary terms
-  in `BINARY-LICENSE.md`. If distinct terms are legally supportable, incorporate
-  clear, consistent scopes into the **newly packaged** beta itself.
-- [ ] Keep mandatory Argon2, Hashcat (MIT), GCC runtime and NVIDIA CUDA runtime
-  attributions/licenses, as well as Nightfall upstream and CPython/Nuitka notices.
-  Audit additional included components; a license file's mere presence is not
-  proof of full compliance.
-- [ ] Remove “DRAFT” from the binary terms only **after** actual approval,
-  and confirm public README, `LICENSE`, package `LICENSE`, binary terms and
-  third-party notices do not contradict each other.
+- [x] Stable, tested private RC3 preview; five paired GPU worker models.
+- [x] Short live Quadro RTX 5000 and RTX 4060 Ti mainnet CPU/GPU tests.
+- [x] MIT release archive generated, retaining byte-identical CUDA workers,
+      native controller and fee CLI.
+- [x] Archive's 141 entries, external/internal SHA-256 manifests, source leak
+      scan, clean extraction and `selftest.sh` pass in Ubuntu 24.04 runner.
+- [x] Add full Nightfall Core MIT/Apache, Hashcat MIT and argon2-rust MIT/NOTICE
+      documents to existing NVIDIA, GCC, Nuitka, CPython and Argon2 notices.
+- [x] Document GLIBC_2.39 requirement for bundled `nightfalld`.
+- [x] First-party MIT README, installation guidance and draft release notes
+      aligned with final archive filename and verified SHA-256.
 
-## B. Prepare a NEW release archive — BLOCKING
+Archive:
+`nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz`
 
-- [ ] Start from the unchanged, hardware-tested RC3 worker/controller binaries.
-  Do not make an unrelated algorithm, CUDA kernel, wallet, or fee change.
-- [ ] Proposed tag: `v1.3.8-rc3-beta.1`.
-- [ ] Proposed archive name:
-  `nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz`.
-- [ ] The archive's top-level folder and `VERSION` must match the approved
-  release naming. Keep `install.sh`, included README/QUICKSTART/MANUAL and
-  actual supported GPU list consistent.
-- [ ] Include approved binary license/third-party notices **inside** the archive.
-- [ ] Generate a fresh exact file inventory, internal manifest and SHA-256 file.
-  **Never reuse the private PREVIEW hash after repackaging.**
-- [ ] Audit the complete extracted archive for secret material, development
-  folders, credentials, fee/controller source, CUDA `.cu`/`.cuh` source,
-  `.ptx` files and project bytecode. Preserve legally required third-party
-  source and notices rather than blindly deleting everything that looks like code.
-- [ ] Verify the set of GPU cubins and `cuobjdump --dump-ptx` results, ELF loader
-  dependencies, worker hash selector and package self-test.
-- [ ] Check that the new archive *actually* carries the corrected files (not
-  merely a GitHub README change).
+SHA-256: `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`
 
-## C. Minimum first-beta acceptance
+Engineering check:
+https://github.com/Larppak/nightfall-miner/actions/runs/38763893508
 
-- [x] RC3 offline correctness/performance comparison passed on five GPU models.
-- [x] RC3 short live CPU/GPU mainnet trials on Turing and Ada passed, with
-  local submission acceptance and restart/canonical recovery.
-- [x] Existing controller and fee binary regression and differential tests
-  passed; no changes to those protected components.
-- [ ] Validate the **newly repackaged** artifact: checksum, self-test and a
-  clean Ubuntu 24.04 x86-64 prebuilt install with a compatible NVIDIA GPU.
-- [ ] Check a fresh `--faststate` installation and its trust/canonical behavior,
-  or explicitly defer it in public release notes if new-artifact testing is
-  not possible. Do not hide a limitation.
-- [ ] Review the ordinary-user 4.5% developer fee caveat: previous live fee
-  results exist, latest RC3 hardware sessions used the maintainer address.
-  A brief distinct-address RC3 check is recommended, but avoid calling
-  ordinary-user mainnet fee *revalidated* until actually tested.
-- [ ] Test/read confirmed Ubuntu 24.04 loader compatibility and prebuilt
-  `nightfalld` GLIBC_2.39 requirement. Do not advertise Ubuntu 22.04 / Debian
-  12 prebuilt support.
-- [ ] Mark Blackwell, older drivers, physical mixed GPUs, unsupported Linux
-  distributions and longer-term reliability as **untested/experimental**, not
-  as certified.
+## Remaining checks and actual publication
 
-## D. GitHub publication (only after explicit approval)
+- [ ] Optional but recommended: final-archive clean GPU install/short FastState
+      smoke on Ubuntu 24.04. Bin hashes are unchanged but packaging/docs changed.
+- [ ] Review completeness of bundled transitive Rust crate notices.
+      Existing and added licenses cover identified primary dependencies;
+      engineering checksum validation alone is not full legal compliance.
+- [ ] Make sure public distribution repository has **no private source, secrets
+      or release archive committed to Git history**. All branches become
+      visible if the repository is made public.
+- [ ] Download `nightfall-miner-v1.3.8-rc3-beta.1-MIT-READY-FOR-UPLOAD`
+      from the private Actions run (ZIP containing miner archive, sha256,
+      and validation JSON). Extract that ZIP on a trusted computer.
+- [ ] Publish a **pre-release** with tag `v1.3.8-rc3-beta.1` in the clean
+      `Larppak/Nightfall-GPU-Miner` repository. Upload **only** the miner
+      `.tar.gz` and matching `.sha256` as Release assets.
+- [ ] Make the clean repository public. Never publicize the private
+      `Larppak/nightfall-miner` development repository.
+- [ ] Re-download the two public Release assets, verify SHA-256 and check
+      that the public README and actual assets correspond.
+- [ ] Collect beta issue reports with OS, GPU architecture and driver;
+      clearly label untested Blackwell/mixed GPUs/older Linux as experimental.
 
-- [ ] Ensure the distribution repo's full branch history is public-safe;
-  visibility changes can expose *all* branches and commit history.
-- [ ] Merge or apply only public-safe docs to `main` after review.
-- [ ] Finalize `docs/RELEASE_NOTES_RC3_BETA.md` with the actual asset names
-  and *new* archive SHA-256; remove pending markers.
-- [ ] Upload approved archive and `.sha256` as **GitHub Release assets**,
-  NOT git commits or git-lfs blobs in distribution history.
-- [ ] Verify downloading both Release assets as a user and running
-  `sha256sum -c` against the actual newly packaged archive.
-- [ ] Mark GitHub Release as `pre-release`, not stable/production.
-- [ ] Add hardware/support limitations and clear 4.5% GPU / 0% CPU fee
-  disclosure to release text.
-- [ ] Change repository visibility to public and publish the release
-  **only when the maintainer explicitly authorizes it**.
-- [ ] Preserve the original RC3 private preview/checkpoint for rollback.
-
-## Acceptance decision
-
-**Currently: DOCUMENTATION PREPARED / PUBLICATION BLOCKED.**
-Mandatory remaining work is a license-consistent *new artifact*, matching
-documentation and a clean test of that final repack. Broad production
-certification is *not* required for a clearly scoped public beta.
-
-
-### Authorship clarification (15 October 2026)
-
-The maintainer confirmed being the sole human developer of the original
-miner components, with Codex as an AI-assisted tool. This helps determine
-first-party licensing authority but does **not** extinguish earlier MIT
-licenses or the rights of contributors to upstream/third-party code.
-The remaining legal/notice and exact license approval gates stay open.
+**GitHub Release publication and visibility switching require a user/API
+action and were not performed by documentation or package-check commits.**
