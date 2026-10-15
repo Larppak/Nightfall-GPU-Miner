@@ -30,11 +30,16 @@
 
 **Nightfall GPU Miner v1.3.8 RC3 — Limited Public Beta**
 
-Download the Linux x86-64 miner from [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases). The package includes precompiled NVIDIA CUDA workers, so **no CUDA Toolkit or `nvcc` is required**. A compatible NVIDIA driver is still needed.
+**Direct downloads (Linux x86-64):**
 
-Under **Assets**, download the miner archive (`nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz`) and its matching `.sha256` file. Verify the checksum before installation.
+- 📦 **[Download Nightfall GPU Miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1/nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz)**
+- 🔐 **[Download SHA-256 checksum (.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1/nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256)**
 
-**Important:** GitHub's automatically generated **“Source code” ZIP/TAR** downloads contain only repository files, **not the executable miner**.
+*The release is currently a private Draft. These direct links will work after the release is published and this distribution repository is made public.*
+
+The miner includes precompiled NVIDIA CUDA workers, so **no CUDA Toolkit or `nvcc` is required**. A compatible NVIDIA driver is still needed. Verify the archive against the downloaded SHA-256 file before installation.
+
+**Important:** GitHub's automatically generated **“Source code” ZIP/TAR** files are **not the executable miner**. Use the direct binary release asset above.
 
 See the [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [installation guide](docs/INSTALL.md).
 
