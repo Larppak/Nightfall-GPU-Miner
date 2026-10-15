@@ -28,9 +28,15 @@
 
 ## 📥 GPU Miner Downloads & Releases
 
-**RC3 limited public beta.** The verified Linux x86-64 archive and SHA-256 checksum are supplied through [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases) once uploaded. See [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [install instructions](docs/INSTALL.md).
+**Nightfall GPU Miner v1.3.8 RC3 — Limited Public Beta**
 
-The release will provide a **Linux x86-64 precompiled CUDA miner archive** and matching **SHA-256 checksum**. The protected GPU workers will not require `nvcc` or a local CUDA Toolkit. Use the actual binary asset from Releases, **not GitHub's automatically generated “Source code” ZIP/TAR archives**. The miner archive must be downloaded as a **GitHub Release asset**, not from this documentation repository's source history.
+Download the Linux x86-64 miner from [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases). The package includes precompiled NVIDIA CUDA workers, so **no CUDA Toolkit or `nvcc` is required**. A compatible NVIDIA driver is still needed.
+
+Under **Assets**, download the miner archive (`nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz`) and its matching `.sha256` file. Verify the checksum before installation.
+
+**Important:** GitHub's automatically generated **“Source code” ZIP/TAR** downloads contain only repository files, **not the executable miner**.
+
+See the [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [installation guide](docs/INSTALL.md).
 
 ## Key Advantages
 
