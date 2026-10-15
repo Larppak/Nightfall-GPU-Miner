@@ -1,10 +1,13 @@
 Nightfall GPU Miner — Public Repository License Scope
 
 The MIT license below applies to README.md, CHANGELOG.md, and other materials
-that expressly identify MIT as their license. It does NOT cover protected
-miner executables, proprietary CUDA components, screenshots/branding, or
-third-party software. Protected software is distributed under separate terms;
-third-party licenses continue to apply.
+that expressly identify MIT as their license in this distribution repository.
+This repository license alone does not grant a new license to protected miner
+binaries, screenshots/branding or third-party components. However, it also
+**does not revoke or supersede any valid MIT rights previously granted** for
+software distributed in earlier versions. Future releases may propose separate
+terms only for specifically identified original contributions whose ownership
+and license scope permit those terms. Third-party licenses continue to apply.
 
 MIT License
 
