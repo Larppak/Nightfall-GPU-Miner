@@ -17,10 +17,11 @@
 
 ## 1. Download the approved GitHub Release
 
-After tag `v1.3.8-rc3-beta.1` and its assets are published:
+Once tag `v1.3.8-rc3-beta.1` and its release assets are published:
 
 ```bash
-cd /workspace
+mkdir -p "$HOME/nightfall-downloads"
+cd "$HOME/nightfall-downloads"
 ASSET="nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz"
 BASE="https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1"
 curl -fL --retry 3 -o "$ASSET" "$BASE/$ASSET"
