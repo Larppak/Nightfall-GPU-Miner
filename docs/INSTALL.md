@@ -1,8 +1,7 @@
 # Nightfall GPU Miner RC3 beta — installation
 
-> **PREPARATION ONLY:** The RC3 public beta has not been published yet. These
-> commands apply **after** a release with the exact asset names below is approved
-> and published on [GitHub Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases).
+> These commands apply when the archive and checksum are available as actual
+> [GitHub Release assets](https://github.com/Larppak/Nightfall-GPU-Miner/releases).
 > Do not download GitHub's automatically generated Source code ZIP/TAR archive:
 > that archive contains documentation, not the executable miner.
 
@@ -18,7 +17,7 @@
 
 ## 1. Download the approved GitHub Release
 
-After the maintainer publishes tag `v1.3.8-rc3-beta.1` and its assets:
+After tag `v1.3.8-rc3-beta.1` and its assets are published:
 
 ```bash
 cd /workspace
@@ -31,7 +30,8 @@ sha256sum -c "$ASSET.sha256"
 
 Expected checksum output: `...tar.gz: OK`. The SHA-256 must correspond to the
 **approved beta artifact**; the older private RC3 preview's hash is **not**
-the checksum of a repackaged final beta. SHA-256 detects accidental alteration;
+the checksum of the new MIT beta. The verified MIT beta archive SHA-256 is
+`6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`. SHA-256 detects accidental alteration;
 it does not authenticate a maliciously replaced file and checksum pair.
 Only trust the maintainer's actual GitHub release.
 
@@ -126,3 +126,12 @@ up and peers agree. Do not disable the chain guard to force mining.
 fee, applied to GPU work. CPU mining has 0% developer fee. Your observed reward
 share can vary with block-finding luck. This miner is independent of Nightfall
 Core and is provided without a profitability or uptime guarantee.
+
+
+## License and fee
+
+The first-party compiled miner and scripts are **MIT licensed**. Users
+may modify and redistribute MIT-covered material subject to the MIT terms.
+The unmodified miner allocates 4.5% of completed GPU work to the developer
+and charges 0% CPU fee. Bundled third-party libraries retain their own
+licenses and redistribution conditions; see the archive's license files.
