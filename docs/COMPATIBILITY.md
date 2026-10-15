@@ -1,6 +1,6 @@
 # RC3 beta compatibility and validation
 
-**Status: candidate documentation; not yet a public release or a certification.**
+**Beta compatibility scope:** Measurements and loader checks below apply to RC3 Beta 1. Other GPU models, Linux configurations and drivers are not automatically certified.
 
 ## Recommended operating system
 
