@@ -22,8 +22,8 @@
   52 local GPU submissions were accepted, zero locally rejected.
 - Recommended initial prebuilt node configuration: Ubuntu 24.04 x86-64,
   because `nightfalld` requires GLIBC_2.39.
-- Mixed physical GPU architectures, Blackwell, older drivers and extended
-  continuous operation have not been hardware certified.
+- RTX 5070 (Blackwell, sm_120) installation and synchronization checks passed; continuous GPU mining and hashrate on this card have not been validated.
+- Other Blackwell models, mixed-generation GPU rigs, older drivers and extended operation have not been certified.
 
 Distribution policy: GitHub Releases hosts the audited miner archive and
 matching SHA-256 file as **Release assets**, not committed into the public
