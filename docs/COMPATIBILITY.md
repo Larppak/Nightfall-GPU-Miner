@@ -40,7 +40,7 @@ Only the following **hardware models have RC3 measurements**:
 | --- | --- | ---: | --- |
 | GTX 1070 | sm_61 | 2,604.83 | Offline GPU validation |
 | RTX 2080 Ti | sm_75 | 4,609.32 | Offline GPU validation; rental reported 22 GiB |
-| RTX 3070 | sm_86 | 4,676.82 | Offline GPU and isolated-install validation |
+| RTX 3070 | sm_86 | 4,676.82 | Offline GPU, service/autotune and installer-plan validation |
 | Quadro RTX 5000 | sm_75 | 5,400.09 | Offline and short mainnet CPU/GPU validation |
 | RTX 4060 Ti 16 GB | sm_89 | 4,174.60 | Offline and short mainnet CPU/GPU validation |
 
