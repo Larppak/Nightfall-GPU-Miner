@@ -130,7 +130,7 @@ The following were measured on the same GPU in paired offline worker tests. They
 
 *The RTX 2080 Ti rental reported 22 GiB VRAM; the test should not be generalized to a stock 11 GiB model. The Quadro and RTX 4060 Ti numbers used their autotuned batches, unlike the batch-128 results above.*
 
-In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally accepted GPU submissions** and no locally rejected submissions. This is not proof of finalized rewards, long-term reliability or real mixed-GPU coverage. These tests used the developer address; ordinary-user 4.5% fee accrual was not live-tested in these sessions.
+In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally accepted GPU submissions** and no locally rejected submissions. An **RTX 5070 (Blackwell, sm_120)** separately passed an installation and synchronization smoke test, **not sustained GPU mining or a hashrate benchmark**. These results do not establish finalized rewards, long-term reliability or real mixed-GPU coverage. The Quadro/4060 Ti sessions used the developer address; ordinary-user 4.5% fee accrual was not live-tested in those sessions.
 
 [RC3 tested GPU/OS matrix](docs/COMPATIBILITY.md).
 
