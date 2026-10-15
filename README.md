@@ -43,6 +43,45 @@ The miner includes precompiled NVIDIA CUDA workers, so **no CUDA Toolkit or `nvc
 
 See the [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [installation guide](docs/INSTALL.md).
 
+## Quickstart
+
+**Recommended system:** Ubuntu 24.04 x86-64 with a compatible NVIDIA driver. Download both files from the **Direct downloads** links above.
+
+1. Verify the downloaded SHA-256 checksum and extract the miner:
+
+```bash
+sha256sum -c nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256
+tar -xzf nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz
+cd nightfall-miner-v1.3.8-rc3-beta.1
+```
+
+2. Run the built-in self-test and review the installation plan:
+
+```bash
+bash selftest.sh
+bash install.sh --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --plan
+```
+
+3. Install using **your own public** `nf1...` payout address (never a private key or recovery phrase):
+
+```bash
+sudo bash install.sh --use-prebuilt --install-deps \
+  --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --non-interactive
+```
+
+4. Once installed, check the dashboard and miner status:
+
+```bash
+mine
+minerctl status
+minerctl doctor
+minerctl blocks 20
+```
+
+**Sync note:** The miner may wait for network synchronization and canonical peer agreement before mining. A recent, **trusted and verified FastState snapshot** can shorten startup, but is optional; a one-minute first installation is not guaranteed. Older Linux distributions may require the experimental Nightfall Core source-build path rather than `--use-prebuilt`.
+
+For FastState import, advanced options and troubleshooting, read the [complete RC3 installation guide](docs/INSTALL.md).
+
 ## Key Advantages
 
 - 🚀 **High hashrate:** Earlier results include RTX 5060 Ti ~5.92 kH/s and RTX 3070 ~4.66 kH/s (hardware dependent).
@@ -116,30 +155,6 @@ In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally acc
 
 Windows and AMD GPU mining are not currently advertised as supported.
 
-## Quickstart
-
-Use the detailed [RC3 beta installation and trusted FastState guide](docs/INSTALL.md) for verified downloads and setup instructions.
-
-1. Download the miner archive and matching SHA-256 file from [Releases](https://github.com/Larppak/Nightfall-GPU-Miner/releases).
-2. Verify the checksum and extract the archive.
-3. Open the extracted miner folder and run the installer with your own payout address:
-
-```bash
-sudo bash install.sh --use-prebuilt --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --non-interactive
-```
-
-Use `--use-prebuilt` primarily on Ubuntu 24.04. If Core is incompatible, consult the experimental source-build path instead of forcing an unsupported binary. The GPU worker is selected automatically from precompiled binaries; chain synchronization and guard checks remain mandatory.
-
-When installation completes:
-
-```bash
-mine
-minerctl status
-minerctl doctor
-minerctl blocks 20
-```
-
-**FastSync note:** An official chain bootstrap can be initialized quickly, but reaching the current network tip may take longer. With a *recent, verified FastState snapshot already on the machine*, mining can begin much sooner after peer/canonical checks pass. “Mining in one minute” is **not a guaranteed first-install time**.
 
 ## 📊 Live Dashboard
 
