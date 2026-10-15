@@ -1,46 +1,32 @@
 # Changelog
 
-## Unreleased — Nightfall GPU Miner v1.3.8 RC3 limited public beta candidate
+## v1.3.8-rc3-beta.1 — Limited Public Beta (MIT)
 
-**Preparation only.** No public executable or GitHub Release has been published.
+- First limited public beta for Linux x86-64 with NVIDIA CUDA and CPU mining.
+- 12 architecture-specific precompiled CUDA workers, with no local `nvcc` required.
+- Native-compiled hybrid controller and GPU developer-fee implementation.
+- **4.5% GPU developer fee for ordinary mining work; 0% CPU fee.**
+- **First-party code and compiled software are MIT-licensed.** The fee is
+  the default behavior of unmodified software, not a restriction of the
+  MIT permission to modify/redistribute covered software.
+- Third-party attributions and original licenses are supplied in the
+  executable release archive: `LICENSE-MANIFEST.md`,
+  `THIRD_PARTY_NOTICES.md`, `licenses/`, `worker/licenses/` and
+  `bin/NOTICES/`.
+- Original GPU/CPU mining code, the compiled CUDA architecture workers,
+  protected controller and fee CLI were retained byte-identically from
+  the tested private RC3 preview. No mining algorithm/fee change.
+- Offline paired GPU tests passed on GTX 1070, RTX 2080 Ti, RTX 3070,
+  Quadro RTX 5000 and RTX 4060 Ti.
+- Short CPU+GPU mainnet trials passed on Quadro RTX 5000 and RTX 4060 Ti;
+  52 local GPU submissions were accepted, zero locally rejected.
+- Recommended initial prebuilt node configuration: Ubuntu 24.04 x86-64,
+  because `nightfalld` requires GLIBC_2.39.
+- Mixed physical GPU architectures, Blackwell, older drivers and extended
+  continuous operation have not been hardware certified.
 
-### Candidate highlights
+Distribution policy: GitHub Releases hosts the audited miner archive and
+matching SHA-256 file as **Release assets**, not committed into the public
+documentation-only Git history.
 
-- Native, architecture-specific precompiled NVIDIA GPU workers instead of distributing
-  proprietary CUDA kernel sources. Local `nvcc` is not required.
-- Protected RC2 Nuitka hybrid controller and fee CLI retained byte-identically:
-  ordinary-user GPU developer fee 4.5%; CPU developer fee 0%.
-- GPU-model-specific worker selection, SHA-256 validation and multi-GPU software support.
-- CPU/GPU hybrid mining, canonical chain guard, FastSync and optional trusted FastState.
-- CUDA worker targets: sm_50/52/60/61/70/75/80/86/89/90/100/120.
-  **Compiling a target does not certify hardware compatibility.**
-- Five actual GPU models tested with short paired RC2/RC3 offline worker benchmarks:
-  GTX 1070, RTX 2080 Ti, RTX 3070, Quadro RTX 5000 and RTX 4060 Ti.
-- Quadro RTX 5000 and RTX 4060 Ti also observed mining together with CPU,
-  service restarts and canonical recovery; 52 submissions locally accepted,
-  0 locally rejected (not proof of final spendable rewards).
-- Recommended first public beta installation: Ubuntu 24.04 x86-64 with compatible
-  NVIDIA proprietary driver. Older distro/Core prebuilt limitations documented.
-- Third-party licenses, protected binary license terms and final archive content
-  must be reviewed before the **new** beta release asset can be approved.
-
-### Open limitations
-
-- Not a production release or unrestricted NVIDIA compatibility claim.
-- Blackwell, real mixed-generation GPUs, many older drivers and long-duration
-  behavior have not been hardware validated in RC3.
-- Ordinary-user 4.5% fee accrual was not retested live during the two newest
-  maintainer-address hardware sessions; unchanged fee controller software
-  was extensively regression tested separately.
-- Bundled `nightfalld` prebuilt references GLIBC_2.39; old-OS source-build Core
-  path remains experimental for this first beta.
-
-### Distribution policy
-
-The clean distribution repository stores documentation and media only.
-Only an **approved, newly packaged and audited** release archive and matching
-checksum will be distributed as GitHub Release assets. Internal sources,
-build history and protected implementation are not to be published.
-
-See [draft release notes](docs/RELEASE_NOTES_RC3_BETA.md),
-[installation](docs/INSTALL.md) and [compatibility](docs/COMPATIBILITY.md).
+Original archive SHA-256: `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`.
