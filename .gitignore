@@ -1,0 +1,69 @@
+# Public distribution repository — documentation and approved media only.
+# This file reduces accidental tracking. It is NOT a substitute for archive
+# auditing, security scanning, or review of the Git history before publishing.
+
+# Release archives belong in GitHub Releases, not in the Git history
+*.tar
+*.tar.gz
+*.tar.xz
+*.tgz
+*.zip
+*.7z
+*.deb
+*.rpm
+*.AppImage
+*.run
+
+# Source code / compiled binaries are not intended for this repository
+*.py
+*.pyc
+*.pyo
+*.cu
+*.cuh
+*.ptx
+*.cubin
+*.fatbin
+*.so
+*.dll
+*.exe
+*.o
+*.obj
+*.rs
+*.c
+*.cpp
+*.h
+*.hpp
+*.elf
+*.bin
+
+# Sensitive local configuration
+.env
+.env.*
+config.env
+config.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# Build output, backups and test data
+build/
+dist/
+__pycache__/
+.pytest_cache/
+tests/
+internal/
+research/
+preparation/
+staging/
+tmp/
+temp/
+logs/
+*.log
+*.tmp
+*.bak
+*.orig
+*.swp
+.DS_Store
