@@ -26,9 +26,15 @@ jobs:
           set -euo pipefail
           test -s docs/RELEASE_NOTES_BETA2.md
           before="$(gh api repos/"$GH_REPO"/releases/414961535)"
-          jq -e '.tag_name == "v1.3.8-rc3-beta.2" and .draft == false and .prerelease == true and (.body == null or .body == "") and (.assets | length) == 2' <<<"$before" >/dev/null
+          jq -e '.tag_name == "v1.3.8-rc3-beta.2" and .draft == false and .prerelease == true and ((.body == null) or (.body == "") or (.body == "@docs/RELEASE_NOTES_BETA2.md")) and (.assets | length) == 2' <<<"$before" >/dev/null
+          python3 - <<'PY' > "$RUNNER_TEMP/beta2-release-body.json"
+          import json
+          from pathlib import Path
+          print(json.dumps({"body": Path("docs/RELEASE_NOTES_BETA2.md").read_text()}))
+          PY
           gh api --method PATCH repos/"$GH_REPO"/releases/414961535 \
-            -f "body=@docs/RELEASE_NOTES_BETA2.md" >/dev/null
+            --input "$RUNNER_TEMP/beta2-release-body.json" >/dev/null
           after="$(gh api repos/"$GH_REPO"/releases/414961535)"
           jq -e '.tag_name == "v1.3.8-rc3-beta.2" and .draft == false and .prerelease == true and (.body | length) > 1000 and (.assets | length) == 2' <<<"$after" >/dev/null
+          python3 -c 'import json,sys,pathlib; actual=json.load(sys.stdin)["body"]; expected=pathlib.Path("docs/RELEASE_NOTES_BETA2.md").read_text(); assert actual==expected, "Release description differs from public notes"' <<<"$after"
           echo "Release body updated, release identity and two assets verified."
