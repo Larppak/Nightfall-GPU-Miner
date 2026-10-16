@@ -13,10 +13,10 @@
 
 ![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)
 [![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://developer.nvidia.com/cuda-toolkit)
-[![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.5-green)](https://github.com/Instinctes/nightfall)
+[![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.6-green)](https://github.com/Instinctes/nightfall)
 [![Status](https://img.shields.io/badge/status-RC3%20limited%20beta-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
 
-**Nightfall GPU Miner** is an independent, high-performance **NVIDIA CUDA + CPU** miner for **NIGHTFALLCOIN (NIGHT)**, built around Nightfall Core v1.0.5. It combines GPU acceleration, CPU mining, multi-GPU support, hardware autotuning, fast synchronization and live monitoring.
+**Nightfall GPU Miner** is an independent, high-performance **NVIDIA CUDA + CPU** miner for **NIGHTFALLCOIN (NIGHT)**, built around a customized Nightfall Core v1.0.6. It combines GPU acceleration, CPU mining, multi-GPU support, hardware autotuning, fast synchronization and live monitoring.
 
 **Fees:** 4.5% of GPU hashes to support ongoing development; **CPU mining has no developer fee**. This is an independent community miner, **not an official Nightfall Core release**.
 
@@ -30,82 +30,103 @@
 
 ## 🆕 Beta 2 — Core 1.0.6 & No-sudo Installation
 
-**Beta 2 is prepared for release (not yet published).** It updates the customized
-Nightfall node to **Core 1.0.6** and introduces an easy rootless installation,
-with no `sudo`, system package installation, or CUDA Toolkit required on
-the supported Ubuntu 24.04 x86-64 setup.
+**Beta 2 is now available.** It upgrades the customized Nightfall node to
+**Core 1.0.6** with improved fork recovery and offers **rootless installation** on
+Ubuntu 24.04 x86-64. Existing CUDA workers and the fee/controller binaries are
+unchanged from Beta 1.
 
 ```bash
 bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS"
 ```
 
-You can already [review the Beta 2 installation script](installer/install.sh)
-and [safe upgrade helper](installer/safe_upgrade.py) in this repository.
-These are **review copies**: run `install.sh` from the verified release
-archive once Beta 2 is published, not directly from the GitHub documentation
-checkout.
+Only a **public** payout address is required; do not provide wallet seeds or
+private keys. Run as a regular Linux user; if you are `root` inside a rental
+container, use the explicitly documented advanced `--system` mode instead.
+
+You can [review the real Beta 2 installer](installer/install.sh) and
+[upgrade helper](installer/safe_upgrade.py) before running the release package.
+Those GitHub copies are for code review, **not standalone installers**.
 
 [Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md) ·
-[Beta 2 quick start](docs/BETA2_QUICKSTART.md) ·
+[Quick start](docs/BETA2_QUICKSTART.md) ·
 [Upgrading from Beta 1](docs/BETA2_UPGRADE.md)
-
-Until Beta 2 is published, **Beta 1 remains the available download below**.
 
 ## 📥 GPU Miner Downloads & Releases
 
-**Nightfall GPU Miner v1.3.8 RC3 — Limited Public Beta**
+**Latest: Nightfall GPU Miner v1.3.8 RC3 Beta 2 — Linux x86-64 (Pre-release)**
 
-**Direct downloads (Linux x86-64):**
+- 📦 **[Download Beta 2 miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.2/nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz)**
+- 🔐 **[Download Beta 2 SHA-256 checksum (.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.2/nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz.sha256)**
 
-- 📦 **[Download Nightfall GPU Miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1/nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz)**
-- 🔐 **[Download SHA-256 checksum (.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.1/nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256)**
+**Beta 2 archive SHA-256:** `032414655229e3396bce107d4d57cc2afe43d74b96a0ed000a315f943bf9284f`
 
-*The links become available when the GitHub prerelease is published.*
+The release package includes precompiled NVIDIA CUDA workers; the CUDA Toolkit
+is **not** required. A compatible NVIDIA driver and Ubuntu 24.04 x86-64 are
+recommended. Verify the checksum before extracting the archive.
 
-The miner includes precompiled NVIDIA CUDA workers, so **no CUDA Toolkit or `nvcc` is required**. A compatible NVIDIA driver is still needed. Verify the archive against the downloaded SHA-256 file before installation.
+**Important:** GitHub's automatically generated **"Source code" ZIP/TAR** files
+are **not the executable miner**. Download the binary release asset above.
 
-**Important:** GitHub's automatically generated **“Source code” ZIP/TAR** files are **not the executable miner**. Use the direct binary release asset above.
-
-See the [RC3 release notes](docs/RELEASE_NOTES_RC3_BETA.md) and [installation guide](docs/INSTALL.md).
+**Previous release:** [Beta 1](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.1)
+remains available for users who need to roll back. See
+[Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md) and
+[upgrade instructions](docs/BETA2_UPGRADE.md).
 
 ## Quickstart
 
-**Recommended system:** Ubuntu 24.04 x86-64 with a compatible NVIDIA driver. Download both files from the **Direct downloads** links above.
+**Recommended:** Ubuntu 24.04 x86-64, NVIDIA proprietary driver, and a regular
+(non-root) Linux user. Download both Beta 2 files above to the same folder.
 
-1. Verify the downloaded SHA-256 checksum and extract the miner:
+1. **Verify and extract the official binary release archive:**
 
 ```bash
-sha256sum -c nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz.sha256
-tar -xzf nightfall-miner-v1.3.8-rc3-beta.1-linux-x86_64.tar.gz
-cd nightfall-miner-v1.3.8-rc3-beta.1
+sha256sum -c nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz.sha256
+tar -xzf nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz
+cd nightfall-miner-v1.3.8-rc3-beta.2
 ```
 
-2. Run the built-in self-test and review the installation plan:
+2. **Run the bundled self-test and preview the installation plan:**
 
 ```bash
 bash selftest.sh
-bash install.sh --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --plan
+bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --plan
 ```
 
-3. Install using **your own public** `nf1...` payout address (never a private key or recovery phrase):
+3. **Install without sudo**, using your public `nf1...` receiving address:
 
 ```bash
-sudo bash install.sh --use-prebuilt --install-deps \
-  --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --non-interactive
+bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS"
 ```
 
-4. Once installed, check the dashboard and miner status:
+4. **Launch and check status:**
 
 ```bash
+export PATH="$HOME/.local/bin:$PATH"
 mine
 minerctl status
 minerctl doctor
-minerctl blocks 20
 ```
 
-**Sync note:** The miner may wait for network synchronization and canonical peer agreement before mining. A recent, **trusted and verified FastState snapshot** can shorten startup, but is optional; a one-minute first installation is not guaranteed. Older Linux distributions may require the experimental Nightfall Core source-build path rather than `--use-prebuilt`.
+The user-mode installer does not run `sudo`, `apt` or Rustup; it reports missing
+dependencies instead of installing system software. It installs under
+`~/.local/share/nightfall-miner` and uses its own user-writable chain data.
+`minerctl` works without sudo.
 
-For FastState import, advanced options and troubleshooting, read the [complete RC3 installation guide](docs/INSTALL.md).
+**Already installed Beta 1?** Do **not** run the fresh installer over an
+existing installation. Stop the old miner and follow the
+[Beta 2 upgrade guide](docs/BETA2_UPGRADE.md), which preserves chain data and
+fee counters. Root-owned installations need deliberate administrator-assisted
+migration.
+
+**Running a root-only GPU rental container?** Use the advanced
+`bash install.sh --system --address "nf1..."` option, not `--user`.
+This does not remove root privileges; prefer an ordinary user on machines
+where that is practical.
+
+**Sync note:** The canonical guard pauses mining until the node agrees with
+its peers. A trusted and verified FastState snapshot can shorten initial
+synchronization; do not import unknown snapshots. For supported options, see
+[Beta 2 quick start](docs/BETA2_QUICKSTART.md).
 
 ## Key Advantages
 
@@ -157,7 +178,7 @@ The following were measured on the same GPU in paired offline worker tests. They
 
 In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally accepted GPU submissions** and no locally rejected submissions. An **RTX 5070 (Blackwell, sm_120)** separately passed an installation and synchronization smoke test, **not sustained GPU mining or a hashrate benchmark**. These results do not establish finalized rewards, long-term reliability or real mixed-GPU coverage. The Quadro/4060 Ti sessions used the developer address; ordinary-user 4.5% fee accrual was not live-tested in those sessions.
 
-[RC3 tested GPU/OS matrix](docs/COMPATIBILITY.md).
+[Beta 2 compatibility and test limits](docs/BETA2_COMPATIBILITY.md). [Historical Beta 1 GPU test details](docs/COMPATIBILITY.md).
 
 ### CPU Mining
 
@@ -172,11 +193,11 @@ In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally acc
 
 ## 🛠️ Requirements
 
-- **OS:** Ubuntu 24.04 x86-64 recommended for the first RC3 beta. Other distros have inherited Core prebuilt restrictions. [Compatibility](docs/COMPATIBILITY.md).
+- **OS:** Ubuntu 24.04 x86-64 recommended for Beta 2. Bundled Core 1.0.6 requires glibc 2.39. [Compatibility](docs/BETA2_COMPATIBILITY.md).
 - **GPU:** Supported NVIDIA card and compatible proprietary driver (check with `nvidia-smi`).
-- **CUDA:** RC3 provides verified precompiled native CUDA workers, so no `nvcc`/CUDA Toolkit is needed on the miner host. A compatible NVIDIA driver is required.
+- **CUDA:** Beta 2 includes the same precompiled native CUDA workers as Beta 1, so no `nvcc`/CUDA Toolkit is needed on the miner host. A compatible NVIDIA driver is required.
 - **Wallet:** A public `nf1...` payout address; no seed phrase or private key is required.
-- **Rust:** Not needed for the recommended Ubuntu 24.04 prebuilt Core path. The inherited `nightfalld` prebuilt references GLIBC_2.39; other OS versions or older CPUs may require Core built from source.
+- **Rust:** Not needed for the recommended Ubuntu 24.04 prebuilt Core 1.0.6 path. Older Linux systems may require an explicit source build with separately installed build tools.
 
 Windows and AMD GPU mining are not currently advertised as supported.
 
@@ -199,17 +220,17 @@ Run `mine` to monitor GPU/CPU hashrate, temperatures, power, block activity and 
 | `minerctl restart` | Restart miner services |
 | `minerctl web-start` | Start local browser dashboard |
 
-For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. **RC3 real mixed-generation GPU operation remains untested**. [Read compatibility](docs/COMPATIBILITY.md).
+For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. **Beta 2 real mixed-generation GPU operation has not been newly verified.** [Read compatibility](docs/BETA2_COMPATIBILITY.md).
 
 ## Multi-GPU Setup
 
 Multiple supported NVIDIA GPUs can mine concurrently. Identify the cards with:
 
 ```bash
-/opt/nightfall-miner/minerctl hardware
+$HOME/.local/bin/minerctl hardware
 ```
 
-To select specific devices on a rig, edit `/opt/nightfall-miner/config.env`:
+To select specific devices on a user-mode rig, edit `~/.local/share/nightfall-miner/config.env`:
 
 ```bash
 NIGHTFALL_CUDA_DEVICES="0,1"
@@ -256,12 +277,17 @@ The protected orchestration component is distributed as a compiled executable; s
 - [MIT license for first-party software and documentation](LICENSE)
 - Third-party licenses and attribution are included with the actual release archive.
 - [Changes](CHANGELOG.md)
-- [RC3 limited beta release notes](docs/RELEASE_NOTES_RC3_BETA.md)
-- [Installation and FastState](docs/INSTALL.md)
-- [Compatibility and tested GPUs](docs/COMPATIBILITY.md)
+- [Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md)
+- [Beta 2 rootless quick start](docs/BETA2_QUICKSTART.md)
+- [Beta 2 upgrade / rollback guide](docs/BETA2_UPGRADE.md)
+- [Beta 2 compatibility](docs/BETA2_COMPATIBILITY.md)
+- [Beta 1 historical release notes](docs/RELEASE_NOTES_RC3_BETA.md)
+- [Beta 1 historical installation guide](docs/INSTALL.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Report an issue](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
 
 The developer fee and independent-project status are disclosed above. Nightfall Core and other bundled dependencies remain subject to their original licenses. This repository contains **documentation and release links only**; approved miner archives are supplied as verified GitHub Release assets. 
 
-**RC3 Beta 1 archive SHA-256:** `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`
+**Current Beta 2 archive SHA-256:** `032414655229e3396bce107d4d57cc2afe43d74b96a0ed000a315f943bf9284f`
+
+**Previous Beta 1 archive SHA-256:** `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`
