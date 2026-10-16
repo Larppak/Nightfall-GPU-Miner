@@ -28,6 +28,29 @@
 
 **Interested in building your own GPU miner?** Check out [GPU Mining Concept](GPU_MINING_CONCEPT.md) for a short explanation of Nighthash-v2, GPU memory parallelism, and an educational CUDA-style example. This is not the source code of the released miner or a security audit of its binaries.
 
+## 🆕 Beta 2 — Core 1.0.6 & No-sudo Installation
+
+**Beta 2 is prepared for release (not yet published).** It updates the customized
+Nightfall node to **Core 1.0.6** and introduces an easy rootless installation,
+with no `sudo`, system package installation, or CUDA Toolkit required on
+the supported Ubuntu 24.04 x86-64 setup.
+
+```bash
+bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS"
+```
+
+You can already [review the Beta 2 installation script](installer/install.sh)
+and [safe upgrade helper](installer/safe_upgrade.py) in this repository.
+These are **review copies**: run `install.sh` from the verified release
+archive once Beta 2 is published, not directly from the GitHub documentation
+checkout.
+
+[Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md) ·
+[Beta 2 quick start](docs/BETA2_QUICKSTART.md) ·
+[Upgrading from Beta 1](docs/BETA2_UPGRADE.md)
+
+Until Beta 2 is published, **Beta 1 remains the available download below**.
+
 ## 📥 GPU Miner Downloads & Releases
 
 **Nightfall GPU Miner v1.3.8 RC3 — Limited Public Beta**
