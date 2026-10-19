@@ -13,10 +13,10 @@
 
 ![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-lightgrey)
 [![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://developer.nvidia.com/cuda-toolkit)
-[![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.6-green)](https://github.com/Instinctes/nightfall)
+[![Nightfall Core](https://img.shields.io/badge/Nightfall%20Core-v1.0.7-green)](https://github.com/Instinctes/nightfall)
 [![Status](https://img.shields.io/badge/status-RC3%20limited%20beta-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases)
 
-**Nightfall GPU Miner** is an independent, high-performance **NVIDIA CUDA + CPU** miner for **NIGHTFALLCOIN (NIGHT)**, built around a customized Nightfall Core v1.0.6. It combines GPU acceleration, CPU mining, multi-GPU support, hardware autotuning, fast synchronization and live monitoring.
+**Nightfall GPU Miner** is an independent, high-performance **NVIDIA CUDA + CPU** miner for **NIGHTFALLCOIN (NIGHT)**, built around a customized Nightfall Core v1.0.7. It combines GPU acceleration, CPU mining, multi-GPU support, hardware autotuning, fast synchronization and live monitoring.
 
 **Fees:** 4.5% of GPU hashes to support ongoing development; **CPU mining has no developer fee**. This is an independent community miner, **not an official Nightfall Core release**.
 
@@ -28,105 +28,70 @@
 
 **Interested in building your own GPU miner?** Check out [GPU Mining Concept](GPU_MINING_CONCEPT.md) for a short explanation of Nighthash-v2, GPU memory parallelism, and an educational CUDA-style example. This is not the source code of the released miner or a security audit of its binaries.
 
-## 🆕 Beta 2 — Core 1.0.6 & No-sudo Installation
+## 🆕 Beta 3 — Core 1.0.7 & Safer Sync
 
-**Beta 2 is now available.** It upgrades the customized Nightfall node to
-**Core 1.0.6** with improved fork recovery and offers **rootless installation** on
-Ubuntu 24.04 x86-64. Existing CUDA workers and the fee/controller binaries are
-unchanged from Beta 1.
+**Beta 3 is available** as a Linux x86-64 pre-release. It updates the
+customized node to **Nightfall Core 1.0.7**, improves deep-fork and IBD
+handling, and hardens process isolation. The protected NVIDIA CUDA workers and
+fee-controller binaries remain unchanged from Beta 2.
 
-```bash
-bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS"
-```
+Rootless installation on Ubuntu 24.04 is supported. Only a **public** `nf1...`
+payout address is required; never provide a wallet seed or private key.
 
-Only a **public** payout address is required; do not provide wallet seeds or
-private keys. Run as a regular Linux user; if you are `root` inside a rental
-container, use the explicitly documented advanced `--system` mode instead.
+[Beta 3 release notes](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.3) ·
+[Previous Beta 2 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.2)
 
-You can [review the real Beta 2 installer](installer/install.sh) and
-[upgrade helper](installer/safe_upgrade.py) before running the release package.
-Those GitHub copies are for code review, **not standalone installers**.
-
-[Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md) ·
-[Quick start](docs/BETA2_QUICKSTART.md) ·
-[Upgrading from Beta 1](docs/BETA2_UPGRADE.md)
+**Installer review note:** The public [installer](installer/install.sh) and
+[upgrade helper](installer/safe_upgrade.py) are **Beta 2 review copies**.
+For Beta 3, use the verified scripts and instructions inside the release archive.
 
 ## 📥 GPU Miner Downloads & Releases
 
-**Latest: Nightfall GPU Miner v1.3.8 RC3 Beta 2 — Linux x86-64 (Pre-release)**
+**Latest: Nightfall GPU Miner v1.3.8 RC3 Beta 3 — Linux x86-64 (Pre-release)**
 
-- 📦 **[Download Beta 2 miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.2/nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz)**
-- 🔐 **[Download Beta 2 SHA-256 checksum (.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.2/nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz.sha256)**
+- 📦 **[Download Beta 3 miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.3/nightfall-miner-v1.3.8-rc3-beta.3-linux-x86_64.tar.gz)**
+- 🔐 **[Download Beta 3 SHA-256 checksum (.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.3/nightfall-miner-v1.3.8-rc3-beta.3-linux-x86_64.tar.gz.sha256)**
 
-**Beta 2 archive SHA-256:** `032414655229e3396bce107d4d57cc2afe43d74b96a0ed000a315f943bf9284f`
+**Beta 3 archive SHA-256:** `f7cfec8dbdbc5fc5f53a1594a3528f55a68f8f4a75df8f6930dc80be0cef9f4c`
 
-The release package includes precompiled NVIDIA CUDA workers; the CUDA Toolkit
-is **not** required. A compatible NVIDIA driver and Ubuntu 24.04 x86-64 are
-recommended. Verify the checksum before extracting the archive.
+The precompiled NVIDIA CUDA workers require a compatible driver, but no CUDA
+Toolkit. Ubuntu 24.04 x86-64 is recommended.
 
 **Important:** GitHub's automatically generated **"Source code" ZIP/TAR** files
-are **not the executable miner**. Download the binary release asset above.
+are public repository snapshots, **not the executable miner**. Download the two
+Beta 3 release assets above.
 
-**Previous release:** [Beta 1](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.1)
-remains available for users who need to roll back. See
-[Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md) and
-[upgrade instructions](docs/BETA2_UPGRADE.md).
+**Previous release:** [Beta 2](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.2).
+For existing installations, follow `UPGRADE.md` inside the Beta 3 archive.
 
 ## Quickstart
 
-**Recommended:** Ubuntu 24.04 x86-64, NVIDIA proprietary driver, and a regular
-(non-root) Linux user. Download both Beta 2 files above to the same folder.
-
-1. **Verify and extract the official binary release archive:**
-
-```bash
-sha256sum -c nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz.sha256
-tar -xzf nightfall-miner-v1.3.8-rc3-beta.2-linux-x86_64.tar.gz
-cd nightfall-miner-v1.3.8-rc3-beta.2
-```
-
-2. **Run the bundled self-test and preview the installation plan:**
+**Recommended:** Ubuntu 24.04 x86-64, a compatible NVIDIA proprietary driver,
+and a normal (non-root) Linux user. Download **both Beta 3 files** to the same
+directory, then:
 
 ```bash
+sha256sum -c nightfall-miner-v1.3.8-rc3-beta.3-linux-x86_64.tar.gz.sha256
+tar -xzf nightfall-miner-v1.3.8-rc3-beta.3-linux-x86_64.tar.gz
+cd nightfall-miner-v1.3.8-rc3-beta.3
 bash selftest.sh
 bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS" --plan
-```
-
-3. **Install without sudo**, using your public `nf1...` receiving address:
-
-```bash
 bash install.sh --user --address "nf1YOUR_PUBLIC_PAYOUT_ADDRESS"
-```
-
-4. **Launch and check status:**
-
-```bash
 export PATH="$HOME/.local/bin:$PATH"
 mine
-minerctl status
-minerctl doctor
 ```
 
-The user-mode installer does not run `sudo`, `apt` or Rustup; it reports missing
-dependencies instead of installing system software. It installs under
-`~/.local/share/nightfall-miner` and uses its own user-writable chain data.
-`minerctl` works without sudo.
+The rootless installer reports missing dependencies rather than installing
+system packages. For root-only GPU rental containers, use `--system` instead
+of `--user`.
 
-**Already installed Beta 1?** Do **not** run the fresh installer over an
-existing installation. Stop the old miner and follow the
-[Beta 2 upgrade guide](docs/BETA2_UPGRADE.md), which preserves chain data and
-fee counters. Root-owned installations need deliberate administrator-assisted
-migration.
+**Already installed?** Do not run a fresh install over existing miner data.
+Stop the old miner and follow the **Beta 3 archive's** `UPGRADE.md` to preserve
+chain data, payout settings and fee counters.
 
-**Running a root-only GPU rental container?** Use the advanced
-`bash install.sh --system --address "nf1..."` option, not `--user`.
-This does not remove root privileges; prefer an ordinary user on machines
-where that is practical.
-
-**Sync note:** The canonical guard pauses mining until the node agrees with
-its peers. A trusted and verified FastState snapshot can shorten initial
-synchronization; do not import unknown snapshots. For supported options, see
-[Beta 2 quick start](docs/BETA2_QUICKSTART.md).
+**Sync note:** Mining starts automatically only after canonical network
+verification. Trusted FastState import is described in the archive's
+`FASTSYNC.md`.
 
 ## Key Advantages
 
@@ -193,11 +158,11 @@ In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally acc
 
 ## 🛠️ Requirements
 
-- **OS:** Ubuntu 24.04 x86-64 recommended for Beta 2. Bundled Core 1.0.6 requires glibc 2.39. [Compatibility](docs/BETA2_COMPATIBILITY.md).
+- **OS:** Ubuntu 24.04 x86-64 recommended for Beta 3. Bundled Core 1.0.7 requires glibc 2.39 or newer. See the release archive's `COMPATIBILITY.md`.
 - **GPU:** Supported NVIDIA card and compatible proprietary driver (check with `nvidia-smi`).
-- **CUDA:** Beta 2 includes the same precompiled native CUDA workers as Beta 1, so no `nvcc`/CUDA Toolkit is needed on the miner host. A compatible NVIDIA driver is required.
+- **CUDA:** Beta 3 includes the same precompiled native CUDA workers as Beta 2, so no `nvcc`/CUDA Toolkit is needed on the miner host. A compatible NVIDIA driver is required.
 - **Wallet:** A public `nf1...` payout address; no seed phrase or private key is required.
-- **Rust:** Not needed for the recommended Ubuntu 24.04 prebuilt Core 1.0.6 path. Older Linux systems may require an explicit source build with separately installed build tools.
+- **Rust:** Not needed for the recommended Ubuntu 24.04 prebuilt Core 1.0.7 path. Older Linux systems may require an explicit source build with separately installed build tools.
 
 Windows and AMD GPU mining are not currently advertised as supported.
 
@@ -220,7 +185,7 @@ Run `mine` to monitor GPU/CPU hashrate, temperatures, power, block activity and 
 | `minerctl restart` | Restart miner services |
 | `minerctl web-start` | Start local browser dashboard |
 
-For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. **Beta 2 real mixed-generation GPU operation has not been newly verified.** [Read compatibility](docs/BETA2_COMPATIBILITY.md).
+For mixed-GPU rigs, the miner supports selecting devices and configuring their batch sizes separately. **Not every mixed-generation GPU setup has been validated on Beta 3.** See `COMPATIBILITY.md` in the release archive.
 
 ## Multi-GPU Setup
 
@@ -277,10 +242,11 @@ The protected orchestration component is distributed as a compiled executable; s
 - [MIT license for first-party software and documentation](LICENSE)
 - Third-party licenses and attribution are included with the actual release archive.
 - [Changes](CHANGELOG.md)
-- [Beta 2 release notes](docs/RELEASE_NOTES_BETA2.md)
-- [Beta 2 rootless quick start](docs/BETA2_QUICKSTART.md)
-- [Beta 2 upgrade / rollback guide](docs/BETA2_UPGRADE.md)
-- [Beta 2 compatibility](docs/BETA2_COMPATIBILITY.md)
+- [Latest Beta 3 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.3)
+- [Beta 2 release notes (historical)](docs/RELEASE_NOTES_BETA2.md)
+- [Beta 2 rootless quick start (historical)](docs/BETA2_QUICKSTART.md)
+- [Beta 2 upgrade / rollback guide (historical)](docs/BETA2_UPGRADE.md)
+- [Beta 2 compatibility (historical)](docs/BETA2_COMPATIBILITY.md)
 - [Beta 1 historical release notes](docs/RELEASE_NOTES_RC3_BETA.md)
 - [Beta 1 historical installation guide](docs/INSTALL.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
@@ -288,6 +254,8 @@ The protected orchestration component is distributed as a compiled executable; s
 
 The developer fee and independent-project status are disclosed above. Nightfall Core and other bundled dependencies remain subject to their original licenses. This repository contains **documentation and release links only**; approved miner archives are supplied as verified GitHub Release assets. 
 
-**Current Beta 2 archive SHA-256:** `032414655229e3396bce107d4d57cc2afe43d74b96a0ed000a315f943bf9284f`
+**Current Beta 3 archive SHA-256:** `f7cfec8dbdbc5fc5f53a1594a3528f55a68f8f4a75df8f6930dc80be0cef9f4c`
+
+**Previous Beta 2 archive SHA-256:** `032414655229e3396bce107d4d57cc2afe43d74b96a0ed000a315f943bf9284f`
 
 **Previous Beta 1 archive SHA-256:** `6b94518283bd777518f0968745c509f94d16e8c46b0f01c02b4b152d55cb991f`
