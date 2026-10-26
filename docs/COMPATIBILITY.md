@@ -1,5 +1,7 @@
 # RC3 beta compatibility and validation
 
+> **Historical Beta 1 compatibility report (Core 1.0.5).** These matrices and hardware checks do **not** certify the current Beta 5 p2 (Core 1.0.11). For current requirements, use the [Beta 5 p2 release notes](RELEASE_NOTES_BETA5_P2.md). AMD support in Beta 5 p2 is included **experimentally and remains physically untested**.
+
 **Beta compatibility scope:** Measurements and loader checks below apply to RC3 Beta 1. Other GPU models, Linux configurations and drivers are not automatically certified.
 
 ## Recommended operating system
