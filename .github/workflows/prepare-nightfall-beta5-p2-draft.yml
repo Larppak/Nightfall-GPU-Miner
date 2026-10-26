@@ -1,0 +1,50 @@
+name: Prepare Nightfall Beta5 p2 draft (assets uploaded manually)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/prepare-nightfall-beta5-p2-draft.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  draft_release:
+    if: github.repository == 'Larppak/Nightfall-GPU-Miner'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: v1.3.8-rc3-beta.5-p2
+      RELEASE_TITLE: Nightfall GPU Miner v1.3.8 RC3 Beta 5 p2 — NVIDIA + Experimental AMD
+    steps:
+      - name: Checkout public release notes only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Ensure exact approved notes and create DRAFT only (no assets or publishing)
+        shell: bash
+        run: |
+          set -euo pipefail
+          notes="docs/RELEASE_NOTES_BETA5_P2.md"
+          test -s "$notes"
+          grep -Fq 'bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012' "$notes"
+          grep -Fq 'EXPERIMENTAL / NOT GPU-TESTED' "$notes"
+          if gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE_TAG" > "$RUNNER_TEMP/existing.json" 2>/dev/null; then
+            python3 - "$RUNNER_TEMP/existing.json" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1]))
+          assert r["draft"] and r["prerelease"], "Existing release is not a draft pre-release; refusing update"
+          assert len(r["assets"]) == 0, "Existing release has uploaded assets; refusing update"
+          print("DRAFT_EXISTS_UNMODIFIED",r["id"],r["html_url"])
+          PY
+          else
+            gh release create "$RELEASE_TAG" \
+              --title "$RELEASE_TITLE" \
+              --notes-file "$notes" \
+              --target main \
+              --draft \
+              --prerelease
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE_TAG" \
+            --jq '{id,tag_name,name,draft,prerelease,html_url,asset_count:(.assets|length)}'
+          echo "DRAFT_RELEASE_READY_ASSETS_NOT_UPLOADED"
