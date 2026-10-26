@@ -1,5 +1,47 @@
 # Changelog
 
+## v1.3.8-rc3-beta.5-p2 — NVIDIA + Experimental AMD (2026-10-26)
+
+- Nightfall Core **1.0.11** with canonical-peer guard, FastSync and
+  safe, stopped-service upgrades / rollback.
+- Same 12 architecture-specific NVIDIA CUDA GPU workers; original GPU
+  calculation kernels remain unchanged from the earlier tested Beta 5.
+- Added four **experimental AMD HIP GPU binaries** (gfx1030/gfx1100/gfx1101/
+  gfx1200). The ROCm compiler-only builds and offline installer checks passed,
+  but **no physical AMD GPU mining or accepted Mainnet AMD block has been tested**.
+- CPU+GPU mining with 30-minute, 6-hour and 24-hour Dashboard history.
+- Native controller / fee runtime SHA checks cover 71 bundled components.
+  Lightweight, reversible obfuscation of integrity pins reduces casual
+  edits. Neither this nor native compilation is tamper-proof DRM.
+- GPU developer fee remains **4.5% of completed GPU work** for ordinary users;
+  CPU developer fee remains **0%**.
+- Tested package and isolated upgrade/rollback behavior, including direct
+  migration from earlier field-tested Beta 5; user chain data, fee accounting
+  and logs preserved in simulated migration tests.
+- Previous NVIDIA Beta 5 showed ~3.41 kH/s GPU raw and 3.31 kH/s effective
+  on a GTX 1660 Ti. The p2 launcher has not been separately GPU field-tested,
+  and these are not general performance guarantees.
+
+[Latest Beta 5 p2 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
+
+Verified Linux release archive SHA-256:
+`bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012`
+
+---
+
+## v1.3.8-rc3-beta.3 — NVIDIA and Core 1.0.7 (historical)
+
+- Updated the bundled Core to **1.0.7** and improved chain IBD and
+  deep-reorganization behavior.
+- Additional process isolation, safe sync and release packaging changes.
+- [Beta 3 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.3)
+
+## v1.3.8-rc3-beta.2 — Rootless installation (historical)
+
+- Recommended installation without sudo and safer upgrade / rollback
+  of stopped instances.
+- [Beta 2 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.2)
+
 ## v1.3.8-rc3-beta.1 — Limited Public Beta (MIT)
 
 - First limited public beta for Linux x86-64 with NVIDIA CUDA and CPU mining.
