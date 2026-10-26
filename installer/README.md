@@ -1,5 +1,7 @@
 # Review the Beta 2 installer
 
+> **Archived Beta 2 review material.** The currently published version is [Beta 5 p2](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2). Its installer is bundled **inside the verified Beta 5 p2 release archive**; neither script in this directory is current.
+
 These files are **byte-for-byte review copies** of the installer and upgrade
 helper shipped inside the Beta 2 archive:
 
