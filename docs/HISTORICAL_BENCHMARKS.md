@@ -48,7 +48,7 @@ The following were measured on the same GPU in paired offline worker tests. They
 
 In short RC3 mainnet tests, Quadro RTX 5000 and RTX 4060 Ti had **52 locally accepted GPU submissions** and no locally rejected submissions. An **RTX 5070 (Blackwell, sm_120)** separately passed an installation and synchronization smoke test, **not sustained GPU mining or a hashrate benchmark**. These results do not establish finalized rewards, long-term reliability or real mixed-GPU coverage. The Quadro/4060 Ti sessions used the developer address; ordinary-user 4.5% fee accrual was not live-tested in those sessions.
 
-[Beta 2 compatibility and test limits](docs/BETA2_COMPATIBILITY.md). [Historical Beta 1 GPU test details](docs/COMPATIBILITY.md).
+[Beta 2 compatibility and test limits](BETA2_COMPATIBILITY.md). [Historical Beta 1 GPU test details](COMPATIBILITY.md).
 
 ### CPU Mining
 
