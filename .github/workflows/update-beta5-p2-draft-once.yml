@@ -1,0 +1,65 @@
+name: Update existing Beta5 p2 release draft summary (one-time)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update-beta5-p2-draft-once.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update_verified_draft:
+    if: github.repository == 'Larppak/Nightfall-GPU-Miner'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_ID: '424265220'
+      ARCHIVE: nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz
+      VERIFIED_SHA: bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012
+    steps:
+      - name: Checkout public release text
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate uploaded draft assets and shorten only its body
+        shell: bash
+        run: |
+          set -euo pipefail
+          notes="docs/RELEASE_SUMMARY_BETA5_P2.md"
+          test -s "$notes"
+          grep -Fq "$VERIFIED_SHA" "$notes"
+          grep -Fq "/releases/download/v1.3.8-rc3-beta.5-p2/$ARCHIVE" "$notes"
+          grep -Fq "/releases/download/v1.3.8-rc3-beta.5-p2/$ARCHIVE.sha256" "$notes"
+          grep -Fq 'Experimental — not tested on physical AMD hardware' "$notes"
+          gh api "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" > "$RUNNER_TEMP/before.json"
+          python3 - "$RUNNER_TEMP/before.json" <<'PY'
+          import json,os,sys
+          r=json.load(open(sys.argv[1]))
+          assert r["draft"] is True and r["prerelease"] is True, "Must remain unpublished pre-release draft"
+          assert r["tag_name"]=="v1.3.8-rc3-beta.5-p2"
+          assert "NVIDIA + Experimental AMD" in r["name"]
+          assets={a["name"]:a for a in r["assets"]}
+          archive=os.environ["ARCHIVE"]
+          assert set(assets)=={archive,archive+".sha256"}, "Only exact reviewed assets allowed"
+          assert assets[archive]["state"]=="uploaded"
+          assert assets[archive]["digest"]=="sha256:"+os.environ["VERIFIED_SHA"], "Uploaded Linux archive hash mismatch"
+          assert assets[archive+".sha256"]["state"]=="uploaded"
+          print("PRE_PATCH_BETA5_P2_DRAFT_AND_TWO_ASSET_SHA_PASS",r["id"])
+          PY
+          jq -n --rawfile body "$notes" '{body:$body}' > "$RUNNER_TEMP/patch.json"
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
+            --input "$RUNNER_TEMP/patch.json" > "$RUNNER_TEMP/updated.json"
+          python3 - "$RUNNER_TEMP/updated.json" "$notes" <<'PY'
+          import json,os,sys
+          from pathlib import Path
+          r=json.load(open(sys.argv[1]))
+          body=Path(sys.argv[2]).read_text()
+          assert r["body"].replace("\r\n","\n").strip()==body.strip(), "Draft body differs from summary"
+          assert r["draft"] and r["prerelease"], "Draft flags changed"
+          assert {a["name"] for a in r["assets"]}=={os.environ["ARCHIVE"],os.environ["ARCHIVE"]+".sha256"}
+          assert any(a["digest"]=="sha256:"+os.environ["VERIFIED_SHA"] for a in r["assets"]), "Release archive SHA mismatch"
+          print("BETA5_P2_DRAFT_SHORT_BODY_LINKS_VERIFIED",
+                "release_id="+str(r["id"]), "chars="+str(len(r["body"])),
+                "asset_count="+str(len(r["assets"])),r["html_url"])
+          PY
