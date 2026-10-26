@@ -1,5 +1,7 @@
 # Nightfall GPU Miner RC3 beta — installation
 
+> **Historical Beta 1 installation guide — not for Beta 5 p2.** The installer commands and URLs on this page apply to an older release. For a new installation or upgrade, follow the [current Beta 5 p2 instructions](RELEASE_NOTES_BETA5_P2.md) and download its two verified GitHub Release assets instead. **Do not run these old commands for the current release.**
+
 > These commands apply when the archive and checksum are available as actual
 > [GitHub Release assets](https://github.com/Larppak/Nightfall-GPU-Miner/releases).
 > Do not download GitHub's automatically generated Source code ZIP/TAR archive:
