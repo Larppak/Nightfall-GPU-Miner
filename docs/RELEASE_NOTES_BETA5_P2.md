@@ -22,36 +22,58 @@ An earlier GTX 1660 Ti field test confirmed **six locally submitted GPU blocks (
 
 **This p2 release has passed static binary, package, simulated native-integrity and upgrade/rollback tests, but its revised launch wrapper has not been retested on physical NVIDIA hardware.** All 12 previously working CUDA binaries remain byte-for-byte unchanged.
 
-## Download and verify — Linux x86-64
+## Download directly on a Linux machine
 
-Download **both** release assets, rather than GitHub's auto-generated source ZIP:
-
-- `nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz`
-- `nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz.sha256`
-
-**SHA-256 of the exact Linux `.tar.gz` release asset:**
-
-```text
-bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012
-```
+Copy and paste these commands. They download **both** GitHub Release files,
+check the SHA-256, extract the miner and run its self-test.
 
 ```bash
-sha256sum -c nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz.sha256
-tar -xzf nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz
-cd nightfall-miner-v1.3.8-rc3-beta.5-p2
+mkdir -p "$HOME/nightfall-download" && cd "$HOME/nightfall-download"
+
+TAG="v1.3.8-rc3-beta.5-p2"
+FILE="nightfall-miner-${TAG}-linux-x86_64.tar.gz"
+URL="https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/${TAG}"
+
+curl -fL --retry 3 -o "$FILE" "$URL/$FILE" &&
+curl -fL --retry 3 -o "$FILE.sha256" "$URL/$FILE.sha256" &&
+sha256sum -c "$FILE.sha256" &&
+tar -xzf "$FILE" &&
+cd "nightfall-miner-${TAG}" &&
 bash selftest.sh
 ```
 
-### Fresh NVIDIA installation (ordinary Linux user)
+Expected output: `NIGHTFALL_MINER_PACKAGE_SELFTEST_PASS`.
+The correct Linux archive SHA-256 is
+`bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012`.
+
+**Stop on any checksum or self-test error.** GitHub's auto-generated
+*Source code* ZIP/TAR archives are not the miner binaries.
+
+### Fresh NVIDIA installation — normal user or root
+
+Once the download and self-test succeed, paste this block from inside the
+extracted miner folder. It **automatically picks `--user` for a normal
+Linux account or `--system` for root**, so rental containers work too.
 
 ```bash
-bash install.sh --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS' --plan
-bash install.sh --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS'
-export PATH="$HOME/.local/bin:$PATH"
-mine
+read -r -p "Your public NIGHT payout address (nf1...): " ADDR
+MODE="--user"
+[ "$(id -u)" -eq 0 ] && MODE="--system"
+bash install.sh "$MODE" --address "$ADDR"
 ```
 
-On an explicitly authorized root/system installation, use `--system` instead of `--user`.
+To display the Dashboard:
+
+```bash
+if [ "$(id -u)" -eq 0 ]; then
+  /opt/nightfall-miner/mine
+else
+  "$HOME/.local/bin/mine"
+fi
+```
+
+The installation will prepare Core and synchronize the blockchain.
+GPU work waits until the canonical network guard approves the chain.
 
 ### AMD experimental installation (new, empty installation only)
 
