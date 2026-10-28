@@ -80,11 +80,18 @@ GPU work waits until the canonical network guard approves the chain.
 First install compatible ROCm drivers/runtime and confirm the actual GPU target using `rocminfo`. **The AMD worker is untested and must pass the installer’s on-device GPU correctness check before any Mainnet mining.**
 
 ```bash
-bash install.sh --gpu-backend amd --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS' --plan
-bash install.sh --gpu-backend amd --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS'
+read -r -p "Your public NIGHT payout address (nf1...): " ADDR
+MODE="--user"
+[ "$(id -u)" -eq 0 ] && MODE="--system"
+
+bash install.sh --gpu-backend amd "$MODE" --address "$ADDR" --plan
+bash install.sh --gpu-backend amd "$MODE" --address "$ADDR"
 ```
 
-You may need `--gpu-arch gfx1100` for an ambiguous but supported GPU model. This does **not** install ROCm drivers.
+The mode automatically changes to `--system` for root. You may need
+`--gpu-arch gfx1100` for an ambiguous but supported GPU model.
+These commands **do not install ROCm drivers**. Use an empty app and
+chain directory for the experimental AMD setup.
 
 ### Upgrade an existing Linux installation
 
