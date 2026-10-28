@@ -1,168 +1,119 @@
 # Nightfall GPU Miner
 
-[![Linux x86-64](https://img.shields.io/badge/platform-Linux%20x86__64-64748b)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
-[![NVIDIA CUDA](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
-[![AMD HIP experimental](https://img.shields.io/badge/AMD%20HIP-experimental-orange)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
-[![Nightfall Core 1.0.11](https://img.shields.io/badge/Nightfall%20Core-1.0.11-blue)](https://github.com/Instinctes/nightfall)
-[![Beta 5 p2](https://img.shields.io/badge/release-Beta%205%20p2-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
+**Easy GPU + CPU mining for NIGHTFALLCOIN (NIGHT) on Linux.**
 
-Independent **NVIDIA GPU + optimized CPU miner** for
-[NIGHTFALLCOIN (NIGHT)](https://nightfallcoin.org/), using
-**Nightfall Core 1.0.11**. The Linux beta also includes **experimental
-AMD ROCm/HIP mining**, which has **not been tested on physical AMD
-hardware by the publisher**.
+![Linux](https://img.shields.io/badge/Linux-x86__64-blue)
+![NVIDIA CUDA](https://img.shields.io/badge/NVIDIA-CUDA-76B900)
+![AMD experimental](https://img.shields.io/badge/AMD_HIP-experimental-orange)
+[![Latest release](https://img.shields.io/badge/Latest-Beta_5_p2-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
 
-**GPU developer fee: 4.5% of completed GPU work. CPU developer fee: 0%.**
-This is a community miner, **not an official Nightfall Core release**.
+**Latest version:** [Beta 5 p2](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2) · **Nightfall Core 1.0.11** · Ubuntu 24.04 x86-64 recommended.
 
-## Download — latest Beta 5 p2
+Supports precompiled **NVIDIA CUDA** mining alongside optimized CPU mining. **AMD ROCm/HIP is included as an experimental preview**, not yet tested on physical AMD hardware.
 
-**[Download the Linux x86-64 miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.5-p2/nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz)** ·
-**[Download SHA-256 checksum](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.5-p2/nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz.sha256)** ·
-[Release notes](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2)
+**GPU developer fee: 4.5% of completed GPU work. CPU developer fee: 0%.** This is an independent community miner, not an official Nightfall Core release.
 
-**SHA-256:** `bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012`
+## 🚀 Start mining on Linux (NVIDIA)
 
-Use the two named **Release assets** above. GitHub's automatically
-generated *Source code* ZIP/TAR archives contain public documentation,
-**not the ready-to-run miner**. For the prebuilt Core, **Ubuntu 24.04
-x86-64** is recommended.
+You need a compatible NVIDIA GPU and working driver, an internet connection, and **your public `nf1...` NIGHT payout address**. No CUDA Toolkit or programming is needed.
 
-## Install — NVIDIA + CPU
+### Step 1 — Download, unpack and test
 
-A supported NVIDIA GPU and working driver are required; no local CUDA
-Toolkit or `nvcc` compilation is needed for precompiled workers.
-
-Download the two release assets into the same folder, then run as an
-ordinary (non-root) Linux account:
+**Copy and paste this entire block into your Linux terminal.** It downloads the miner directly from GitHub, verifies its checksum, extracts it and runs the self-test.
 
 ```bash
-sha256sum -c nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz.sha256
-tar -xzf nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz
-cd nightfall-miner-v1.3.8-rc3-beta.5-p2
+mkdir -p "$HOME/nightfall-download" && cd "$HOME/nightfall-download"
+
+TAG="v1.3.8-rc3-beta.5-p2"
+FILE="nightfall-miner-${TAG}-linux-x86_64.tar.gz"
+URL="https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/${TAG}"
+
+curl -fL --retry 3 -o "$FILE" "$URL/$FILE" &&
+curl -fL --retry 3 -o "$FILE.sha256" "$URL/$FILE.sha256" &&
+sha256sum -c "$FILE.sha256" &&
+tar -xzf "$FILE" &&
+cd "nightfall-miner-${TAG}" &&
 bash selftest.sh
-bash install.sh --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS' --plan
-bash install.sh --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS'
-~/.local/bin/mine
 ```
 
-Only a **public `nf1...` receiving address** is required. Never enter
-a wallet seed phrase, private key or wallet file.
+You should see **`NIGHTFALL_MINER_PACKAGE_SELFTEST_PASS`**. If a download, checksum or self-test fails, **do not install**; check the error first.
 
-For an intentionally root-operated rental/container installation, use
-`--system` instead of `--user`, and control the installed miner using
-`/opt/nightfall-miner/minerctl`.
+**Prefer downloading files manually?** [Miner (.tar.gz)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.5-p2/nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz) · [SHA-256 checksum](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.5-p2/nightfall-miner-v1.3.8-rc3-beta.5-p2-linux-x86_64.tar.gz.sha256).
 
-## AMD GPU — experimental
+### Step 2 — Install and start
 
-The beta includes four HIP workers: `gfx1030`, `gfx1100`,
-`gfx1101` and `gfx1200`. A compatible AMD GPU, ROCm runtime/driver
-and `rocminfo` are required before installation. The installer runs
-an **on-device correctness check** and refuses to mine if it fails.
-
-**AMD mining is experimental and untested by the publisher on
-physical AMD hardware.** GPU hashrate, actual Mainnet acceptance, driver
-compatibility and stability are not guaranteed. The initial AMD path
-supports fresh, separate installations, not a mixed AMD/NVIDIA rig.
+Run this **in the extracted miner folder**. It detects whether you are using a normal Linux account or `root` and chooses the correct installation mode automatically.
 
 ```bash
-bash install.sh --gpu-backend amd --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS' --plan
-bash install.sh --gpu-backend amd --user --address 'nf1YOUR_PUBLIC_PAYOUT_ADDRESS'
+read -r -p "Your public NIGHT payout address (nf1...): " ADDR
+
+MODE="--user"
+[ "$(id -u)" -eq 0 ] && MODE="--system"
+
+bash install.sh "$MODE" --address "$ADDR"
 ```
 
-For AMD root/system installations, replace `--user` with `--system`
-and use a **fresh, empty** app directory and chain datadir.
+**That's it!** The installer checks the hardware, prepares the Nightfall node and starts the miner. On a completely new machine, it may take a while to download/synchronize the blockchain and verify peers before GPU mining begins.
 
-## Upgrading an existing miner
+> **Using `root` in a rental/container?** The commands above automatically select `--system`. Do not use `--user` as root. The normal-user installation needs **no `sudo`**.
 
-**Stop the existing miner first.** Do not perform a fresh install over
-the old application or chain state. From the verified new archive use
-`--upgrade --plan`, review the preserved data and rollback plan, then
-apply the upgrade. For example, an existing root/system installation:
+### Step 3 — View your mining dashboard
 
 ```bash
-/opt/nightfall-miner/minerctl stop
-bash install.sh --system --upgrade --prefix /opt/nightfall-miner --plan
-bash install.sh --system --upgrade --prefix /opt/nightfall-miner
-/opt/nightfall-miner/minerctl native-integrity-check
-/opt/nightfall-miner/minerctl start
-/opt/nightfall-miner/minerctl doctor
+if [ "$(id -u)" -eq 0 ]; then
+  /opt/nightfall-miner/mine
+else
+  "$HOME/.local/bin/mine"
+fi
 ```
 
-Run these commands **from inside the extracted latest release folder**.
-For rootless installations, use the original user installation prefix
-and `--user --upgrade` instead. The upgrade preserves chain data,
-public payout settings, GPU fee accounting and mining logs.
+To manage mining, use these commands:
 
-[Complete Beta 5 p2 installation and upgrade guide](docs/RELEASE_NOTES_BETA5_P2.md)
+| Action | Normal Linux user | Root / system installation |
+| --- | --- | --- |
+| Check status | `~/.local/bin/minerctl status` | `/opt/nightfall-miner/minerctl status` |
+| Stop mining | `~/.local/bin/minerctl stop` | `/opt/nightfall-miner/minerctl stop` |
+| Start again | `~/.local/bin/minerctl start` | `/opt/nightfall-miner/minerctl start` |
+| Check for problems | `~/.local/bin/minerctl doctor` | `/opt/nightfall-miner/minerctl doctor` |
 
-## What it includes
+Closing the dashboard is **not** the same as stopping the miner; use `minerctl stop` when you want to stop mining.
 
-| Feature | Details |
-| --- | --- |
-| GPU mining | 12 precompiled NVIDIA CUDA architectures; 4 experimental AMD HIP targets |
-| Hybrid mining | Optimized CPU mining alongside one selected GPU backend |
-| Chain safety | Canonical peer agreement guard; pauses mining when chain agreement is insufficient |
-| FastSync | SHA-256-verified trusted historical bootstrap, followed by normal network validation |
-| Monitoring | Terminal Dashboard and optional loopback-only web Dashboard; 30m / 6h / 24h history |
-| Recovery | Safe stopped-service upgrade/rollback, `minerctl doctor`, fee and native-integrity diagnostics |
-| Fees | GPU 4.5% work-based developer fee; CPU 0% |
+## 🟥 AMD GPUs — experimental
 
-The historical bootstrap anchor is locally trusted rather than having
-every block through the anchor individually reverified. The node
-checks subsequent blocks and waits for canonical network agreement.
+The package includes AMD HIP workers for `gfx1030`, `gfx1100`, `gfx1101` and `gfx1200`.
 
-### Useful commands
+**AMD mining has NOT been verified on a physical AMD GPU by the publisher.** A compatible GPU, installed ROCm driver/runtime and `rocminfo` are required. The installer performs an on-device hash correctness test before mining. Performance, stability and Mainnet acceptance are unverified.
 
-For a root/system installation, replace `minerctl` below with
-`/opt/nightfall-miner/minerctl`.
+After completing **Step 1**, use this command **instead of the NVIDIA installation in Step 2**:
 
 ```bash
-~/.local/bin/minerctl status
-~/.local/bin/minerctl doctor
-~/.local/bin/minerctl native-integrity-check
-~/.local/bin/minerctl fee-policy-check
-~/.local/bin/minerctl dev-fee-status
-~/.local/bin/minerctl fastsync-info
+read -r -p "Your public NIGHT payout address (nf1...): " ADDR
+MODE="--user"
+[ "$(id -u)" -eq 0 ] && MODE="--system"
+bash install.sh --gpu-backend amd "$MODE" --address "$ADDR"
 ```
 
-### Testing and performance
+AMD is currently intended for **fresh installations on an empty app/chain directory**, not switching an existing NVIDIA installation to AMD.
 
-An earlier NVIDIA Beta 5 field test on a GTX 1660 Ti observed approximately
-**3.41 kH/s raw / 3.31 kH/s effective GPU hashrate** on a canonical
-Mainnet chain. The Beta 5 p2 CUDA binaries remain unchanged from
-that version, but the new p2 launch/integrity path has been tested in
-isolated Linux CI rather than in a separate, sustained physical GPU run.
-Do not assume those speeds apply to other cards.
+## 🔄 Already running an older version?
 
-[Historical GPU and CPU benchmark measurements](docs/HISTORICAL_BENCHMARKS.md)
-are older development observations, not guaranteed Beta 5 p2 benchmarks.
-There is **no publisher-verified AMD hashrate** yet.
+**Do not run a fresh installation over an existing miner.** Stop the miner, download and verify the latest package using **Step 1**, then follow the [upgrade instructions](docs/RELEASE_NOTES_BETA5_P2.md#upgrade-an-existing-linux-installation). The upgrade preserves existing chain data, wallet payout settings, GPU fee accounting and logs.
 
-## Documentation, history and support
+## Features and support
 
-- [Latest Beta 5 p2 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2) ·
-  [Detailed release notes](docs/RELEASE_NOTES_BETA5_P2.md)
-- [Troubleshooting](docs/TROUBLESHOOTING.md) ·
-  [Report a bug or AMD testing result](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
-- [Historical benchmarks](docs/HISTORICAL_BENCHMARKS.md) ·
-  [GPU mining concept (educational)](GPU_MINING_CONCEPT.md)
-- [Older Beta 3 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.3) ·
-  [Earlier Beta 2](docs/RELEASE_NOTES_BETA2.md) and
-  [Beta 1](docs/RELEASE_NOTES_RC3_BETA.md) notes
+- **12 NVIDIA CUDA GPU architectures** (Maxwell to Blackwell), with GPU + CPU mining.
+- Nightfall Core **1.0.11**, FastSync, and a canonical network guard that pauses mining until sufficient peer agreement is available.
+- Terminal dashboard and optional localhost browser dashboard, including **30-minute, 6-hour and 24-hour** mining statistics.
+- Safe upgrade/rollback, health diagnostics and protected native-controller integrity checks.
+- Hardware-dependent performance: an earlier NVIDIA Beta 5 test on an RTX 3080 reached approximately **9.1 kH/s**. These figures are user-reported and not guaranteed for every card or driver; AMD has no verified benchmark yet.
 
-**Important source/installer distinction:** This public repository
-primarily hosts **documentation and Release downloads**, not the private
-optimized CUDA/HIP or native controller sources. The files under
-[`installer/`](installer/) are **historical Beta 2 review copies** and
-must not be used to install the current Beta 5 p2. Use `install.sh`,
-`selftest.sh` and `UPGRADE.md` **inside the downloaded verified
-Beta 5 p2 archive**.
+[Full installation and upgrade guide](docs/RELEASE_NOTES_BETA5_P2.md) ·
+[Troubleshooting](docs/TROUBLESHOOTING.md) ·
+[Historical benchmarks](docs/HISTORICAL_BENCHMARKS.md) ·
+[Report an issue](https://github.com/Larppak/Nightfall-GPU-Miner/issues)
 
-First-party miner software and documentation retain the existing
-[MIT license](LICENSE). Third-party software has its own terms and
-notices in the release package. Mining rewards are probabilistic and
-not guaranteed; local accepted block counters do not necessarily
-represent finalized wallet rewards. Local integrity/obfuscation
-checks deter casual tampering but do not prevent a machine owner
-from modifying the miner.
+**Download safety:** Use the actual release `.tar.gz` asset, not GitHub's automatically generated *Source code* ZIP. The expected archive SHA-256 is
+`bb31b66d94354e625add8030cd36824aaf9bab0afff5eb00ed9f3208633a8012`.
+Only a **public payout address** is required; **never share your wallet seed or private key**.
+
+The public [`installer/` directory](installer/) contains **old Beta 2 review copies** and is **not** the current installer. Run the `install.sh` from the **verified, downloaded Beta 5 p2 archive**. First-party materials remain [MIT-licensed](LICENSE); third-party notices are bundled with the release. Mining rewards are not guaranteed.
