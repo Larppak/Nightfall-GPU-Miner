@@ -9,6 +9,9 @@
 
 **Latest version:** [Beta 5 p2](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.5-p2) · **Nightfall Core 1.0.11** · Ubuntu 24.04 x86-64 recommended.
 
+> **Important — upcoming Nightfall network upgrade:** Official [Core 1.1.1](https://github.com/Instinctes/nightfall/releases/tag/v1.1.1) activates new consensus rules at **Mainnet block 500,000**. The Beta 5 p2 download on this page still bundles Core **1.0.11** and **must be upgraded before block 500,000**. It will not follow the correct chain after activation. A fork-compatible Linux GPU miner is being validated; **do not simply replace the included Core binary**, because this miner needs its customized GPU RPC. No chain reset, new wallet or mining algorithm change is required.
+
+
 Supports precompiled **NVIDIA CUDA** mining alongside optimized CPU mining. **AMD ROCm/HIP is included as an experimental preview**, not yet tested on physical AMD hardware.
 
 **GPU developer fee: 4.5% of completed GPU work. CPU developer fee: 0%.** This is an independent community miner, not an official Nightfall Core release.
