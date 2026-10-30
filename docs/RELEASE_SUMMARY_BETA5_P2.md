@@ -1,5 +1,7 @@
 # Nightfall GPU Miner — Beta 5 p2
 
+> ⚠️ **Mandatory network upgrade at Mainnet block 500,000:** This Beta 5 p2 package contains **Core 1.0.11**, which will **stop following the correct chain after block 500,000**. [Nightfall Core 1.1.1](https://github.com/Instinctes/nightfall/releases/tag/v1.1.1) introduces the required consensus rules. A compatible Linux GPU Miner update is being tested. **Do not simply swap the bundled Core executable:** this miner requires its own GPU RPC integration. Keep existing blockchain and wallet data; no chain reset is needed.
+
 **Linux x86-64 · Nightfall Core 1.0.11 · NVIDIA CUDA + Experimental AMD HIP**
 
 Independent NIGHTFALLCOIN (NIGHT) community miner. **Pre-release — not official Nightfall Core software.**
