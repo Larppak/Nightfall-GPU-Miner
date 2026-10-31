@@ -1,0 +1,138 @@
+name: Finalize Linux Beta6 OneFile draft assets and notes (DO NOT publish)
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/beta6-onefile-draft-fix-once.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  finalize_draft:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    if: github.repository == 'Larppak/Nightfall-GPU-Miner'
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: Larppak/Nightfall-GPU-Miner
+      RELEASE_ID: "429977352"
+      EXPECTED_TAG: v1.3.8-rc3-beta.6
+      RUN_NAME: nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run
+      SHA_NAME: nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run.sha256
+      RUN_SHA256: 9e7e2c7f143c5d2d61b22f6493f00760894c73af44d721fc36ea4bbaf79251fd
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Guard existing draft, exact OneFile binary hash, and unexpected upload
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/release.before.json"
+          python3 - "$RUNNER_TEMP/release.before.json" <<'PY'
+          import json,os,sys
+          d=json.load(open(sys.argv[1]))
+          assert d["id"] == int(os.environ["RELEASE_ID"])
+          assert d["tag_name"] == os.environ["EXPECTED_TAG"]
+          assert d["draft"] is True and d["prerelease"] is True
+          assets=d["assets"]
+          mine=[a for a in assets if a["name"]==os.environ["RUN_NAME"]]
+          assert len(mine)==1, "Expected exactly one Linux OneFile .run"
+          assert mine[0]["state"]=="uploaded"
+          assert mine[0]["digest"] == "sha256:"+os.environ["RUN_SHA256"], "Uploaded .run does not match audited SHA"
+          assert mine[0]["size"]==23084206, "Unexpected uploaded .run length"
+          other=[a for a in assets if a["name"] not in (os.environ["RUN_NAME"],os.environ["SHA_NAME"])]
+          assert not other or (len(other)==1 and other[0]["id"]==695648335 and other[0]["size"]==136), "Unexpected assets; manual review required"
+          print("BETA6_DRAFT_RUN_SHA256_AND_BINARY_SIZE_PASS")
+          print("UNRELATED_ASSETS_TO_REMOVE="+str(len(other)))
+          PY
+
+      - name: Remove the one incorrectly uploaded non-Beta6 checksum
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/release.check.json"
+          if python3 - "$RUNNER_TEMP/release.check.json" <<'PY'
+          import json,sys
+          assets=json.load(open(sys.argv[1]))["assets"]
+          sys.exit(0 if any(a["id"]==695648335 for a in assets) else 1)
+          PY
+          then
+            gh api --method DELETE "repos/$REPO/releases/assets/695648335"
+            echo "UNRELATED_RELEASE_ASSET_REMOVED"
+          else
+            echo "NO_UNRELATED_ASSET_TO_REMOVE"
+          fi
+
+      - name: Add matching OneFile .run.sha256 from pinned digest
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          FILE="$RUNNER_TEMP/$SHA_NAME"
+          printf '%s  %s\n' "$RUN_SHA256" "$RUN_NAME" > "$FILE"
+          gh api "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/release.current.json"
+          if python3 - "$RUNNER_TEMP/release.current.json" <<'PY'
+          import json,os,sys
+          a=json.load(open(sys.argv[1]))['assets']
+          sys.exit(0 if any(x['name']==os.environ['SHA_NAME'] for x in a) else 1)
+          PY
+          then
+            echo "CORRECT_SHA256_COMPANION_ALREADY_PRESENT"
+          else
+            curl --fail-with-body --silent --show-error --retry 2 \
+              -X POST \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary "@$FILE" \
+              "https://uploads.github.com/repos/$REPO/releases/$RELEASE_ID/assets?name=$SHA_NAME" \
+              > "$RUNNER_TEMP/sha-upload.json"
+            echo "CORRECT_SHA256_COMPANION_UPLOADED"
+          fi
+
+      - name: Set SHORT OneFile release notes, remain private draft
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          body=Path('docs/RELEASE_NOTES_BETA6.md').read_text(encoding='utf-8')
+          assert 'nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run' in body
+          assert '9e7e2c7f143c5d2d61b22f6493f00760894c73af44d721fc36ea4bbaf79251fd' in body
+          assert 'nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.tar.gz' not in body
+          payload={'name':'Nightfall GPU Miner v1.3.8 RC3 Beta 6 — Linux / Core 1.1.1',
+                   'body':body, 'draft':True,'prerelease':True}
+          Path('/tmp/nightfall-beta6-patch.json').write_text(json.dumps(payload))
+          print('ONEFILE_RELEASE_DESCRIPTION_READY')
+          PY
+          gh api --method PATCH -H "Accept: application/vnd.github+json" \
+            --input /tmp/nightfall-beta6-patch.json \
+            "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/release.patched.json"
+
+      - name: Final gate — exactly two correct assets, no publication
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/release.final.json"
+          python3 - "$RUNNER_TEMP/release.final.json" "$RUNNER_TEMP/$SHA_NAME" <<'PY'
+          import hashlib,json,os,sys
+          d=json.load(open(sys.argv[1]))
+          assert d["id"]==int(os.environ["RELEASE_ID"])
+          assert d["tag_name"]==os.environ["EXPECTED_TAG"]
+          assert d["draft"] is True and d["prerelease"] is True
+          assets={a["name"]:a for a in d["assets"]}
+          assert set(assets)=={os.environ["RUN_NAME"],os.environ["SHA_NAME"]}, list(assets)
+          assert assets[os.environ["RUN_NAME"]]["digest"]=="sha256:"+os.environ["RUN_SHA256"]
+          expected=hashlib.sha256(open(sys.argv[2],"rb").read()).hexdigest()
+          assert assets[os.environ["SHA_NAME"]]["digest"]=="sha256:"+expected
+          assert "9e7e2c7f143c5d2d61b22f6493f00760894c73af44d721fc36ea4bbaf79251fd" in d["body"]
+          assert "nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.tar.gz" not in d["body"]
+          print("BETA6_ONEFILE_DRAFT_FINAL_CHECK_PASS")
+          print("RELEASE_IS_DRAFT_TRUE_AND_PRE_RELEASE_TRUE")
+          print("RELEASE_ASSET_COUNT=2")
+          print("RUN_SHA256="+os.environ["RUN_SHA256"])
+          print("USER_CAN_PUBLISH_AFTER_REVIEW="+d["html_url"])
+          PY
