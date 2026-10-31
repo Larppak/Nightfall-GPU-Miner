@@ -71,4 +71,3 @@ jobs:
           print("BETA6_RELEASE_IS_DRAFT=True (NOT YET PUBLIC)")
           print("BETA6_RELEASE_ASSETS=0 (USER WILL UPLOAD TWO FILES)")
           PY
-Y
