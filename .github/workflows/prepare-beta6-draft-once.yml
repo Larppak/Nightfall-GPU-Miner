@@ -32,33 +32,43 @@ jobs:
           grep -Fq "$EXPECTED_SHA" "$NOTES"
           grep -Fq 'Linux' "$NOTES"
           grep -Fq 'AMD ROCm/HIP is EXPERIMENTAL' "$NOTES"
-          if gh api "repos/$REPO/releases/tags/$TAG" > /tmp/nightfall-existing-release.json 2>/dev/null; then
-            python3 - <<'PY'
+          # Draft releases are addressable through the authenticated release list,
+          # but the /releases/tags/<tag> route returns 404 until publication.
+          gh api "repos/$REPO/releases?per_page=100" > /tmp/nightfall-all-releases.json
+          if python3 - <<'PY'
           import json
-          r=json.load(open('/tmp/nightfall-existing-release.json'))
-          assert r['draft'] is True, 'A published Beta6 release already exists; refusing modification'
-          assert r['prerelease'] is True, 'Existing draft is not marked prerelease'
-          assert len(r['assets'])==0, 'Existing draft already has uploaded assets; refusing modification'
-          print('BETA6_DRAFT_ALREADY_EXISTS id=%s url=%s'%(r['id'],r['html_url']))
+          r=json.load(open('/tmp/nightfall-all-releases.json'))
+          match=[x for x in r if x.get("tag_name")=="v1.3.8-rc3-beta.6"]
+          if match:
+              d=match[0]
+              assert d["draft"] is True and d["prerelease"] is True
+              assert len(d["assets"])==0
+              print("BETA6_DRAFT_ALREADY_EXISTS id=%s url=%s"%(d["id"],d["html_url"]))
+          else:
+              raise SystemExit(1)
           PY
+          then
+            echo "Verified existing unpublished Beta6 draft; no duplicate created."
           else
-            echo 'Creating DRAFT only; NO release assets are uploaded.'
+            echo "Creating DRAFT only; NO release assets are uploaded."
             gh release create "$TAG" --repo "$REPO" --draft --prerelease \
               --target main \
               --title 'Nightfall GPU Miner v1.3.8 RC3 Beta 6 — Core 1.1.1 (Linux)' \
               --notes-file "$NOTES"
           fi
-          gh api "repos/$REPO/releases/tags/$TAG" > /tmp/nightfall-draft-release.json
+          gh api "repos/$REPO/releases?per_page=100" > /tmp/nightfall-all-releases.json
           python3 - <<'PY'
           import json
-          d=json.load(open('/tmp/nightfall-draft-release.json'))
-          assert d['draft'] is True and d['prerelease'] is True
-          assert len(d['assets'])==0, 'Expected no binaries yet'
-          assert '369ff5b1e41157adc532ced255a2afbcb9d774d7e62822b076c7ce9dc95b2f52' in d['body']
-          print('BETA6_RELEASE_DRAFT_PREPARED_PASS')
-          print('BETA6_RELEASE_ID='+str(d['id']))
-          print('BETA6_RELEASE_HTML_URL='+d['html_url'])
-          print('BETA6_RELEASE_EDIT_URL=https://github.com/Larppak/Nightfall-GPU-Miner/releases/edit/v1.3.8-rc3-beta.6')
-          print('BETA6_RELEASE_IS_DRAFT=True (NOT YET PUBLIC)')
-          print('BETA6_RELEASE_ASSETS=0 (USER WILL UPLOAD TWO FILES)')
+          matches=[r for r in json.load(open('/tmp/nightfall-all-releases.json')) if r["tag_name"]=="v1.3.8-rc3-beta.6"]
+          assert len(matches)==1, "Expected exactly one Beta6 release draft"
+          d=matches[0]
+          assert d["draft"] is True and d["prerelease"] is True
+          assert len(d["assets"])==0, "Expected no uploaded binaries yet"
+          assert "369ff5b1e41157adc532ced255a2afbcb9d774d7e62822b076c7ce9dc95b2f52" in d["body"]
+          print("BETA6_RELEASE_DRAFT_PREPARED_PASS")
+          print("BETA6_RELEASE_ID="+str(d["id"]))
+          print("BETA6_RELEASE_HTML_URL="+d["html_url"])
+          print("BETA6_RELEASE_IS_DRAFT=True (NOT YET PUBLIC)")
+          print("BETA6_RELEASE_ASSETS=0 (USER WILL UPLOAD TWO FILES)")
           PY
+Y
