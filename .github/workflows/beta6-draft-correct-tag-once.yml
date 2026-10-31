@@ -1,0 +1,69 @@
+name: Repair Beta6 draft version tag (single use, no publication)
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/beta6-draft-correct-tag-once.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  restore_beta6_tag:
+    if: github.repository == 'Larppak/Nightfall-GPU-Miner'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: Larppak/Nightfall-GPU-Miner
+      RELEASE_ID: '429977352'
+      TAG: v1.3.8-rc3-beta.6
+    steps:
+      - name: Confirm exactly the approved files and draft state
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > /tmp/before.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/before.json'))
+          assert d['draft'] is True and d['prerelease'] is True
+          assert d['tag_name'] in ('v1.3.8-rc3-beta.6','untagged-227cc5ae0b35613c39b1'),d['tag_name']
+          a={x['name']:x for x in d['assets']}
+          assert len(a)==2
+          assert a['nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run']['digest']=='sha256:9e7e2c7f143c5d2d61b22f6493f00760894c73af44d721fc36ea4bbaf79251fd'
+          assert a['nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run.sha256']['digest']=='sha256:cc5be737fea93c8d472f5a4165565b29e5e16625490e492c51f1b496a82b7910'
+          print('BETA6_TWO_ASSETS_AND_CHECKSUMS_PASS')
+          PY
+
+      - name: Restore version tag explicitly while retaining unpublished draft
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.load(open('/tmp/before.json'))
+          p={'tag_name':'v1.3.8-rc3-beta.6',
+             'target_commitish':'main','name':d['name'],
+             'body':d['body'],'draft':True,'prerelease':True}
+          Path('/tmp/tagfix.json').write_text(json.dumps(p))
+          PY
+          gh api --method PATCH --input /tmp/tagfix.json \
+            "repos/$REPO/releases/$RELEASE_ID" >/tmp/patched.json
+
+      - name: Verify correct final tag and keep draft
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > /tmp/after.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/after.json'))
+          assert d['draft'] is True and d['prerelease'] is True
+          assert d['tag_name']=='v1.3.8-rc3-beta.6', 'Draft tag still incorrect: '+d['tag_name']
+          assert len(d['assets'])==2
+          print('BETA6_DRAFT_TAG_CORRECTED_PASS')
+          print('BETA6_DRAFT_UNPUBLISHED=True')
+          print('BETA6_DRAFT_URL='+d['html_url'])
+          PY
