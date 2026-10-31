@@ -1,87 +1,67 @@
 # Nightfall GPU Miner v1.3.8 RC3 Beta 6 — Linux
 
-**Linux x86-64 · Core 1.1.1 · NVIDIA CUDA · Experimental AMD HIP**
+**Core 1.1.1 · NVIDIA CUDA + CPU · AMD HIP experimental**
 
-A limited **pre-release** of the independent Nightfall GPU + CPU miner. This is **not official NIGHTFALLCOIN Core software**.
+This is a limited Linux x86-64 pre-release of an independent NIGHTFALLCOIN (NIGHT) miner. Not an official Nightfall Core release.
 
-Beta 6 upgrades the included Nightfall Core from **1.0.11 → 1.1.1** for the mandatory binding consensus change at **Mainnet block 500,000**. Previously published Beta 5 p2 and other Core 1.0.x miners will not follow the correct Mainnet after that change.
+**What's new:** Nightfall Core upgraded from 1.0.11 to **1.1.1**, ready for the mandatory consensus change at Mainnet block **500,000**. The GPU mining algorithm and precompiled NVIDIA workers are unchanged. GPU developer fee **4.5%**; CPU fee **0%**.
 
-The 12 NVIDIA CUDA GPU workers and mining algorithm are retained. GPU developer work fee: **4.5%**. CPU developer work fee: **0%**.
+## Download
 
-## Download (Linux x86-64)
+[**Linux one-file miner (.run)**](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.6/nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run) · [**SHA-256 checksum**](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.6/nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run.sha256)
 
-Download **both** files from this release's **Assets**:
+SHA-256 of the `.run`: `9e7e2c7f143c5d2d61b22f6493f00760894c73af44d721fc36ea4bbaf79251fd`
 
-- `nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.tar.gz`
-- `nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.tar.gz.sha256`
-
-**Expected SHA-256 for the .tar.gz:**
-`369ff5b1e41157adc532ced255a2afbcb9d774d7e62822b076c7ce9dc95b2f52`
-
-Or download and verify directly in Linux:
+Download, verify and check the package on Linux:
 
 ```bash
 mkdir -p "$HOME/nightfall-download" && cd "$HOME/nightfall-download"
-TAG=v1.3.8-rc3-beta.6
-FILE="nightfall-miner-${TAG}-linux-x86_64.tar.gz"
-URL="https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/${TAG}"
-curl -fL --retry 3 -o "$FILE" "$URL/$FILE" &&
-curl -fL --retry 3 -o "$FILE.sha256" "$URL/$FILE.sha256" &&
+FILE=nightfall-miner-v1.3.8-rc3-beta.6-linux-x86_64.run
+BASE=https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.6
+curl -fL --retry 3 -o "$FILE" "$BASE/$FILE" &&
+curl -fL --retry 3 -o "$FILE.sha256" "$BASE/$FILE.sha256" &&
 sha256sum -c "$FILE.sha256" &&
-tar -xzf "$FILE" &&
-cd "nightfall-miner-${TAG}" &&
-bash selftest.sh
+chmod +x "$FILE" &&
+./"$FILE" --verify
 ```
 
-Expected: `NIGHTFALL_MINER_PACKAGE_SELFTEST_PASS`. Run subsequent commands **from that extracted Beta 6 directory**.
-
-## Upgrade from Beta 5 p2 (recommended)
-
-The normal update is **stop → review upgrade plan → upgrade → start → doctor**. It preserves the existing blockchain, public payout address, settings, GPU developer-fee ledger and logs. **No new wallet, blockchain reset, source compilation or FastSync download required.**
+## Fresh install
 
 ```bash
-MODE=--user; CTL="$HOME/.local/bin/minerctl"
-if [ "$(id -u)" -eq 0 ]; then MODE=--system; CTL=/opt/nightfall-miner/minerctl; fi
+read -r -p "Your PUBLIC NIGHT payout address (nf1...): " ADDR
+./"$FILE" --install --address "$ADDR"
+```
+
+The installer selects user or system mode as appropriate. Only your public payout address is needed. **Never provide wallet seeds or private keys.** Mining starts after canonical peer agreement.
+
+## Upgrade from Beta 5 p2
+
+No new wallet, blockchain redownload or source build is required. Keep the existing chain, payout configuration and GPU fee ledger.
+
+```bash
+CTL="$HOME/.local/bin/minerctl"
+[ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
 "$CTL" stop
-bash install.sh "$MODE" --upgrade --plan
+./"$FILE" --upgrade --plan
 ```
 
-Check that the plan shows your **existing installation and chain paths**, and that fee/payout state is preserved. Only then:
+Check the displayed installation path, chain path and fee settings before proceeding:
 
 ```bash
-bash install.sh "$MODE" --upgrade
+./"$FILE" --upgrade
 "$CTL" start
 "$CTL" doctor
 ```
 
-If you used a custom installation prefix, supply your existing `--prefix PATH` to **both** upgrade commands and use the installed `minerctl` at that path. The upgrade has a documented rollback path in the included `UPGRADE.md`.
+For a nonstandard installation use the original `--prefix PATH` with both upgrade commands and the matching installed `minerctl`.
 
-## Fresh install (no previous Nightfall miner)
+## Tested and limitations
 
-```bash
-read -r -p "Public NIGHT payout address (nf1...): " ADDR
-MODE=--user; [ "$(id -u)" -eq 0 ] && MODE=--system
-bash install.sh "$MODE" --address "$ADDR"
-```
+- Physical **GTX 1650** CUDA correctness, real canonical Mainnet USER/DEV work and one automatically scheduled DEV work batch: **PASS**.
+- Core 1.1.1 consensus and fork-height tests: **PASS on isolated DEVNET**.
+- Package self-test, protected components and stopped Beta 5 p2 → Beta 6 upgrade/rollback: **PASS**.
+- **Beta:** no accepted Mainnet block was observed; live post-500,000 Mainnet validation, longer fee convergence and every GPU model remain untested. Hashrate and rewards are not guaranteed.
+- **AMD HIP remains experimental and has not been verified on physical AMD GPUs.**
+- **Windows is not included** in this Linux release.
 
-Provide only your **public** `nf1...` payout address. Never provide a wallet seed or private key. Mining begins after sufficient canonical Mainnet peer agreement.
-
-## What was tested
-
-- Core **1.1.1** pinned upstream; CPU/consensus and pre-/post-fork tests on isolated DEVNET.
-- A real **NVIDIA GTX 1650**: CUDA correctness, persistent worker and socket bridge.
-- Canonical real Mainnet sync, actual CUDA **USER and DEV** work and one **automatically scheduled DEV** GPU work batch on GTX 1650.
-- Protected native component checks, SHA-256/package self-tests and a stopped **published Beta 5 p2 → Beta 6** upgrade/rollback that preserved chain and accounting state.
-
-## Known limitations
-
-- **Beta software.** Physical Mainnet validation was before block 500,000. The post-fork rules passed DEVNET tests, not live post-fork Mainnet validation.
-- No canonically accepted Mainnet block was observed in the short hardware test. Rewards and performance are never guaranteed.
-- 4.5% is the target share of **completed GPU work over time**, not necessarily each job; multi-cycle fee convergence remains unverified.
-- Only GTX 1650 has this exact Beta 6 physical Mainnet validation; other NVIDIA models vary by GPU and driver.
-- **AMD ROCm/HIP is EXPERIMENTAL**; the included AMD workers have **not been physically tested** with this release.
-- Windows GPU mining is a separate project and **is not included in this Linux release**.
-
-[Linux compatibility notes](https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/docs/RELEASE_NOTES_BETA5_P2.md) (previous Beta 5 p2) · [Source & licensing](https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/LICENSE)
-
-**Important:** download the attached release archive, **not** GitHub's automatically generated source-code ZIP, which is not the precompiled miner.
+Download the `.run` file in Assets, **not** GitHub's automatically generated source-code ZIP. The installer is a self-extracting package, not encryption.
