@@ -1,0 +1,81 @@
+name: Fix published V2 release download links (one-time, DO NOT alter binaries or tag)
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/v2-published-release-notes-fix-once.yml]
+permissions:
+  contents: write
+jobs:
+  update_notes:
+    if: github.repository == 'Larppak/Nightfall-GPU-Miner'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: Larppak/Nightfall-GPU-Miner
+      RELEASE_ID: '431464133'
+      RUN: nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run
+      SHA: nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run.sha256
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify existing published V2 and SHA-pinned binary assets; never move tag
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/v2-before.json"
+          gh api "repos/$REPO/git/ref/tags/V2" > "$RUNNER_TEMP/v2-tag-before.json"
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,os
+          d=json.loads(Path(os.environ['RUNNER_TEMP'],'v2-before.json').read_text())
+          t=json.loads(Path(os.environ['RUNNER_TEMP'],'v2-tag-before.json').read_text())
+          assert d['id']==431464133 and d['tag_name']=='V2'
+          assert d['draft'] is False and d['prerelease'] is True and d['published_at'] is not None
+          a={x['name']:x for x in d['assets']}
+          assert len(a)==2 and set(a)=={os.environ['RUN'],os.environ['SHA']}
+          assert a[os.environ['RUN']]['state']=='uploaded' and a[os.environ['RUN']]['size']==23093688
+          assert a[os.environ['RUN']]['digest']=='sha256:5d6e4935be8ab677b28502dc4f9f8494fc4f12c8dc849788cac31e64f4df5700'
+          assert a[os.environ['SHA']]['digest']=='sha256:4fd5ca87ece9404957f14e621bff2d6dee61e7159131f0e45b2ef3720b6d133e'
+          assert t['ref']=='refs/tags/V2'
+          notes=Path('docs/RELEASE_NOTES_V2_CORE112.md').read_text()
+          assert notes.count('/releases/download/V2/')==2
+          assert '/releases/download/v1.3.8-rc3-beta.6-p1/' not in notes
+          assert '5d6e4935be8ab677b28502dc4f9f8494fc4f12c8dc849788cac31e64f4df5700' in notes
+          body={'tag_name':'V2','name':d['name'],'body':notes,
+                'draft':False,'prerelease':True}
+          Path('/tmp/v2-release-patch.json').write_text(json.dumps(body))
+          print('V2_EXISTING_RELEASE_TWO_BINARIES_AND_TAG_GUARD_PASS')
+          PY
+      - name: Update only published release description and preserve V2 tag
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api --method PATCH --input /tmp/v2-release-patch.json \
+            "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/v2-patched.json"
+      - name: Final verify published release, asset hashes, body links, and unchanged tag commit
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          gh api "repos/$REPO/releases/$RELEASE_ID" > "$RUNNER_TEMP/v2-after.json"
+          gh api "repos/$REPO/git/ref/tags/V2" > "$RUNNER_TEMP/v2-tag-after.json"
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,os
+          tmp=Path(os.environ['RUNNER_TEMP'])
+          before=json.loads((tmp/'v2-before.json').read_text())
+          after=json.loads((tmp/'v2-after.json').read_text())
+          tag1=json.loads((tmp/'v2-tag-before.json').read_text())
+          tag2=json.loads((tmp/'v2-tag-after.json').read_text())
+          assert tag1['object']['sha']==tag2['object']['sha'], 'V2 git tag target changed'
+          assert after['id']==before['id'] and after['tag_name']=='V2'
+          assert after['draft'] is False and after['prerelease'] is True
+          assert sorted((a['name'],a['digest']) for a in after['assets'])==sorted((a['name'],a['digest']) for a in before['assets'])
+          assert after['body']==Path('docs/RELEASE_NOTES_V2_CORE112.md').read_text()
+          assert '/releases/download/V2/' in after['body']
+          assert '/releases/download/v1.3.8-rc3-beta.6-p1/' not in after['body']
+          assert after['html_url'].endswith('/releases/tag/V2')
+          print('V2_PUBLISHED_RELEASE_NOTES_DOWNLOAD_LINKS_FIXED_PASS')
+          print('V2_EXISTING_TWO_ASSETS_AND_TAG_UNCHANGED_PASS')
+          PY
