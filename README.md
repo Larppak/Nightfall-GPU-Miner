@@ -1,23 +1,24 @@
-# Nightfall GPU Miner V2
+# Nightfall GPU Miner
 
-**Linux NVIDIA GPU + CPU miner for NIGHTFALLCOIN (NIGHT).**
+**Mine NIGHTFALLCOIN (NIGHT) on Linux using your NVIDIA GPU and CPU.**
 
-[![Linux](https://img.shields.io/badge/Linux-x86__64-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2)
-[![NVIDIA CUDA](https://img.shields.io/badge/NVIDIA-CUDA-76B900)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2)
-![AMD experimental](https://img.shields.io/badge/AMD_HIP-experimental-orange)
-[![Download V2](https://img.shields.io/badge/Download-V2-blue)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2)
+Easy installation, automatic blockchain syncing, and a live mining dashboard. The miner comes with prebuilt CUDA workers — **no CUDA Toolkit or compiling required**.
 
-**Latest release: [Nightfall GPU Miner V2 — Core 1.1.2](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2)**
+**Latest: V2 · Nightfall Core 1.1.2 · Linux x86-64 · Beta**
 
-Linux x86-64 · Ubuntu 24.04 recommended · Independent **pre-release**, not official Nightfall Core software.
+**[Download V2 for Linux (.run)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run)** · [SHA-256 checksum](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run.sha256) · [What's new in V2](docs/RELEASE_NOTES_V2_CORE112.md)
 
-**One-file download:** precompiled NVIDIA CUDA workers for 12 GPU architectures, CPU mining, automatic sync safety guard, optional AMD HIP preview, safe upgrade and rollback. No CUDA Toolkit or Rust compilation needed for the normal installation.
+> **Linux only.** Ubuntu 24.04 (64-bit) and a compatible NVIDIA driver are recommended. AMD HIP is included as an **untested experimental preview**. Windows is not included.
+>
+> This is an independent community beta, **not the official Nightfall Core miner**.
 
-## Download and verify
+## New user? Install in 2 steps
 
-**[Download V2 Linux miner (.run)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run)** · **[SHA-256 checksum](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run.sha256)** · [V2 release notes](docs/RELEASE_NOTES_V2_CORE112.md)
+You'll need a **public NIGHT payout address** (starts with `nf1`). Never enter your wallet's recovery phrase or private key.
 
-Copy into your Linux terminal:
+### 1. Download and check the miner
+
+Copy this into an Ubuntu/Linux terminal:
 
 ```bash
 mkdir -p "$HOME/nightfall-download" && cd "$HOME/nightfall-download"
@@ -30,36 +31,26 @@ sha256sum -c "$FILE.sha256" &&
 bash "$FILE" --verify
 ```
 
-Expected result: `ONEFILE_BETA6_PACKAGE_SELFTEST_PASS`. **Do not install if the SHA-256 or package self-test fails.**
+Look for **`ONEFILE_BETA6_PACKAGE_SELFTEST_PASS`** (the internal self-test name is retained in V2). If the checksum or self-test fails, **do not install**.
 
-Verified V2 `.run` SHA-256:
+### 2. Install
 
-```text
-5d6e4935be8ab677b28502dc4f9f8494fc4f12c8dc849788cac31e64f4df5700
-```
-
-The internal package version is `1.3.8-rc3-beta.6-p1`; the public GitHub release tag is simply **`V2`**. These names are intentional.
-
-## New installation
-
-Run in the directory containing the verified `.run` file. You need a compatible NVIDIA GPU and driver, network access, and your **public NIGHT payout address**.
+In the same terminal and download folder:
 
 ```bash
-FILE=nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run
-read -r -p "Public NIGHT address (nf1...): " ADDR
+read -r -p "Your public NIGHT payout address (nf1...): " ADDR
 bash "$FILE" --install --address "$ADDR"
 ```
 
-The installer selects a normal-user installation or root/system installation according to your Linux account. The node synchronizes first. The canonical-chain guard holds mining in `SYNCING_SAFE_WAIT` until it is safe to begin.
+The installer uses your current Linux account (no `sudo` required for a normal-user installation). Your node syncs with the network first; mining starts when the chain is ready and peers agree. **`SYNCING_SAFE_WAIT` is normal while syncing.**
 
-**Never provide your wallet seed, recovery phrase, private key or exchange credentials.**
+## Already mining? Upgrade to V2
 
-## Upgrade from Beta 6 (Core 1.1.1)
+Your existing blockchain, payout settings, mining history and GPU fee records are preserved by the supported upgrade process. **Use the same Linux account that installed the miner.** First complete **Step 1 above** to download and verify V2.
 
-**Stop → review upgrade plan → upgrade → restart.** Existing blockchain data, payout configuration, mining history and GPU-fee accounting are retained. Use the same account that installed the previous version, and run these commands from the V2 download directory.
+**Stop the old miner and preview the upgrade:**
 
 ```bash
-FILE=nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run
 CTL="$HOME/.local/bin/minerctl"
 [ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
 
@@ -67,7 +58,7 @@ CTL="$HOME/.local/bin/minerctl"
 bash "$FILE" --upgrade --plan
 ```
 
-**Check the existing application and blockchain paths printed by the plan.** If correct:
+Check the installation and blockchain paths shown by the plan. If everything is correct:
 
 ```bash
 bash "$FILE" --upgrade
@@ -75,31 +66,29 @@ bash "$FILE" --upgrade
 "$CTL" doctor
 ```
 
-If the previous installation used a custom `--prefix PATH`, supply that original prefix to **both** upgrade commands and use its matching `minerctl`. Do not install over a running node or replace the Core executable manually.
+Using a custom installation folder? Add your original `--prefix PATH` to **both** upgrade commands and use its matching `minerctl`. **Don't replace the Core executable manually or upgrade while mining is running.**
 
-## Monitor your miner
-
-After installation, on a normal-user account use `~/.local/bin/minerctl`; for root/system installations use `/opt/nightfall-miner/minerctl`.
+## Check your miner
 
 ```bash
 CTL="$HOME/.local/bin/minerctl"
 [ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
+
 "$CTL" status
 "$CTL" doctor
 "$CTL" dashboard 5
 ```
 
-Dashboard `Ctrl+C` closes only the display; use `"$CTL" stop` to stop mining.
+The dashboard updates every 5 seconds. Press `Ctrl+C` to close **only the dashboard**. To control mining, use `"$CTL" stop` or `"$CTL" start`.
 
-## V2 changes and limitations
+## Good to know
 
-- **Core 1.1.2** improves initial blockchain sync (short IBD pages), peer-specific reorg recovery, crash durability of blockchain storage, and light API validation.
-- **Same Nightfall PoW and GPU kernels** as the previous Beta 6, including the Mainnet binding consensus activation at height 500,000.
-- **GPU developer fee: 4.5% of completed GPU work. CPU developer fee: 0%.** Fee shares settle over multiple jobs, not necessarily each individual batch.
-- GTX 1660 SUPER has passed V2 startup and integrity diagnostics. Core 1.1.2 passed private consensus, storage, IBD and GPU USER/DEV DEVNET tests. Extended multi-GPU Mainnet acceptance and developer-fee convergence are not yet independently demonstrated; no accepted Mainnet block is claimed.
-- **AMD HIP is experimental**: included AMD workers have not been physically validated. Windows is **not** included in this Linux release.
-- Independent community beta software; uptime, GPU compatibility, hashrate and mining rewards are not guaranteed.
+- **NVIDIA CUDA + CPU:** precompiled workers for multiple GPU generations. You need a compatible driver, not a local CUDA Toolkit.
+- **Nightfall Core 1.1.2:** better blockchain sync, fork recovery and storage handling. The required Mainnet upgrade at block **500,000** is included.
+- **Developer fee:** **4.5% of completed GPU mining work**; **0% on CPU mining**.
+- **AMD HIP:** experimental and **not tested on physical AMD GPUs**. Not recommended for beginners.
+- **Beta:** GTX 1660 SUPER V2 startup/integrity testing passed, but long Mainnet mining performance and rewards are **not guaranteed**.
 
-[Full V2 release notes](docs/RELEASE_NOTES_V2_CORE112.md) · [Report an issue](https://github.com/Larppak/Nightfall-GPU-Miner/issues) · [License and third-party notices](LICENSE) · [Previous Beta 6](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.6)
+**Need help?** [Troubleshooting](docs/TROUBLESHOOTING.md) · [Full V2 release notes](docs/RELEASE_NOTES_V2_CORE112.md) · [Report a problem](https://github.com/Larppak/Nightfall-GPU-Miner/issues) · [License](LICENSE)
 
-**Important — GitHub automatically lists “Source code (zip)” and “Source code (tar.gz)” for every release. These are repository snapshots, NOT the working GPU miner. Download only the verified `.run` asset above. The self-extracting package is not encryption.**
+*Important: GitHub's automatically generated “Source code (zip)” and “Source code (tar.gz)” files are **not** the ready-to-run miner. Download the `.run` file linked above.*
