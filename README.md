@@ -82,6 +82,8 @@ If the previous installation used a custom `--prefix PATH`, supply that original
 After installation, on a normal-user account use `~/.local/bin/minerctl`; for root/system installations use `/opt/nightfall-miner/minerctl`.
 
 ```bash
+CTL="$HOME/.local/bin/minerctl"
+[ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
 "$CTL" status
 "$CTL" doctor
 "$CTL" dashboard 5
