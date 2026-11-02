@@ -28,7 +28,7 @@ Download these **two verified release assets**. GitHub's automatic Source code Z
 ```bash
 mkdir -p "$HOME/nightfall-download" && cd "$HOME/nightfall-download"
 FILE=nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run
-BASE=https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.6-p1
+BASE=https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2
 curl -fL --retry 3 -o "$FILE" "$BASE/$FILE" &&
 curl -fL --retry 3 -o "$FILE.sha256" "$BASE/$FILE.sha256" &&
 sha256sum -c "$FILE.sha256" &&
