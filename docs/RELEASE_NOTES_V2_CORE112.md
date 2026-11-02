@@ -2,7 +2,7 @@
 
 **New Linux pre-release · NVIDIA CUDA + CPU · AMD HIP experimental**
 
-A simpler, single-file NIGHTFALLCOIN (NIGHT) miner, now based on **Nightfall Core 1.1.2**. V2 is the release name; the verified package's internal version is **1.3.8-rc3-beta.6-p1**.
+A simpler, single-file NIGHTFALLCOIN (NIGHT) miner, now based on **Nightfall Core 1.1.2**. GitHub release tag: **V2**. The verified Linux package's internal version remains **1.3.8-rc3-beta.6-p1**.
 
 ### What's changed?
 
@@ -14,12 +14,12 @@ A simpler, single-file NIGHTFALLCOIN (NIGHT) miner, now based on **Nightfall Cor
 
 ### Download (Linux x86-64)
 
-Download these **two release assets** (not the automatically generated source ZIP):
+Download these **two verified release assets**. GitHub's automatic Source code ZIP/TAR files contain repository snapshots, **not** the working miner:
 
-- [Linux V2 miner (.run)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.6-p1/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run)
-- [SHA-256 checksum (.run.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/v1.3.8-rc3-beta.6-p1/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run.sha256)
+- [Linux V2 miner (.run)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run)
+- [SHA-256 checksum (.run.sha256)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run.sha256)
 
-**Expected SHA-256 of the .run:**
+**Expected SHA-256 of the .run** (23,093,688 bytes):
 
 `5d6e4935be8ab677b28502dc4f9f8494fc4f12c8dc849788cac31e64f4df5700`
 
