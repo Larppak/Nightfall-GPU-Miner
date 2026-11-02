@@ -1,5 +1,19 @@
 # Changelog
 
+## Nightfall GPU Miner V2 — Core 1.1.2 (Linux pre-release; 2026-11-02)
+
+- **[Download V2](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2)** — Linux one-file `.run` + `.sha256` only. GitHub tag: `V2`; miner internal version `1.3.8-rc3-beta.6-p1`.
+- Rebuilt patched Nightfall Core **1.1.2** with the existing GPU RPC, optimized CPU backend, canonical sync guard and GPU USER/DEV payout handling.
+- Includes upstream short-IBD-page, peer-scoped fork recovery, disk durability and light API fixes. No new mining algorithm, mandatory fork-height change or CUDA/HIP worker replacement.
+- Retains **4.5% GPU developer work fee**, **0% CPU fee**, stopped upgrade/rollback and existing chain/payout/accounting preservation.
+- Upstream Core build and private node/consensus/crypto/storage/IBD/reorg/DEVNET GPU USER/DEV RPC checks passed; NVIDIA GTX 1660 SUPER V2 startup and integrity diagnostics passed. Physical AMD HIP remains experimental; no accepted Mainnet GPU block is claimed.
+- Published `.run` SHA256: `5d6e4935be8ab677b28502dc4f9f8494fc4f12c8dc849788cac31e64f4df5700`.
+- GitHub auto-generated *Source code* archives are repository snapshots, **not the ready-to-run miner**.
+
+## Nightfall GPU Miner Beta 6 — Core 1.1.1 (historical; 2026-10-31)
+
+- [Previous Beta 6 release](https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/v1.3.8-rc3-beta.6) introduced mandatory block-500,000 binding consensus support and Linux OneFile distribution.
+
 ## v1.3.8-rc3-beta.5-p2 — NVIDIA + Experimental AMD (2026-10-26)
 
 - Nightfall Core **1.0.11** with canonical-peer guard, FastSync and
