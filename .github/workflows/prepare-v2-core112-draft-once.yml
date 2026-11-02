@@ -1,0 +1,64 @@
+name: Prepare Nightfall GPU Miner V2 Core 1.1.2 DRAFT only (no assets, no publish)
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/prepare-v2-core112-draft-once.yml]
+permissions:
+  contents: write
+jobs:
+  create_draft:
+    if: github.repository == 'Larppak/Nightfall-GPU-Miner'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: Larppak/Nightfall-GPU-Miner
+      TAG: v1.3.8-rc3-beta.6-p1
+      SHA: 5d6e4935be8ab677b28502dc4f9f8494fc4f12c8dc849788cac31e64f4df5700
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Create unpublished V2 draft for manual binary asset upload
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          NOTES=docs/RELEASE_NOTES_V2_CORE112.md
+          test -s "$NOTES"
+          grep -Fq 'Nightfall GPU Miner V2' "$NOTES"
+          grep -Fq "$SHA" "$NOTES"
+          gh api "repos/$REPO/releases?per_page=100" > "$RUNNER_TEMP/releases-before.json"
+          if python3 - "$RUNNER_TEMP/releases-before.json" <<'PY'
+          import json,os,sys
+          rel=[d for d in json.load(open(sys.argv[1])) if d["tag_name"]==os.environ["TAG"]]
+          if len(rel)!=1 or rel[0]["draft"] is not True or len(rel[0]["assets"])!=0:
+              raise SystemExit(1)
+          print("V2_DRAFT_ALREADY_EXISTS")
+          PY
+          then
+            echo 'Existing matching empty draft retained'
+          else
+            python3 - "$RUNNER_TEMP/releases-before.json" <<'PY'
+          import json,os,sys
+          assert not any(d["tag_name"]==os.environ["TAG"] for d in json.load(open(sys.argv[1]))), "Release tag already exists with conflicting state; refusing duplicate"
+          PY
+            gh release create "$TAG" --repo "$REPO" --draft --prerelease \
+              --target main \
+              --title 'Nightfall GPU Miner V2 — Core 1.1.2 (Linux Beta)' \
+              --notes-file "$NOTES"
+          fi
+          gh api "repos/$REPO/releases?per_page=100" > "$RUNNER_TEMP/releases-after.json"
+          python3 - "$RUNNER_TEMP/releases-after.json" <<'PY'
+          import json,os,sys
+          ds=[d for d in json.load(open(sys.argv[1])) if d["tag_name"]==os.environ["TAG"]]
+          assert len(ds)==1,"Draft missing or duplicated"
+          d=ds[0]
+          assert d["draft"] is True and d["prerelease"] is True and len(d["assets"])==0
+          assert d["name"]=="Nightfall GPU Miner V2 — Core 1.1.2 (Linux Beta)"
+          assert os.environ["SHA"] in d["body"]
+          assert 'DO NOT' not in d["name"]
+          print("V2_CORE112_DRAFT_CREATED_PASS")
+          print("RELEASE_ID="+str(d["id"]))
+          print("EDIT=https://github.com/Larppak/Nightfall-GPU-Miner/releases/edit/"+d["html_url"].rsplit("/",1)[-1])
+          print("STATUS=draft, prerelease, assets=0, NOT PUBLISHED")
+          PY
