@@ -2,26 +2,7 @@
 
 # Nightfall GPU Miner
 
-<pre>
-             .                           .
-       .-._\|/_.-.                   .-._\|/_.-.
-      /  _  |  _  \    .-"""""""-.   /  _  |  _  \
-         \ \|/ /     .'========='.     \ \|/ /
-      ----\|/----   /=============\  ----\|/----
-           |       |===============|      |
-           |       |----=======----|      |
-          /|        \===-------===/       |\
-         / |         '-._______.-'        | \
-        /  |      _   ___   _____  _      |  \
-           |     | | |[]|  |[][]| | |     |
-           |     | |_|[]|__|[][]|_| |     |
-    _______|_____|___|___|______|___|_____|_______
-        \            \    |    /            /
-         \____________\___|___/____________/
-
-             N I G H T F A L L
-               G P U  M I N E R
-</pre>
+<img src="assets/nightfall-miami-vice-banner.svg" alt="Nightfall GPU Miner — NVIDIA GPU + CPU mining for Nightfall" width="100%">
 
 **Mine NIGHTFALLCOIN (NIGHT) on Linux using your NVIDIA GPU and CPU.**
 
