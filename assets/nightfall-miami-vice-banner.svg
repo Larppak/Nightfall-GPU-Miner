@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="420" viewBox="0 0 1500 420" role="img" aria-labelledby="title desc">
+<title id="title">Nightfall GPU Miner</title>
+<desc id="desc">Miami Vice-inspired neon sunset banner, NVIDIA GPU + CPU mining for Nightfall.</desc>
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#020b2b"/><stop offset=".48" stop-color="#12104b"/><stop offset=".82" stop-color="#681057"/><stop offset="1" stop-color="#fa317e"/></linearGradient>
+  <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#ff2fae"/><stop offset=".48" stop-color="#ff4e8b"/><stop offset=".85" stop-color="#ff835b"/><stop offset="1" stop-color="#ffb875"/></linearGradient>
+  <linearGradient id="water" x2="0" y2="1"><stop stop-color="#130c46"/><stop offset="1" stop-color="#010824"/></linearGradient>
+  <linearGradient id="cyan" x2="1"><stop stop-color="#e0fdff"/><stop offset=".5" stop-color="#4beeff"/><stop offset="1" stop-color="#00dfff"/></linearGradient>
+  <filter id="pinkglow" x="-30%" y="-120%" width="160%" height="340%"><feGaussianBlur stdDeviation="9"/></filter>
+  <filter id="blueglow" x="-30%" y="-120%" width="160%" height="340%"><feGaussianBlur stdDeviation="8"/></filter>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="17"/></filter>
+  <clipPath id="sunclip"><circle cx="745" cy="172" r="170"/></clipPath>
+  <g id="palm"><path d="M0 0C-8 -60 -20 -140 -50 -226" fill="none" stroke="#02051b" stroke-width="23" stroke-linecap="round"/>
+    <path d="M-48 -224Q-135 -275 -205 -213Q-140 -245 -60 -212Z M-48 -224Q-157 -224 -225 -153Q-140 -205 -52 -211Z M-48 -224Q-95 -311 -164 -319Q-116 -288 -45 -216Z M-48 -224Q15 -329 85 -306Q12 -295 -51 -217Z M-48 -224Q45 -251 116 -216Q36 -227 -55 -212Z M-48 -224Q-10 -315 -44 -347Q-27 -300 -49 -211Z" fill="#040521" stroke="#d91897" stroke-width="2"/>
+    <path d="M-45 -219Q-111 -279 -170 -274M-44 -218Q27 -307 65 -304M-45 -218Q55 -244 106 -220" fill="none" stroke="#ff3cb7" stroke-width="2" opacity=".7"/>
+  </g>
+</defs>
+<rect width="1500" height="420" fill="url(#sky)"/>
+<ellipse cx="760" cy="280" rx="590" ry="100" fill="#f71c8a" opacity=".3" filter="url(#soft)"/>
+<circle cx="745" cy="172" r="170" fill="url(#sun)" opacity=".48" filter="url(#pinkglow)"/>
+<circle cx="745" cy="172" r="170" fill="url(#sun)"/>
+<g clip-path="url(#sunclip)" stroke="#18052a" stroke-width="8" opacity=".90"><path d="M570 142H920M570 175H920M570 209H920M570 239H920M570 266H920M570 290H920M570 310H920M570 328H920M570 345H920"/></g>
+<g fill="#09072c" stroke="#e92aa8" stroke-width="1.2"><path d="M800 302V267h16v-39h21v74h17v-29h18v29h20v-61h22v61h18v-84h25v84h12v-34h20v34h16v-56h30v56h11v-43h30v43h19v-78h35v78h17v-55h19v55h13v-97h35v97h18v-51h20v51h28v-127h36v127h20v-58h32v58h16v-82h39v82h24v-113h45v113h26v-79h26v79h40v-106h44v106h20v-77h18v77h43v118H790Z"/></g>
+<g fill="#17e9ff" opacity=".8"><path d="M1128 236h3v4h-3zm10 0h3v4h-3zm-10 13h3v4h-3zm10 13h3v4h-3zm56-16h3v4h-3zm12 0h3v4h-3zm12 0h3v4h-3zm-24 13h3v4h-3zm24 13h3v4h-3zm47-43h3v4h-3zm13 0h3v4h-3zm-13 15h3v4h-3zm13 15h3v4h-3zm58-30h3v4h-3zm10 12h3v4h-3zm-10 12h3v4h-3zm56-25h3v4h-3zm14 0h3v4h-3zm14 11h3v4h-3z"/></g>
+<path d="M0 301H1500" stroke="#fd52ba" stroke-width="5" opacity=".85"/>
+<rect y="303" width="1500" height="117" fill="url(#water)"/>
+<g stroke="#ed2cc0" stroke-width="2" opacity=".75"><path d="M0 325H1500M0 343H1500M0 369H1500M0 405H1500"/></g>
+<g stroke="#00e9ff" stroke-width="2.7" opacity=".91"><path d="M745 302L40 420M745 302L310 420M745 302L515 420M745 302L690 420M745 302L805 420M745 302L975 420M745 302L1190 420M745 302L1460 420"/></g>
+<g stroke="#ea28a8" stroke-width="1" opacity=".5"><path d="M0 315H1500M0 352H1500M0 387H1500"/></g>
+<g transform="translate(115 407) scale(.88)"><use href="#palm"/></g>
+<g transform="translate(1475 430) scale(-.72 .77)"><use href="#palm"/></g>
+<g text-anchor="middle" font-weight="bold"><text x="718" y="206" fill="#ff32bb" opacity=".9" font-size="112" font-family="Brush Script MT,Segoe Script,cursive" font-style="italic" filter="url(#pinkglow)">Nightfall</text><text x="718" y="206" fill="#ff52c5" font-size="112" font-family="Brush Script MT,Segoe Script,cursive" font-style="italic">Nightfall</text>
+<text x="750" y="260" font-family="Arial,Helvetica,sans-serif" font-size="84" font-style="italic" letter-spacing="5" fill="#00dcff" filter="url(#blueglow)">GPU MINER</text><text x="750" y="260" font-family="Arial,Helvetica,sans-serif" font-size="84" font-style="italic" letter-spacing="5" fill="url(#cyan)">GPU MINER</text></g>
+<path d="M425 274Q750 286 1105 268" fill="none" stroke="#00ecff" stroke-width="5" opacity=".9"/>
+<rect x="285" y="279" width="930" height="40" rx="8" fill="#100b43" opacity=".83"/>
+<text x="750" y="307" text-anchor="middle" fill="white" font-size="31" font-style="italic" font-weight="bold" font-family="Arial,Helvetica,sans-serif" letter-spacing="1">NVIDIA GPU + CPU mining for Nightfall</text>
+</svg>
