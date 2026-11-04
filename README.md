@@ -2,6 +2,17 @@
 
 # Nightfall GPU Miner
 
+<pre>
+             .       *          .       *
+        *            _..._
+                   .'     '.
+                  /         \
+                  \         /
+                   '-.___.-'
+         _/\_        /\        _/\_
+     ___/    \______/  \______/    \___
+</pre>
+
 **Mine NIGHTFALLCOIN (NIGHT) on Linux using your NVIDIA GPU and CPU.**
 
 Easy installation, automatic blockchain syncing, and a live mining dashboard. The miner comes with prebuilt CUDA workers — **no CUDA Toolkit or compiling required**.
