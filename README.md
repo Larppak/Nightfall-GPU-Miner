@@ -131,6 +131,19 @@ These are **approximate historical NIGHT mining results**, collected across diff
 | RTX 5060 Ti 16 GB | 5.92 kH/s | Earlier development measurement |
 | RTX 4070 Ti SUPER | 9.08 kH/s | Earlier development measurement |
 
+### CPU mining examples
+
+For comparison, here are **historical NIGHT CPU mining measurements**. CPU rates are shown in both H/s and kH/s (1 kH/s = 1,000 H/s).
+
+| CPU | Approx. hashrate | Equivalent |
+| --- | ---: | ---: |
+| AMD EPYC 7D12 | 520–674 H/s | 0.520–0.674 kH/s |
+| Intel Xeon E5 series | 115–635 H/s | 0.115–0.635 kH/s |
+| AMD EPYC 7272 | 358 H/s | 0.358 kH/s |
+| Intel Core i7 (8th generation) | 258 H/s | 0.258 kH/s |
+
+For scale, the RTX 3060 example above is **4,800 H/s**, compared with **520–674 H/s** for the EPYC 7D12 example. These are different systems and test conditions, **not a matched CPU-versus-GPU benchmark**. CPU speed varies with the processor, core/thread count and settings.
+
 **Results are not directly comparable:** some are offline worker measurements and others are field observations. Raw GPU hashrate, effective hashrate and actual rewards may differ because of GPU tuning, power limits, driver versions, node synchronization, stale work and mining luck. See [historical benchmarks](docs/HISTORICAL_BENCHMARKS.md) and [compatibility/test scope](docs/COMPATIBILITY.md) for more context.
 
 ---
