@@ -96,6 +96,9 @@ Using a custom installation folder? Add your original `--prefix PATH` to **both*
 
 ## Check your miner
 
+
+Quickest way to just type mine
+
 ```bash
 CTL="$HOME/.local/bin/minerctl"
 [ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
