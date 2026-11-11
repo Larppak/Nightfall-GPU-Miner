@@ -125,6 +125,7 @@ These are **approximate historical NIGHT mining results**, collected across diff
 | GTX 1070 | 2.60 kH/s | RC3 offline worker test |
 | GTX 1660 Ti | 3.45 kH/s | User-reported measurement |
 | RTX 3060 | 4.80 kH/s | User-reported measurement |
+| RTX 3060 Ti | 5.80 kH/s | User-reported measurement |
 | RTX 3070 | 4.68 kH/s | RC3 offline worker test |
 | RTX 4060 Ti 16 GB | 4.17 kH/s | RC3 offline worker test |
 | Quadro RTX 5000 | 5.40 kH/s | RC3 offline worker test |
