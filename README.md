@@ -56,15 +56,25 @@ bash "$FILE" --install --address "$ADDR"
 
 The installer uses your current Linux account (no `sudo` required for a normal-user installation).
 
-**Installation complete? Open your dashboard:**
+---
+
+## Open your mining dashboard
+
+After installation, **just type `mine`** to open your live dashboard:
 
 ```bash
 mine
 ```
 
-Your node syncs with the network first; mining starts when the chain is ready and peers agree.
+![Nightfall GPU Miner dashboard screenshot](assets/nightfall-dashboard-example.webp)
 
-> **`SYNCING_SAFE_WAIT` is normal while syncing.**
+*Example of the live terminal dashboard. Hashrates, block counts, rewards and network status vary; locally accepted blocks are not necessarily confirmed wallet rewards.*
+
+The dashboard shows GPU and CPU hashrates, blockchain synchronization, mining status, temperatures, power usage, rolling performance averages and recent events. Your node syncs automatically; `SYNCING_SAFE_WAIT` is normal until the chain is ready and canonical peer checks pass.
+
+Press `Q` or `Ctrl+C` to close **only the dashboard view**. Mining and synchronization continue in the background.
+
+For advanced controls, use your installation's `minerctl` (`status`, `doctor`, `start` or `stop`). See [Troubleshooting](docs/TROUBLESHOOTING.md) for the full command paths.
 
 ---
 
@@ -97,22 +107,6 @@ bash "$FILE" --upgrade
 Using a custom installation folder? Add your original `--prefix PATH` to **both** upgrade commands and use its matching `minerctl`.
 
 > **Don't replace the Core executable manually or upgrade while mining is running.**
-
----
-
-## Open your mining dashboard
-
-After installation, open the live dashboard with **one command**:
-
-```bash
-mine
-```
-
-The dashboard shows GPU and CPU hashrates, blockchain synchronization, mining status, and performance statistics. It also works while the node is syncing: `SYNCING_SAFE_WAIT` means mining is safely paused until the chain is ready.
-
-Press `Q` or `Ctrl+C` to close **only the dashboard**. Mining and node synchronization continue in the background.
-
-For advanced controls, use your installation's `minerctl` (`status`, `doctor`, `start`, or `stop`). See [Troubleshooting](docs/TROUBLESHOOTING.md) for the full command paths.
 
 ---
 
