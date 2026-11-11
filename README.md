@@ -6,7 +6,7 @@
 
 **Mine NIGHTFALLCOIN (NIGHT) on Linux using your NVIDIA GPU and CPU.**
 
-Easy installation, automatic blockchain syncing, and a live mining dashboard. The miner comes with prebuilt CUDA workers — **no CUDA Toolkit or compiling required**.
+Easy installation, automatic blockchain syncing, and a live mining dashboard. **After installation, just type `mine` to open the dashboard.** Prebuilt CUDA workers mean **no CUDA Toolkit or compiling required**.
 
 **Latest: V2 · Nightfall Core 1.1.2 · Linux x86-64 · Beta**
 
@@ -56,6 +56,12 @@ bash "$FILE" --install --address "$ADDR"
 
 The installer uses your current Linux account (no `sudo` required for a normal-user installation).
 
+**Installation complete? Open your dashboard:**
+
+```bash
+mine
+```
+
 Your node syncs with the network first; mining starts when the chain is ready and peers agree.
 
 > **`SYNCING_SAFE_WAIT` is normal while syncing.**
@@ -94,21 +100,19 @@ Using a custom installation folder? Add your original `--prefix PATH` to **both*
 
 ---
 
-## Check your miner
+## Open your mining dashboard
 
-
-Quickest way to just type mine
+After installation, open the live dashboard with **one command**:
 
 ```bash
-CTL="$HOME/.local/bin/minerctl"
-[ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
-
-"$CTL" status
-"$CTL" doctor
-"$CTL" dashboard 5
+mine
 ```
 
-The dashboard updates every 5 seconds. Press `Ctrl+C` to close **only the dashboard**. To control mining, use `"$CTL" stop` or `"$CTL" start`.
+The dashboard shows GPU and CPU hashrates, blockchain synchronization, mining status, and performance statistics. It also works while the node is syncing: `SYNCING_SAFE_WAIT` means mining is safely paused until the chain is ready.
+
+Press `Q` or `Ctrl+C` to close **only the dashboard**. Mining and node synchronization continue in the background.
+
+For advanced controls, use your installation's `minerctl` (`status`, `doctor`, `start`, or `stop`). See [Troubleshooting](docs/TROUBLESHOOTING.md) for the full command paths.
 
 ---
 
