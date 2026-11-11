@@ -116,6 +116,25 @@ For advanced controls, use your installation's `minerctl` (`status`, `doctor`, `
 
 ---
 
+## Example NVIDIA GPU hashrates
+
+These are **approximate historical NIGHT mining results**, collected across different miner versions, GPUs and test conditions. They are **not guaranteed V2 performance** or expected mining rewards.
+
+| NVIDIA GPU | Approx. hashrate | Source |
+| --- | ---: | --- |
+| GTX 1070 | 2.60 kH/s | RC3 offline worker test |
+| GTX 1660 Ti | 3.45 kH/s | User-reported measurement |
+| RTX 3060 | 4.80 kH/s | User-reported measurement |
+| RTX 3070 | 4.68 kH/s | RC3 offline worker test |
+| RTX 4060 Ti 16 GB | 4.17 kH/s | RC3 offline worker test |
+| Quadro RTX 5000 | 5.40 kH/s | RC3 offline worker test |
+| RTX 5060 Ti 16 GB | 5.92 kH/s | Earlier development measurement |
+| RTX 4070 Ti SUPER | 9.08 kH/s | Earlier development measurement |
+
+**Results are not directly comparable:** some are offline worker measurements and others are field observations. Raw GPU hashrate, effective hashrate and actual rewards may differ because of GPU tuning, power limits, driver versions, node synchronization, stale work and mining luck. See [historical benchmarks](docs/HISTORICAL_BENCHMARKS.md) and [compatibility/test scope](docs/COMPATIBILITY.md) for more context.
+
+---
+
 ## Good to know
 
 - **NVIDIA CUDA + CPU:** precompiled workers for multiple GPU generations. You need a compatible driver, not a local CUDA Toolkit.
