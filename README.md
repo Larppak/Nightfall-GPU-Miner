@@ -1,158 +1,64 @@
-<div align="center">
-
 # Nightfall GPU Miner
 
-<img src="assets/nightfall-miami-vice-banner.svg" alt="Nightfall GPU Miner — NVIDIA GPU + CPU mining for Nightfall" width="100%">
+![Nightfall GPU Miner banner](https://raw.githubusercontent.com/Larppak/Nightfall-GPU-Miner/main/assets/nightfall-miami-vice-banner.svg)
 
-**Mine NIGHTFALLCOIN (NIGHT) on Linux using your NVIDIA GPU and CPU.**
+Mine **NIGHT** with your NVIDIA GPU on Windows or Linux. On Linux, Lmux also offers **Pearl Solo** and **NIGHT + Pearl** on supported cards. Both miners are independent community builds and include prebuilt GPU workers.
 
-Easy installation, automatic blockchain syncing, and a live mining dashboard. **After installation, just type `mine` to open the dashboard.** Prebuilt CUDA workers mean **no CUDA Toolkit or compiling required**.
+| Choose your platform | Download | Release |
+|---|---|---|
+| **Windows 10/11 x64** | [Windows ZIP][win-zip] · [SHA-256][win-sha] | [Alpha 1 RC1 · Nightfall Core 1.1.6][win] |
+| **Linux x86-64** | [Online installer (135 KiB)][linux-online] · [SHA-256][linux-online-sha] | [Lmux 2.6.1 · Build 26109 · Nightfall Core 1.1.5][linux] |
 
-**Latest: V2 · Nightfall Core 1.1.2 · Linux x86-64 · Beta**
+## Start on Windows
 
-**[Download V2 for Linux (.run)](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run)** · [SHA-256 checksum](https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2/nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run.sha256) · [What's new in V2](docs/RELEASE_NOTES_V2_CORE112.md)
+1. Download the Windows ZIP and its SHA-256 file. In PowerShell, run `Get-FileHash .\Nightfall-Windows.zip -Algorithm SHA256` and compare the hash with the one in the checksum file.
+2. Extract the entire ZIP to a new folder and open **Nightfall.cmd**. Under **Setup & Devices**, enter your public `nf1…` receiving address, choose a Mainnet data folder and select your NVIDIA GPU.
+3. Choose **Start mining**. When you finish, choose **Stop mining** and wait for cleanup before closing the app or switching versions.
 
-</div>
+The Windows miner runs NIGHT on the GPU with CPU mining disabled. It includes CUDA workers for SM 6.1, 7.5, 8.6, 8.9 and 12.0. For a first chain sync, the release notes explain how to import the official FastSync snapshot. [Windows release notes][win]
 
-> **Linux only.** Ubuntu 24.04 (64-bit) and a compatible NVIDIA driver are recommended. AMD HIP is included as an **untested experimental preview**. Windows is not included.
->
-> This is an independent community beta, **not the official Nightfall Core miner**.
+![Windows miner dashboard during a mining session][win-dashboard]
 
----
+## Start on Linux
 
-## New user? Install in 2 steps
-
-You'll need a **public NIGHT payout address** (starts with `nf1`).
-
-> Never enter your wallet's recovery phrase or private key.
-
-### 1. Download and check the miner
-
-Copy this into an Ubuntu/Linux terminal:
+On Ubuntu 24.04 x86-64, use a working NVIDIA driver, Python 3.10 or later and OpenSSL. Download the online installer and its checksum from the table above. Run these commands in the download directory. The installer detects your GPU and fetches the matching runtime.
 
 ```bash
-mkdir -p "$HOME/nightfall-download" && cd "$HOME/nightfall-download"
-FILE=nightfall-miner-v1.3.8-rc3-beta.6-p1-linux-x86_64.run
-URL=https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/V2
-
-curl -fL --retry 3 -o "$FILE" "$URL/$FILE" &&
-curl -fL --retry 3 -o "$FILE.sha256" "$URL/$FILE.sha256" &&
-sha256sum -c "$FILE.sha256" &&
-bash "$FILE" --verify
+sha256sum -c LMUX-26109-Linux-Online.run.sha256 &&
+  python3 LMUX-26109-Linux-Online.run
 ```
 
-Look for **`ONEFILE_BETA6_PACKAGE_SELFTEST_PASS`** (the internal self-test name is retained in V2).
+Choose an idle GPU and one of the modes shown for it. Enter the public payout address for each coin, then confirm with `y`. NIGHT setup may calibrate the GPU and synchronize the chain. To monitor mining, open a second terminal and run the dashboard command printed by the installer.
 
-> If the checksum or self-test fails, **do not install**.
+To inspect your GPUs before starting, run `python3 LMUX-26109-Linux-Online.run --list-gpus`. NIGHT supports eligible rigs with 2–8 GPUs. Pearl Solo and dual mining use one supported GPU. [Linux release notes and GPU benchmarks][linux]
 
-### 2. Install
+![Linux miner dashboard from the V2 release][linux-dashboard]
 
-In the same terminal and download folder:
+*Linux dashboard example from the earlier V2 release.*
 
-```bash
-read -r -p "Your public NIGHT payout address (nf1...): " ADDR
-bash "$FILE" --install --address "$ADDR"
-```
+For an offline installation, download the [all-in-one ZIP (293 MiB)][linux-zip] and its [SHA-256 file][linux-sha]. The [Linux release notes][linux] include extraction and setup commands.
 
-The installer uses your current Linux account (no `sudo` required for a normal-user installation).
+## How fast is it?
 
----
+On an **RTX 3060 12 GB**, Lmux NIGHT Solo reported **4,410 H/s** and the Night Core GPU reference reported **2,930 H/s**. Across 15 GPU models with paired results, Lmux reported **93.5% higher H/s on average**. These five-minute Linux tests used builds 26104–26105. The reference counts completed GPU hashes, while the Lmux counter may include other work. The full table gives per-card results, dual-mining rates and the measurement method. [See the benchmark table][bench]
 
-## Open your mining dashboard
+## Fees and support
 
-After installation, **just type `mine`** to open your live dashboard:
+Both miners charge a **4.5% developer fee on completed NIGHT GPU work**. Lmux charges a **0% application fee on Pearl**.
 
-```bash
-mine
-```
+[Report an issue][issues] · [Earlier Linux V2 release][v2] · [License][license]
 
-![Nightfall GPU Miner dashboard screenshot](assets/nightfall-dashboard-example.webp)
-
-*Example of the live terminal dashboard. Hashrates, block counts, rewards and network status vary; locally accepted blocks are not necessarily confirmed wallet rewards.*
-
-The dashboard shows GPU and CPU hashrates, blockchain synchronization, mining status, temperatures, power usage, rolling performance averages and recent events. Your node syncs automatically; `SYNCING_SAFE_WAIT` is normal until the chain is ready and canonical peer checks pass.
-
-Press `Q` or `Ctrl+C` to close **only the dashboard view**. Mining and synchronization continue in the background.
-
-For advanced controls, use your installation's `minerctl` (`status`, `doctor`, `start` or `stop`). See [Troubleshooting](docs/TROUBLESHOOTING.md) for the full command paths.
-
----
-
-## Already mining? Upgrade to V2
-
-Your existing blockchain, payout settings, mining history and GPU fee records are preserved by the supported upgrade process.
-
-> **Use the same Linux account that installed the miner.**
-
-First complete **Step 1 above** to download and verify V2.
-
-**Stop the old miner and preview the upgrade:**
-
-```bash
-CTL="$HOME/.local/bin/minerctl"
-[ "$(id -u)" -eq 0 ] && CTL=/opt/nightfall-miner/minerctl
-
-"$CTL" stop
-bash "$FILE" --upgrade --plan
-```
-
-Check the installation and blockchain paths shown by the plan. If everything is correct:
-
-```bash
-bash "$FILE" --upgrade
-"$CTL" start
-"$CTL" doctor
-```
-
-Using a custom installation folder? Add your original `--prefix PATH` to **both** upgrade commands and use its matching `minerctl`.
-
-> **Don't replace the Core executable manually or upgrade while mining is running.**
-
----
-
-## Example NVIDIA GPU hashrates
-
-These are **approximate historical NIGHT mining results**, collected across different miner versions, GPUs and test conditions. They are **not guaranteed V2 performance** or expected mining rewards.
-
-| NVIDIA GPU | Approx. hashrate | Source |
-| --- | ---: | --- |
-| GTX 1070 | 2.60 kH/s | RC3 offline worker test |
-| GTX TITAN X | 2.70 kH/s | User-reported measurement |
-| GTX 1660 Ti | 3.45 kH/s | User-reported measurement |
-| GTX 1660 SUPER | 3.90 kH/s | User-reported measurement |
-| RTX 3060 | 4.80 kH/s | User-reported measurement |
-| RTX 3060 Ti | 5.80 kH/s | User-reported measurement |
-| RTX 3070 | 4.68 kH/s | RC3 offline worker test |
-| RTX 4060 Ti 16 GB | 4.17 kH/s | RC3 offline worker test |
-| Quadro RTX 5000 | 5.40 kH/s | RC3 offline worker test |
-| RTX 5060 Ti 16 GB | 5.92 kH/s | Earlier development measurement |
-| RTX 4070 Ti SUPER | 9.08 kH/s | Earlier development measurement |
-
-### CPU mining examples
-
-For comparison, here are **historical NIGHT CPU mining measurements**. CPU rates are shown in both H/s and kH/s (1 kH/s = 1,000 H/s).
-
-| CPU | Approx. hashrate | Equivalent |
-| --- | ---: | ---: |
-| AMD EPYC 7D12 | 520–674 H/s | 0.520–0.674 kH/s |
-| Intel Xeon E5 series | 115–635 H/s | 0.115–0.635 kH/s |
-| AMD EPYC 7272 | 358 H/s | 0.358 kH/s |
-| Intel Core i7 (8th generation) | 258 H/s | 0.258 kH/s |
-
-For scale, the RTX 3060 example above is **4,800 H/s**, compared with **520–674 H/s** for the EPYC 7D12 example. These are different systems and test conditions, **not a matched CPU-versus-GPU benchmark**. CPU speed varies with the processor, core/thread count and settings.
-
-**Results are not directly comparable:** some are offline worker measurements and others are field observations. Raw GPU hashrate, effective hashrate and actual rewards may differ because of GPU tuning, power limits, driver versions, node synchronization, stale work and mining luck. See [historical benchmarks](docs/HISTORICAL_BENCHMARKS.md) and [compatibility/test scope](docs/COMPATIBILITY.md) for more context.
-
----
-
-## Good to know
-
-- **NVIDIA CUDA + CPU:** precompiled workers for multiple GPU generations. You need a compatible driver, not a local CUDA Toolkit.
-- **Nightfall Core 1.1.2:** better blockchain sync, fork recovery and storage handling. The required Mainnet upgrade at block **500,000** is included.
-- **Developer fee:** **4.5% of completed GPU mining work**; **0% on CPU mining**.
-- **AMD HIP:** experimental and **not tested on physical AMD GPUs**. Not recommended for beginners.
-- **Beta:** GTX 1660 SUPER V2 startup/integrity testing passed, but long Mainnet mining performance and rewards are **not guaranteed**.
-
-**Need help?** [Troubleshooting](docs/TROUBLESHOOTING.md) · [Full V2 release notes](docs/RELEASE_NOTES_V2_CORE112.md) · [Report a problem](https://github.com/Larppak/Nightfall-GPU-Miner/issues) · [License](LICENSE)
-
-> *Important: GitHub's automatically generated “Source code (zip)” and “Source code (tar.gz)” files are **not** the ready-to-run miner. Download the `.run` file linked above.*
+[win]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/windows-alpha-1-rc1
+[win-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Windows.zip
+[win-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Windows.zip.sha256
+[win-dashboard]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Dashboard-Session.png
+[linux]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/untagged-f42a0b37911f0fceccb2
+[linux-dashboard]: https://raw.githubusercontent.com/Larppak/Nightfall-GPU-Miner/main/assets/nightfall-dashboard-example.webp
+[linux-online]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux-Online.run
+[linux-online-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux-Online.run.sha256
+[linux-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux.zip
+[linux-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux.zip.sha256
+[bench]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/untagged-f42a0b37911f0fceccb2#night-performance-on-real-gpus
+[issues]: https://github.com/Larppak/Nightfall-GPU-Miner/issues
+[v2]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2
+[license]: https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/LICENSE
