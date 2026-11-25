@@ -7,7 +7,7 @@ Mine **NIGHT** with your NVIDIA GPU on Windows or Linux. On Linux, Lmux also off
 | Choose your platform | Download | Release |
 |---|---|---|
 | **Windows 10/11 x64** | [Windows ZIP][win-zip] · [SHA-256][win-sha] | [Alpha 1 RC1 · Nightfall Core 1.1.6][win] |
-| **Linux x86-64** | [Online installer (135 KiB)][linux-online] · [SHA-256][linux-online-sha] | [Lmux 2.6.1 · Build 26109 · Nightfall Core 1.1.5][linux] |
+| **Linux x86-64** | [Online installer (139 KiB)][linux-online] · [SHA-256][linux-online-sha] | [Lmux 2.6.1 · Build 26109 D1 · Nightfall Core 1.1.5][linux] |
 
 ## Start on Windows
 
@@ -61,6 +61,8 @@ If direct execution is unavailable, use `python3 LMUX-26109-Linux-Online.run` fr
 
 ### Open the Linux dashboard
 
+**Using the original build 26109?** Download the D1 online installer and checksum from the table above into a separate directory. Verify the checksum, then run the new installer with `--prefix "/actual/install/path" --dashboard` to open D1 against the existing installation. Add `--multi-gpu` for a multi-GPU rig. Keep the original launcher for starting that rig.
+
 **Terminal:** Open a second terminal on the miner (a second SSH session on Vast). Copy the complete command printed after **Dashboard in a second SSH terminal** during setup. It ends in `--dashboard` and already includes the correct installer path, installation directory and any `--multi-gpu` flag. The display refreshes every five seconds. Press **Ctrl+C** in this terminal to close the viewer while mining continues.
 
 **Browser on the Linux machine:** In a second terminal, run the command printed after **Browser dashboard on the miner**. It ends in `--web-dashboard`. Leave it running and open [the dashboard on localhost](http://127.0.0.1:17882/) in a browser on that machine.
@@ -112,13 +114,13 @@ Both miners charge a **4.5% developer fee on completed NIGHT GPU work**. Lmux ch
 [win-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Windows.zip
 [win-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Windows.zip.sha256
 [win-dashboard]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Dashboard-Session.png
-[linux]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/untagged-f42a0b37911f0fceccb2
+[linux]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/lmux-linux-26109-d1
 [linux-dashboard]: https://raw.githubusercontent.com/Larppak/Nightfall-GPU-Miner/main/assets/nightfall-dashboard-example.webp
-[linux-online]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux-Online.run
-[linux-online-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux-Online.run.sha256
-[linux-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux.zip
-[linux-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/untagged-f42a0b37911f0fceccb2/LMUX-26109-Linux.zip.sha256
-[bench]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/untagged-f42a0b37911f0fceccb2#night-performance-on-real-gpus
+[linux-online]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux-Online.run
+[linux-online-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux-Online.run.sha256
+[linux-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux.zip
+[linux-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux.zip.sha256
+[bench]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/lmux-linux-26109-d1#night-performance-on-real-gpus
 [issues]: https://github.com/Larppak/Nightfall-GPU-Miner/issues
 [v2]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2
 [license]: https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/LICENSE
