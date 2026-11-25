@@ -32,6 +32,39 @@ Choose an idle GPU and one of the modes shown for it. Enter the public payout ad
 
 To inspect your GPUs before starting, run `python3 LMUX-26109-Linux-Online.run --list-gpus`. NIGHT supports eligible rigs with 2–8 GPUs. Pearl Solo and dual mining use one supported GPU. [Linux release notes and GPU benchmarks][linux]
 
+### Open the Linux dashboard
+
+**Terminal:** Open a second terminal on the miner (a second SSH session on Vast). Copy the complete command printed after **Dashboard in a second SSH terminal** during setup. It ends in `--dashboard` and already includes the correct installer path, installation directory and any `--multi-gpu` flag. The display refreshes every five seconds. Press **Ctrl+C** in this terminal to close the viewer while mining continues.
+
+**Browser on the Linux machine:** In a second terminal, run the command printed after **Browser dashboard on the miner**. It ends in `--web-dashboard`. Leave it running and open [the dashboard on localhost](http://127.0.0.1:17882/) in a browser on that machine.
+
+**Browser on your own computer (Vast or another SSH host):**
+
+1. On the **remote miner**, start the `--web-dashboard` command above and leave it running.
+2. On **your own computer**, open PowerShell or a terminal. Copy the SSH connection details from Vast **Connect**. In the command below, replace `PORT`, `USER` and `HOST` with the SSH port, username and host from that connection. If your connection uses `-i` for a key file, include the same option here.
+
+   ```sh
+   ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:17882:127.0.0.1:17882 -p PORT USER@HOST
+   ```
+
+3. Leave the SSH tunnel running and open **http://127.0.0.1:17882/** on your own computer. A quiet SSH window is normal. If local port 17882 is busy, change the forwarding argument to `127.0.0.1:17883:127.0.0.1:17882` and open **http://127.0.0.1:17883/**. The remote dashboard listens on loopback, so the miner needs no public dashboard port.
+
+### Check status, get a support report or stop mining
+
+On the miner, reuse the terminal dashboard command printed during setup. Keep the same installer path, `--prefix` value and, for a multi-GPU installation, `--multi-gpu`. Replace the final `--dashboard` option with the action you want.
+
+| Action | Option |
+|---|---|
+| View the installed miner’s status | `--status` |
+| Print a single privacy-filtered JSON snapshot for troubleshooting | `--support-report` |
+| Stop mining for this installation | `--stop` |
+
+If you closed the setup terminal, run the following from the directory containing the online installer. Replace `/actual/install/path` with the **INSTALL PATH** shown during setup. For a multi-GPU installation, add `--multi-gpu`. If you installed from the ZIP, run `bash lmux.sh` from the extracted directory with the same options.
+
+```bash
+python3 LMUX-26109-Linux-Online.run --prefix "/actual/install/path" --dashboard
+```
+
 ![Linux miner dashboard from the V2 release][linux-dashboard]
 
 *Linux dashboard example from the earlier V2 release.*
