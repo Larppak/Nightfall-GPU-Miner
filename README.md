@@ -21,16 +21,43 @@ The Windows miner runs NIGHT on the GPU with CPU mining disabled. It includes CU
 
 ## Start on Linux
 
-On Ubuntu 24.04 x86-64, use a working NVIDIA driver, Python 3.10 or later and OpenSSL. Download the online installer and its checksum from the table above. Run these commands in the download directory. The installer detects your GPU and fetches the matching runtime.
+**Requirements:** Ubuntu 24.04 x86-64, NVIDIA driver, Python 3.10+ and OpenSSL. No CUDA Toolkit or compilation required.
+
+Download the online installer to `/workspace` and run:
 
 ```bash
-sha256sum -c LMUX-26109-Linux-Online.run.sha256 &&
-  python3 LMUX-26109-Linux-Online.run
+cd /workspace &&
+chmod +x LMUX-26109-Linux-Online.run &&
+./LMUX-26109-Linux-Online.run
 ```
 
-Choose an idle GPU and one of the modes shown for it. Enter the public payout address for each coin, then confirm with `y`. NIGHT setup may calibrate the GPU and synchronize the chain. To monitor mining, open a second terminal and run the dashboard command printed by the installer.
+The installer automatically detects your GPUs and downloads the required runtime.
 
-To inspect your GPUs before starting, run `python3 LMUX-26109-Linux-Online.run --list-gpus`. NIGHT supports eligible rigs with 2–8 GPUs. Pearl Solo and dual mining use one supported GPU. [Linux release notes and GPU benchmarks][linux]
+1. Choose an idle GPU and your mining mode.
+2. Enter your public payout address for each selected coin.
+3. Confirm with `y` to install and start mining.
+
+NIGHT supports single-GPU and eligible multi-GPU rigs with up to eight GPUs. Pearl Solo and NIGHT + Pearl Dual mining are available on supported individual GPUs. NIGHT setup may calibrate the GPU and synchronize the chain before mining begins.
+
+**Dashboard:** Open a second terminal and run the dashboard command displayed during setup.
+
+**Check GPU compatibility:**
+
+```bash
+./LMUX-26109-Linux-Online.run --list-gpus
+```
+
+**Optional but recommended — verify download integrity before running the installer:**
+
+Download the SHA-256 checksum from the table above into the same directory and run:
+
+```bash
+sha256sum -c LMUX-26109-Linux-Online.run.sha256
+```
+
+If direct execution is unavailable, use `python3 LMUX-26109-Linux-Online.run` from the download directory.
+
+[Linux release notes and GPU benchmarks][linux]
 
 ### Open the Linux dashboard
 
