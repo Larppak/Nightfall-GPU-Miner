@@ -7,7 +7,7 @@ Mine **NIGHT** with your NVIDIA GPU on Windows or Linux. On Linux, Lmux also off
 | Choose your platform | Download | Release |
 |---|---|---|
 | **Windows 10/11 x64** | [Windows ZIP][win-zip] · [SHA-256][win-sha] | [Alpha 1 RC1 · Nightfall Core 1.1.6][win] |
-| **Linux x86-64** | [Online installer (139 KiB)][linux-online] · [SHA-256][linux-online-sha] | [Lmux 2.6.1 · Build 26109 D1 · Nightfall Core 1.1.5][linux] |
+| **Linux x86-64** | [Online installer (140 KiB)][linux-online] · [SHA-256][linux-online-sha] | [Lmux 2.6.1 · Build 26109 D1 · Nightfall Core 1.1.5][linux] |
 
 ## Start on Windows
 
@@ -58,6 +58,8 @@ sha256sum -c LMUX-26109-Linux-Online.run.sha256
 If direct execution is unavailable, use `python3 LMUX-26109-Linux-Online.run` from the download directory.
 
 [Linux release notes and GPU benchmarks][linux]
+
+During NIGHT setup the installer shows elapsed time and the detected activity. Long steps refresh roughly every 15 seconds. If it cannot identify a specific stage, it shows a general setup message.
 
 ### Open the Linux dashboard
 
@@ -114,13 +116,13 @@ Both miners charge a **4.5% developer fee on completed NIGHT GPU work**. Lmux ch
 [win-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Windows.zip
 [win-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Windows.zip.sha256
 [win-dashboard]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/windows-alpha-1-rc1/Nightfall-Dashboard-Session.png
-[linux]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/lmux-linux-26109-d1
+[linux]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/lmux-linux-26109-setup-progress
 [linux-dashboard]: https://raw.githubusercontent.com/Larppak/Nightfall-GPU-Miner/main/assets/nightfall-dashboard-example.webp
-[linux-online]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux-Online.run
-[linux-online-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux-Online.run.sha256
-[linux-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux.zip
-[linux-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-d1/LMUX-26109-Linux.zip.sha256
-[bench]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/lmux-linux-26109-d1#night-performance-on-real-gpus
+[linux-online]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-setup-progress/LMUX-26109-Linux-Online.run
+[linux-online-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-setup-progress/LMUX-26109-Linux-Online.run.sha256
+[linux-zip]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-setup-progress/LMUX-26109-Linux.zip
+[linux-sha]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/download/lmux-linux-26109-setup-progress/LMUX-26109-Linux.zip.sha256
+[bench]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/lmux-linux-26109-setup-progress#night-performance-on-real-gpus
 [issues]: https://github.com/Larppak/Nightfall-GPU-Miner/issues
 [v2]: https://github.com/Larppak/Nightfall-GPU-Miner/releases/tag/V2
 [license]: https://github.com/Larppak/Nightfall-GPU-Miner/blob/main/LICENSE
